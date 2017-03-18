@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.universaal.tools.aalstudio.core.PreferencePageRoot"
+            id="org.universaal.tools.AALStudio"
+            name="AAL Studio">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="org.universaal.tools.AALStudio.menu"
+               label="AAL Studio"
+               mnemonic="U">
+            <separator
+                  name="view">
+            </separator>
+            <separator
+                  name="newproject"
+                  visible="true">
+            </separator>
+            <separator
+                  name="new"
+                  visible="true">
+            </separator>
+            <separator
+                  name="import"
+                  visible="true">
+            </separator>
+            <separator
+                  name="transform"
+                  visible="true">
+            </separator>
+            <separator
+                  name="build"
+                  visible="true">
+            </separator>
+            <separator
+                  name="test"
+                  visible="true">
+            </separator>
+            <separator
+                  name="publish"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>

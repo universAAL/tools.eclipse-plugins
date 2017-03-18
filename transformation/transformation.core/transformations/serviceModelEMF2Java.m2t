@@ -1,0 +1,377 @@
+/**
+ * transformation NewTransformation
+ * date: 14/10/2012
+ * author: null
+ * description: 
+ */
+
+texttransformation ServiceModelEMF2Java (in mdl:"http://www.universaal.org/tools/modelling/servicemodel", in uml:"http://www.eclipse.org/uml2/3.0.0/UML") {
+
+	var javaBasePath:String
+	var effectTypeMap:Hashtable
+
+	mdl.ServiceInterface::main () {
+	  	self.createEffectTypeMap()
+	  	
+		javaBasePath = "./src/main/java"
+		
+		self.generateLevel2Interface()
+		self.generateActivator()
+	}
+  
+	//get the full name of the root package
+	mdl.ServiceInterface::getFullOwnerPackageName():String {
+		var packageName : String
+		packageName = self.packageName
+		return packageName
+		 // + self.name.toLower()
+	}
+  
+
+	/*
+	* This operation will handle the level 2 interface generation
+	*/
+	mdl.ServiceInterface::generateLevel2Interface() {
+  		//create the file
+  		var interfaceName:String = self.name.trim()
+		file( javaBasePath + "/" + self.getFullOwnerPackageName().replace("\\.", "/") + '/' + interfaceName + ".java" )
+  	  
+		//create the header for the level2 interface
+		self.generateLevel2InterfaceHeader()
+			
+		//create the operations for the level2 interface
+		self.generateLevel2InterfaceOperations()
+
+		//close the interface
+		'\n}'
+	}  
+
+	/*
+	* This operation will create the header part of the file
+	*/
+	mdl.ServiceInterface::generateLevel2InterfaceHeader() {
+   
+    	'package ' self.getFullOwnerPackageName() ';	'
+		//static imports
+		'\n
+import org.universAAL.middleware.api.annotation.ChangeEffect;
+import org.universAAL.middleware.api.annotation.Input;
+import org.universAAL.middleware.api.annotation.OntologyClasses;
+import org.universAAL.middleware.api.annotation.Output;
+import org.universAAL.middleware.api.annotation.Outputs;
+import org.universAAL.middleware.api.annotation.ServiceOperation;
+import org.universAAL.middleware.api.annotation.UniversAALService;
+import org.universAAL.middleware.rdf.Resource;'
+	
+		// TODO: Add handling of dynamic imports
+	
+		//dynamic imports. Must import the service that is implemented as well as the classes that are used as properties
+		var propertyImportHash: Hashtable
+	
+	
+		//set the ontologyClass name
+		var serviceClass : uml.Class
+		serviceClass = self.service 
+	
+		//get the name of the realizationService and format it for import
+		String realizationService = serviceClass.qualifiedName.substringAfter("::").replace("::", ".")
+		'\nimport ' realizationService ';'
+	
+		//get the serviceclass' ownedattributes' type
+		self.operations->forEach(so:mdl.ServiceOperation){
+		  //check input parameters
+		  so.input->forEach(ip: mdl.Parameter){
+		  	if (ip.propertyPath!=null){
+		  	  	var path : uml.Property
+		  	  	path = ip.propertyPath.properties.last()
+		  		propertyImportHash.put(so.name,path)
+		  	}
+		  }
+		  
+		//check output parameters
+		so.output->forEach(op: mdl.Parameter){
+			if (op.propertyPath!=null){
+				var path : uml.Property
+				path = op.propertyPath.properties.last()
+				propertyImportHash.put(so.name,path)
+				}
+			}	
+		}
+		
+		//filter the properties to ensure that only one instance of the property type is in the list.
+		var uniqueList : list
+		propertyImportHash.values()->forEach(prop : uml.Property){
+			if (!uniqueList.contains(prop)){
+				uniqueList.add(prop)
+			}
+		}
+		//print the import statements for the filtered set of properties
+	   
+		uniqueList->forEach(prop : uml.Property) {
+		  if (!prop.type==null) {
+		    if (prop.type.oclIsTypeOf(uml.Class) || prop.type.oclIsTypeOf(uml.Enumeration)) {
+		    '\nimport ' prop.type.getFullPackageName() ';'
+		    }
+		  }
+		}
+		
+				
+		//declare the service
+		'\n\n@UniversAALService(namespace = ' self.name '.namespace, name="' self.name '")\n'
+
+		if (self.service != null) {		
+			'@OntologyClasses(value = {' self.service.name '.class})\n'
+		}
+		else {
+		 	Stdout.println("ERROR: The service property of the ServiceInterface must be set to a service from the ontology!")
+		}
+		'public interface ' self.name ' {\n'
+		
+		//set the namespace based on the packagename reversed
+		'\n\tpublic final static String namespace = "http://' reverseDelimitedString(self.getFullOwnerPackageName(), ".") '/' self.name '.owl#";'
+	    
+	}
+	
+	mdl.PropertyPath::generatePropertyPath() {
+		var separator:String = ""
+		self.properties->forEach(prop:uml.Property) {
+		   	separator + prop.owner.name +  '.PROP_' + toUpperFormat(prop.name) //separator + p.owner.name + '.PROP_' p.toUpperFormat()
+			separator = ", "
+		}
+	}  
+	
+	mdl.ServiceInterface::generateActivator() {
+	  //create the file
+  		
+		file( javaBasePath + "/" + self.getFullOwnerPackageName().replace("\\.", "/") + '/' + "Activator.java" )
+		'package ' self.getFullOwnerPackageName() ';	'
+  	  
+	  
+'
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.universAAL.middleware.api.SimpleServiceRegistrator;
+import org.universAAL.middleware.container.ModuleContext;
+import org.universAAL.middleware.container.osgi.uAALBundleContainer;
+
+public class Activator implements BundleActivator {
+
+    public static ModuleContext mc;
+    private SimpleServiceRegistrator ssr;
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
+     * )
+     */
+    public void start(final BundleContext context) throws Exception {
+	mc = uAALBundleContainer.THE_CONTAINER
+		.registerModule(new Object[] { context });
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop(BundleContext context) throws Exception {
+
+    }
+}
+
+ 
+		
+		
+		'
+	
+	}
+	
+	mdl.PropertyPath::getFilteringClass():String {
+	  return self.properties.last().type.name
+	}  
+  
+	mdl.ServiceOperation::generateAnnotated() {
+    // self.createEffectTypeMap()
+'
+	@ServiceOperation
+'
+	var separator:String = ""
+	var returnParam:mdl.Parameter
+	var returnProp:uml.Property
+
+	// Print any outputs 
+	if (!self.output.isEmpty()) {
+	
+		'\t@Outputs(value = { '
+		self.output->forEach(outParam:mdl.Parameter) {
+			separator + '\n\t\t@Output(name = "' + outParam.name + '", '
+			separator = ","
+			if (outParam.propertyPath != null) {
+				'filteringClass = ' outParam.propertyPath.getFilteringClass() + '.class,'
+				' propertyPaths = {\n'
+				'\t\t\t'outParam.propertyPath.generatePropertyPath()' } '
+			}
+			else {
+			  StdOut.println("Warning: Propety path not set for output " + outParam.name)
+			}
+			')'
+		}
+		' })
+'
+	}	
+
+	// Print any change effects
+
+	self.effects->forEach(effect : mdl.ServiceEffect) {
+		var effectType:String = effect.effectType
+		'	' + effectTypeMap.get(effectType) + '(propertyPaths = { ' // Was: '	' + effectTypeMap.get(effectType) + '(propertyPaths = { '
+		//var effectProps:List = effectCls.getValue("ServiceEffect", "effectProperties")
+		
+		var valueType:String = ""
+		if (effect.propertyPath != null) {
+		  effect.propertyPath.generatePropertyPath()
+		  valueType = effect.propertyPath.getFilteringClass()
+		}
+		else {
+		  StdOut.println("Warning: Propety path not set for effect " + effect.name)
+		}  
+		' },\n'
+		'		value = "' + effect.effectValue + '",'
+		' valueType = ' + valueType + '.class)\n' // TODO: find whether this is right type to use
+	}
+	
+	 
+	// Print the method signature
+	'	public ' 
+	// Determine return type
+	if (self.output.size() == 0) {
+		'void '
+	} else if (self.output.size() > 1) {
+	  'Object[] '
+	} else {
+	  returnParam = self.output.first()
+	  //var arrayAdd: String = ""
+	  //returnProp = returnParam.propertyPath.properties.last()
+	  //if (returnProp.upperValue <> 1) {
+	  //	arrayAdd = '[]'
+	  //}
+	  
+	  returnParam.getTypeFromParameter() + ' '
+	  //returnProp.type.name + arrayAdd +  ' '
+	}
+	
+	self.name
+
+	'('
+	separator = ""
+    self.input->forEach(par:mdl.Parameter) {
+   		separator + '@Input(name = "'par.name'", propertyPaths = {'
+   		if (par.propertyPath != null) {
+   		  par.propertyPath.generatePropertyPath()
+   		} 
+   		'}) '+  par.getTypeFromParameter() + ' ' par.name  //par.type.name
+//   		separator + '@Input(name = "'par.name'") '+ par.getTypeFromParameter() + ' ' par.name  //par.type.name
+		separator = ", "
+    }
+	');
+'	
+}  
+
+	mdl.Parameter::getTypeFromParameter():String {
+		var returnProp:uml.Property
+	  	var arrayAdd: String = ""
+
+		if (self.propertyPath == null) {
+		  '\nWarning: propertyPath for ' self.name ' is null!\n'
+		  return ""
+		}
+		else {
+			returnProp = self.propertyPath.properties.last()
+		  	if (returnProp.upperValue <> 1) {
+		  		arrayAdd = '[]'
+	  		}
+	  		return returnProp.type.name + arrayAdd	
+		}  
+	}
+  
+    /*
+     * This operation will generate the annotated operations of the level 2 interface
+     * It uses the information set on the operations to decide input/output/changeeffect paramters
+     */
+	mdl.ServiceInterface::generateLevel2InterfaceOperations() {
+	    //call generate annotated
+	    self.operations->forEach(pro : mdl.ServiceOperation){
+	    	pro.generateAnnotated()
+		}
+  	}
+
+ 	reverseDelimitedString(ds:String, delimiter:String):String {
+   		var retString: String = ""
+  		var tempString:String = ds
+	  	
+  		while (tempString.IndexOf(delimiter)>0) {  //checking for occurance of delimiter
+  	  		if (retString.size()=0) {
+  	  	  	retString =  tempString.substringBefore(delimiter) 
+  	  		}
+  	  		else {
+  	  	   	retString =  tempString.substringBefore(delimiter) + delimiter + retString
+  	  		}
+  	  		//shrink tempString.
+  	  		tempString = tempString.substringAfter(delimiter)
+  	  	
+  	
+  		}
+   		if (retString ="") { //case where ds (input) does not have a delimiter
+   	  		retString = tempString
+   		}
+   		else {
+   			retString = tempString + delimiter + retString
+		}
+		return retString  	
+	}
+
+	toUpperFormat(str:String):String {
+    	var txt:String
+    	var res:String
+  
+    	txt = str.trim()
+    	res = ""
+
+    	txt->forEach(aChar:String) {
+      		if (aChar.isUpperCase(0)) {
+        		res = res + "_";
+      		}
+      		res = res + aChar;
+    	}  
+
+  		return res.toUpper()
+  	}   
+
+    mdl.ServiceOperation::createEffectTypeMap() {
+    	effectTypeMap.put("CHANGE","@ChangeEffect")
+    	effectTypeMap.put("ADD","@AddEffect")
+    	effectTypeMap.put("REMOVE","@RemoveEffect")    
+  	}
+  	
+  	  uml.Classifier::getFullPackageName():String {
+  	if(self.owner !=null) {
+  	  var targetName:String
+  	  targetName = self.owner.getFullPackageName() 
+  	  if (targetName.equals("")) {
+  	  	return self.name.trim()
+  	  }
+  	  else {
+  	  	return targetName.trim() + "." + self.name
+  	  }
+  	}
+  	else {
+  		return ""
+  	}
+  }
+  	
+
+}

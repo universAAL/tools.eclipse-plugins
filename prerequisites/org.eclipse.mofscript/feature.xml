@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.mofscript"
+      label="MOFScript"
+      version="1.4.0.3"
+      provider-name="SINTEF">
+   <install-handler/>
+
+   <description url="http://download.eclipse.org/modeling/gmt/mofscript/update/">
+      This is the MOFScript Eclipse Plugin.
+MOFScript is a MOF (EMF-based) model to text transformation tool.
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c) 2005, SINTEF
+All rights reserved. This program and 
+the accompanying materials are made 
+available under the terms of the 
+Eclipse Public License v1.0
+which accompanies this distribution, 
+and is available at http://www.eclipse.org/legal/epl-v10.html
+Contributors: 
+Jon Oldevik, Tor Neple, Gøran Olsen
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      MOFSCRIPT IS PROVIDED ON AN &quot;AS IS&quot; BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+EITHER EXPRESSED OR IMPLIED INCLUDING,
+WITHOUT LIMITATIONS, ANY WARRANTIES OR 
+CONDITIONS OF TITLE, NON-INFRINGEMENT,
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR 
+PURPOSE. Each Receipient is solely responsible 
+for determining the appropriateness of using 
+and distributing MOFSCRIPT and assumes all 
+risks associated with its exercise of rights 
+under this Agreement, including but not 
+limited to the risks and costs of program errors, 
+compliance with applicable laws, damage to or 
+loss of data, programs or equipment, and 
+unavailability or interruption of operations.
+
+See Eclipse Public License (EPL) v1.0 for full 
+licence description.
+(http://www.eclipse.org/legal/epl-v10.html)
+   </license>
+
+   <url>
+      <update label="MOFScript update" url="http://download.eclipse.org/modeling/gmt/mofscript/update/"/>
+      <discovery label="MOFScript update site at Eclipe GMT" url="http://download.eclipse.org/modeling/gmt/mofscript/update/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.emf"/>
+      <!--<import plugin="org.eclipse.core.runtime.compatibility"/>-->
+   </requires>
+
+   <plugin
+         id="org.eclipse.core.runtime.compatibility"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.mofscript.editor"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.fileresourcemodel"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.model"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.parser"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.runtime"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.traceabilitymodel"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"/>
+
+   <plugin
+         id="org.eclipse.mofscript.help"
+         download-size="0"
+         install-size="0"
+         version="1.4.0.3"
+         unpack="false"/>
+
+</feature>

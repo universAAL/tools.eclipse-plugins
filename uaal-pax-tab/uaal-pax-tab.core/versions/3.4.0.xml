@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<version>
+	<middleware>
+		<bundleset>
+			<bundle level="1">mvn:com.google.code.gson/gson/2.2.4</bundle>
+			<bundle level="1">mvn:org.apache.felix/org.apache.felix.fileinstall/3.1.10</bundle>
+			<bundle level="1">mvn:org.apache.felix/org.apache.felix.log/1.0.1</bundle>
+			<bundle level="1">mvn:org.apache.felix/org.osgi.core/1.4.0</bundle>
+			<bundle level="1">mvn:org.osgi/org.osgi.compendium/4.1.0</bundle>
+			<bundle level="1">mvn:org.osgi/org.osgi.core/4.1.0</bundle>
+			<bundle level="1">mvn:org.universAAL.middleware/mw.container.xfaces.osgi/3.4.0</bundle>
+			<bundle level="1">mvn:org.universAAL.middleware/mw.schemas/3.4.0</bundle>
+			<bundle level="1">wrap:mvn:org.bouncycastle/jce.jdk13/144</bundle>
+
+			<bundle level="2">mvn:org.apache.felix/org.apache.felix.configadmin/1.2.4</bundle>
+			<bundle level="2">mvn:org.apache.felix/org.apache.felix.shell/1.4.1</bundle>
+			<bundle level="2">mvn:org.apache.felix/org.osgi.service.obr/1.0.2</bundle>
+			<bundle level="2">mvn:org.jgroups/jgroups/3.4.0.Final</bundle>
+			<bundle level="2">mvn:org.ops4j.pax.logging/pax-logging-api/1.6.2</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.brokers.api.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.connectors.api.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.container.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.interfaces.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.managers.api.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.modules.api.osgi/3.4.0</bundle>
+			<bundle level="2">mvn:org.universAAL.thirdparty/jslp.osgi/3.4.0</bundle>
+
+			<bundle level="3">mvn:org.apache.felix/org.apache.felix.bundlerepository/1.4.2</bundle>
+			<bundle level="3">mvn:org.ops4j.pax.confman/pax-confman-propsloader/0.2.2</bundle>
+			<bundle level="3">mvn:org.universAAL.middleware/mw.data.representation.osgi/3.4.0</bundle>
+
+			<bundle level="4">mvn:org.universAAL.middleware/mw.data.serialization.osgi/3.4.0</bundle>
+			<bundle level="4">mvn:org.universAAL.middleware/mw.connectors.communication.jgroups.osgi/3.4.0</bundle>
+			<bundle level="4">mvn:org.universAAL.middleware/mw.connectors.discovery.slp.osgi/3.4.0</bundle>
+
+			<bundle level="5">mvn:org.universAAL.middleware/mw.modules.aalspace.osgi/3.4.0</bundle>
+			<bundle level="5">mvn:org.universAAL.middleware/mw.modules.communication.osgi/3.4.0</bundle>
+
+			<bundle level="6">mvn:org.universAAL.middleware/mw.brokers.control.osgi/3.4.0</bundle>
+
+			<bundle level="7">mvn:org.universAAL.middleware/mw.managers.aalspace.osgi/3.4.0</bundle>
+
+			<bundle level="8">mvn:org.universAAL.middleware/mw.managers.tenant.osgi/3.4.0</bundle>
+			<bundle level="8">mvn:org.universAAL.middleware/mw.managers.configuration.osgi/3.4.0</bundle>
+			<bundle level="8">mvn:org.universAAL.middleware/mw.managers.deploy.osgi/3.4.0</bundle>
+			<bundle level="8">mvn:org.universAAL.middleware/mw.bus.model.osgi/3.4.0</bundle>
+
+			<bundle level="9">mvn:org.universAAL.middleware/mw.managers.distributedmw.osgi/3.4.0</bundle>
+			<bundle level="9">mvn:org.universAAL.middleware/mw.bus.context.osgi/3.4.0</bundle>
+			<bundle level="9">mvn:org.universAAL.middleware/mw.bus.service.osgi/3.4.0</bundle>
+
+			<bundle level="10">mvn:org.universAAL.middleware/mw.bus.ui.osgi/3.4.0</bundle>
+
+			<bundle level="11">mvn:org.universAAL.middleware/mw.bus.tracker.osgi/3.4.0</bundle>
+		</bundleset>
+	</middleware>
+
+	<features>
+		<bundleset name="CHE">
+			<bundle>mvn:org.openrdf.sesame/sesame-runtime-osgi/2.6.0</bundle>
+			<bundle>mvn:org.universAAL.context/ctxt.che/3.4.0</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.che/3.4.0</bundle>
+		</bundleset>
+		<bundleset name="Log Monitor">
+			<bundle>mvn:org.universAAL.tools/tools.log_mon/3.4.0</bundle>
+		</bundleset>
+		<bundleset name="ASOR">
+			<bundle>mvn:org.universAAL.ontology/ont.asor/3.4.0</bundle>
+			<bundle>mvn:org.universAAL.service/srvc.asor/3.4.0</bundle>
+		</bundleset>
+	</features>
+
+	<relevant>
+		<artifactset>
+			<artifact>org.universAAL.middleware/mw.container.xfaces.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.container.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.model.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.data.representation.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.service.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.context.osgi/3.4.0</artifact>
+			<artifact>org.universAAL.middleware/mw.data.serialization.osgi/3.4.0</artifact>
+		</artifactset>
+	</relevant>
+
+	<ignore>
+		<artifactset>
+			<artifact>org.apache.felix/org.apache.felix.main</artifact>
+			<artifact>org.apache.felix/org.apache.felix.framework</artifact>
+			<artifact>org.apache.felix/org.osgi.core</artifact>
+			<artifact>org.apache.felix/org.apache.felix.artifactrepository</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell.tui</artifact>
+			<artifact>org.apache.felix/org.osgi.compendium</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.apache.felix/javax.servlet</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>org.universAAL.middleware/mw.composite</artifact>
+			<artifact>javax.media/jmf</artifact>
+			<artifact>org.apache.felix/org.osgi.foundation</artifact>
+			<artifact>org.apache.felix/org.apache.felix.log</artifact>
+			<artifact>org.osgi/org.osgi.core</artifact>
+			<artifact>org.osgi/org.osgi.osgi</artifact>
+			<artifact>org.osgi/org.osgi.compendium</artifact>
+		</artifactset>
+	</ignore>
+</version>

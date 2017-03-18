@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model Name="BiomedicalSensors" Package="org.universaal.ontology.BiomedicalSensors" versionInfo="1.0">
+<Comment>The Ontology of Physical Activity Monitor Module (joemoul,billyk)</Comment>
+<AbstractClasses>
+<Name>SensorType</Name>
+<Name>ConnectionType</Name>
+</AbstractClasses>
+</Model>

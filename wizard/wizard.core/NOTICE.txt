@@ -1,0 +1,27 @@
+universAAL New Project Wizard tool
+
+Copyright 2008-2014 ITACA-TSB, http://www.tsb.upv.es
+Instituto Tecnologico de Aplicaciones de Comunicacion 
+Avanzadas - Grupo Tecnologias para la Salud y el 
+Bienestar (TSB)
+
+I. Included Software
+
+This does not include any software developed by 3rd parties
+
+
+II. Used Software
+
+This product uses software developed at
+The Apache Software Foundation (http://www.apache.org/).
+Licensed under the Apache License 2.0.
+
+This product uses software developed at
+Eclipse Foundation (www.eclipse.org)
+Copyright (c) 2011 Eclipse Foundation
+Licensed under Eclipse Public License v1.0
+
+
+III. License Summary
+- Apache License 2.0
+- Eclipse Public License v1.0

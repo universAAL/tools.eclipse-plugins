@@ -1,0 +1,377 @@
+	/**
+ * transformation Service Model UML 2 Java transformation for universAAL
+ * date: 14/8/2012
+ * author: Erlend Stav, StŒle Walderhaug
+ * description: 
+ */
+
+texttransformation ServiceModelUML2Java (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") {
+
+
+
+
+  var ontologyNamespace:String
+  var ontologyName:String
+  var ontologyNamespaceReference:String
+  var propertyHashtable: Hashtable  
+  var projectInfo: Hashtable
+  var importedModels: Hashtable
+  var javaBasePath:String
+  var javaOWLSupport:String
+  var datatypeImportMap:Hashtable 
+  
+  var ontologyClassList:Hashtable 
+  var ontologyEnumerationList:Hashtable 
+  var subPackageList:Hashtable
+  var ontologyClass:String //the name of the ontology service class being realized
+  
+   var effectTypeMap:Hashtable //for change effects
+  
+ 
+   /**
+   * Main (entry point)
+   */
+    
+  uml.Model::main() {
+    //var defaultOntologyNamespace:String
+  	//var defaultOntologyName:String
+  	
+  	var ontologyNameList:Hashtable
+  	
+   
+   	'Transforming UML service model to Java...
+   	'
+    javaBasePath = "./" //getEnv("org.universaal.tools.transformationcommand.javadir")
+    javaOWLSupport = "/src/main/java" //getEnv("org.universaal.tools.transformationcommand.javaowlsupport")
+    
+    self.ownedMember -> forEach( p:uml.Package ){  
+      	//need a guard to control package type/stereotype 
+      	      	   		
+   		//generate activator
+   		//p.generateActivator(ontologyNameList)
+   	
+   		//generate provider (serviceprofile)
+   		p.ownedMember->forEach( interf : uml.Interface) {
+ 			//generate the file and content
+ 			interf.generateLevel2Interface()
+		  
+   		}
+   		
+    }
+}
+  
+ /*
+  * This operation will handle the level 2 interface generation
+  */
+uml.Interface::generateLevel2Interface() {
+  	//create the file
+  	var interfaceName:String = self.name.trim()
+	file( javaBasePath + "/" + self.getFullOwnerPackageName().replace("\\.", "/") + '/' + interfaceName + ".java" )
+  	  
+	//create the header for the level2 interface
+	self.generateLevel2InterfaceHeader()
+			
+	//create the operations for the level2 interface
+	self.generateLevel2InterfaceOperations()
+
+	//close the interface
+	'}'
+}  
+ 
+ /*
+  * This operation will create the 
+  */
+uml.Interface::generateLevel2InterfaceHeader() {
+   
+    'package ' self.getFullOwnerPackageName() ';	'
+	//static imports
+	'\n
+import org.universAAL.middleware.api.annotation.ChangeEffect;
+import org.universAAL.middleware.api.annotation.Input;
+import org.universAAL.middleware.api.annotation.OntologyClasses;
+import org.universAAL.middleware.api.annotation.Output;
+import org.universAAL.middleware.api.annotation.Outputs;
+import org.universAAL.middleware.api.annotation.ServiceOperation;
+import org.universAAL.middleware.api.annotation.UniversAALService;'
+	
+	//dynamic imports. Must import the service that is implemented as well as the classes that are used as properties
+	var propertyImportHash: Hashtable
+	
+	//get realization class
+	var serviceClass: uml.Class
+	serviceClass = self.clientDependency.first().supplier.first()
+	
+	//set the ontologyClass name
+	ontologyClass = serviceClass.name
+	
+	//get the name of the realizationService and format it for import
+	String realizationService = serviceClass.qualifiedName.substringAfter("::").replace("::", ".")
+	'\nimport ' realizationService ';'
+	
+	//get the serviceclass' ownedattributes' type
+	
+	serviceClass->forEach( prop : uml.Property) {
+		propertyImportHash.put(prop.name, prop)
+		//stdout.println("Found property on serviceClass: " + prop.name + ":" + prop.type)
+	}
+	
+	//import the superclasses 	
+	while (!serviceClass.general.isEmpty()) {
+	  	serviceClass.ownedElement->forEach(prop: uml.Property){
+	  		propertyImportHash.put(prop.name, prop)
+	  		//if property is an objecttype (class), import its property types as well
+	  		if (prop.type.oclIsTypeOf(uml.Class)) {
+	  			prop.type.ownedElement->forEach(subProp: uml.Property) {
+	  				propertyImportHash.put(subProp.name,subProp)
+	  				//stdout.println("SubProperty: " + subProp.name + " inserted")
+	  			}
+	  		}
+	  	}
+	  	serviceClass = serviceClass.general.first()
+	}
+	
+    //print the import statements
+	propertyImportHash->forEach(prop : uml.Property) {
+	  if (!prop.type==null) {
+	    if (prop.type.oclIsTypeOf(uml.Class) || prop.type.oclIsTypeOf(uml.Enumeration)) {
+	    '\nimport ' prop.type.getFullPackageName() ';'
+	    }
+	  }
+	}
+			
+	//declare the service
+	'\n\n@UniversAALService(namespace = ' self.name '.namespace, name="' self.name '")\n'
+	'@OntologyClasses(value = {' ontologyClass '.class})\n'
+	'public interface ' self.name ' {\n'
+	
+	//set the namespace based on the packagename reversed
+	'\n\tpublic final static String namespace = "http://' reverseDelimitedString(self.getFullOwnerPackageName(), ".") '/' self.name '.owl#";'
+	 
+    
+}
+  
+    /*
+     * This operation will generate the annotated operations of the level 2 interface
+     * It uses the information set on the operations to decide input/output/changeeffect paramters
+     */
+uml.Interface::generateLevel2InterfaceOperations() {
+    //call generate annotated
+    self.ownedOperation->forEach(op : uml.Operation){
+    	op.generateAnnotated()
+    }
+}
+ 
+ uml.Package::generateActivator(ontNameList : Hashtable) {
+   //generate the activatorfile based on the ontologies applied and project name
+ 
+ }
+ 
+ reverseDelimitedString(ds:String, delimiter:String):String {
+   	var retString: String = ""
+  	var tempString:String = ds
+	  	
+  	while (tempString.IndexOf(delimiter)>0) {  //checking for occurance of delimiter
+  	  	if (retString.size()=0) {
+  	  	  retString =  tempString.substringBefore(delimiter) 
+  	  	}
+  	  	else {
+  	  	   retString =  tempString.substringBefore(delimiter) + delimiter + retString
+  	  	}
+  	  	//shrink tempString.
+  	  	tempString = tempString.substringAfter(delimiter)
+  	  	
+  	
+  	}
+   	if (retString ="") { //case where ds (input) does not have a delimiter
+   	  	retString = tempString
+   	}
+   	else {
+   		retString = tempString + delimiter + retString
+   	}
+   	return retString  	
+  	
+  
+  }
+ 
+ uml.Interface::generateServiceProfile() {
+   	var serviceName:String = self.name.trim()
+	file( javaBasePath + "/" + self.getFullPackageName().replace("\\.", "/") + serviceName + ".java" )
+   
+ 
+ }
+ 
+ uml.Interface::generateServiceCallee() {
+ 
+ }
+ 
+ uml.Interface::generateServiceProfileHeader() {
+ // First, find package/interface? name to become service name	
+ 
+
+'
+package ' self.getFullPackageName() '; 
+
+import java.util.Hashtable;
+
+import org.universAAL.middleware.owl.Enumeration;
+import org.universAAL.middleware.owl.MergedRestriction;
+import org.universAAL.middleware.owl.OntologyManagement;
+import org.universAAL.middleware.owl.SimpleOntology;
+import org.universAAL.middleware.rdf.Resource;
+import org.universAAL.middleware.rdf.TypeMapper;
+import org.universAAL.middleware.rdf.impl.ResourceFactoryImpl;
+import org.universAAL.middleware.service.owls.profile.ServiceProfile;
+import org.universAAL.ontology.lighting.ElectricLight;
+import org.universAAL.ontology.lighting.LightSource;
+import org.universAAL.ontology.lighting.Lighting;
+import org.universAAL.ontology.location.Location;
+import org.universAAL.ontology.phThing.PhysicalThing;
+'
+	self.generateServiceProfileImports()
+	
+ }
+
+ uml.Interface::generateServiceProfileImports() { 
+  
+ }
+
+  //get the full name of the root package
+  uml.Classifier::getFullOwnerPackageName():String {
+    if (self.owner!=null) {
+      return self.owner.getFullPackageName()
+    }
+  	return ""
+  }
+  
+ 
+  uml.Classifier::getFullPackageName():String {
+  	if(self.owner !=null) {
+  	  var targetName:String
+  	  targetName = self.owner.getFullPackageName() 
+  	  if (targetName.equals("")) {
+  	  	return self.name.trim()
+  	  }
+  	  else {
+  	  	return targetName.trim() + "." + self.name
+  	  }
+  	}
+  	else {
+  		return ""
+  	}
+  }
+
+
+  uml.Parameter::getTypeFromParameter():String {
+    if (self.hasStereotype("PropertyBinding")) {
+		var paramProperties:List = self.getValue("PropertyBinding", "properties")
+		paramProperties->forEach(p:uml.Property) {
+		    return p.type.name
+		}
+    }
+    return "<unset property binding for " + self.name + ">"
+  }
+
+
+  uml.Operation::generateAnnotated() {
+    self.createEffectTypeMap()
+'
+	@ServiceOperation
+'
+	var separator:String = ""
+
+	// Print any outputs 
+	var outList:List = self.ownedParameter->select(par:uml.Parameter | par.direction == "out")
+	if (!outList.isEmpty()) {
+	
+		'	@Outputs(value = { '
+		separator = ""
+		outList->forEach(outParam:uml.Parameter) {
+			separator + '@Output(name = "' + outParam.name + '")'  // TODO: replace name with correct value
+			separator = ", "
+		}
+		'})
+'
+	}	
+
+	// Print any change effects
+
+	if (self.hasStereotype("ServiceProfile")) {
+		var effectList:List = self.getValue("ServiceProfile", "effects")
+		effectList->forEach(c) {
+			var effectCls:uml.Class = c._getFeature("base_Class")
+			var effectType:String = effectCls.getValue("ServiceEffect", "effectType").name
+			'	' + effectTypeMap.get(effectType) + '(propertyPaths = { '
+			
+			var effectProps:List = effectCls.getValue("ServiceEffect", "effectProperties")
+			var valueType:String = ""
+			separator = ""
+			effectProps->forEach(p:uml.Property) {
+			    separator + p.owner.name + '.PROP_' p.toUpperFormat()
+				separator = ", "
+				valueType = p.type.name // Use type of last property
+			}
+			' },\n'
+			'		value = "' + effectCls.getValue("ServiceEffect", "effectValue") + '",'
+			' valueType = ' + valueType + '.class)\n'
+					
+			// TODO: find what to use for value type
+		}
+	}
+	
+	 
+	// Print the method signature
+	'	public ' 
+	// Determine return type
+	if (outList.size() == 0) {
+		'void '
+	} else if (outList.size() > 1) {
+	  'Object[] '
+	} else {
+	  var returnParam:uml.Parameter = outList.first()
+	  var arrayAdd: String = ""
+	  if (returnParam.upperValue <> 1) {
+	    arrayAdd = '[]'
+	  }
+	  returnParam.getTypeFromParameter() + arrayAdd +  ' '
+	}
+	
+	self.name
+
+	'('
+	separator = ""
+    self.ownedParameter->forEach(par:uml.Parameter) {
+    	if (par.direction == "in") {
+ 	   		separator + '@Input(name = "'par.name'") '+ par.getTypeFromParameter() + ' ' par.name  //par.type.name
+			separator = ", "
+    	}
+    }
+	');
+'	
+  }
+  
+  uml.Operation::createEffectTypeMap() {
+    effectTypeMap.put("CHANGE_EFFECT","@ChangeEffect")
+    effectTypeMap.put("ADD_EFFECT","@AddEffect")
+    effectTypeMap.put("REMOVE_EFFECT","@RemoveEffect")    
+  }
+
+
+  uml.Classifier::toUpperFormat():String {
+    var txt:String
+    var res:String
+  
+    txt = self.name.trim()
+    res = ""
+
+    txt->forEach(aChar:String) {
+      if (aChar.isUpperCase(0)) {
+        res = res + "_";
+      }
+      res = res + aChar;
+    }  
+
+  	return res.toUpper()
+  }   
+
+}
+

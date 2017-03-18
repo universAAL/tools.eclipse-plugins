@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="help_project" title="universAAL Project Wizard">
+		<description>This plug-in lets you create a new universAAL project.</description>
+		<topic href="http://forge.universaal.org/wiki/uaaltools:Project_and_Item_Wizards" label="Plug-in Wiki Page"/>
+	</context>
+	<context id="help_item" title="universAAL Item Wizard">
+		<description>This plug-in lets you create a new universAAL item.</description>
+		<topic href="http://forge.universaal.org/wiki/uaaltools:Project_and_Item_Wizards" label="Plug-in Wiki Page"/>
+	</context>
+</contexts>
+

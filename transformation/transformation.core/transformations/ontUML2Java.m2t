@@ -1,0 +1,961 @@
+/**
+ * transformation Ontology UML 2 Java transformation for universAAL
+ * date: 28/6/2011
+ * author: Erlend Stav, StŒle Walderhaug
+ * description: 
+ */
+
+texttransformation OntologyUML2Java (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") {
+
+
+  var ontologyNamespace:String
+  var ontologyName:String
+  var ontologyNamespaceReference:String
+  var propertyHashtable: Hashtable  
+  var projectInfo: Hashtable
+  var importedModels: Hashtable
+
+ 
+   /**
+   * Main (entry point)
+   */
+    
+  uml.Model::main() {
+    
+    if (!self.hasStereotype("owlOntology")) {
+      
+      StdOut.println("WARNING!!! The model must be stereotyped with owlOntology and default namespace must be set!")  
+      StdOut.println("To perform the transformation, add this information to the model")
+      return 
+    }
+    
+    ontologyName = self.name 
+    StdOut.println("Generating Java classes for ontology: " + ontologyName)
+    ontologyNamespace = "http:\\\\\\\\ontology.universAAL.org\\\\"+ontologyName; //self.getStereotypeValue("owlOntology", "defaultNamespace")
+    StdOut.println("Namespace: "+ontologyNamespace) 
+    ontologyNamespaceReference =  ontologyName +  'Namespace.NAMESPACE'  
+  
+    
+    //must create the import list.
+    self.getImportList()
+         
+  	self.ownedMember -> forEach( p:uml.Package ){         
+        var ontologyClassList:Hashtable
+ 
+ 	  	StdOut.println("Handling namespace interface of package :" + p.name) 
+   		p.generateNamespaceInterface()
+   		
+   		//Create a hashtable containing the properties of the classes in the model.
+   		StdOut.println("Handling properties of classes (not interfaces) in the package: " + p.name)
+   		p.ownedElement->forEach(c : uml.Class) {
+   			c.createPropertyList()
+  			c.createPropertyListForAssociations()
+  			
+   		}
+		//now see if there are any associations that own both its ends
+		p.ownedElement->forEach(ass : uml.Association) {ass.createPropertyForAssociations()}
+
+	  	StdOut.println("Handling classes of package :" + p.name) 
+  		//Generate a java-class for each class in the ontology
+		p.ownedElement -> forEach( component:uml.Class ) { // | component.hasStereotype("owlClass") ){
+		    ontologyClassList.put(component.name, component)
+			component.generateOntologyClass()
+		}
+	
+	  	StdOut.println("Handling interfaces of package :" + p.name) 
+  		//Generate a java-class for each interface in the ontology
+		p.ownedElement -> forEach( inter:uml.Interface ) { // | component.hasStereotype("owlClass") ){
+			inter.generateOntologyInterface()
+  		    ontologyClassList.put(self.name, self)
+		}
+		
+		StdOut.println("Generating the POM file")
+		//create the POM file for the project
+		p.generatePOMFile() 
+
+	  	StdOut.println("Handling activator of package :" + p.name) 
+   		p.generateActivator(ontologyClassList)
+   		
+                                         
+	}           
+  }
+ 
+ 
+  uml.Package::generateActivator(ontologyClassList:Hashtable) {
+    StdOut.println('Generating activator')
+    
+	file( self.name.replace("\\.", "/") + '/' + "Activator.java" )
+    
+'
+package ' self.name ';
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+
+public class Activator implements BundleActivator {
+
+  static BundleContext context = null;
+
+    public void start(BundleContext context) throws Exception {
+      Activator.context = context;
+'
+	ontologyClassList.values()->forEach(component:uml.Class) {
+'      Class.forName(' component.package.name '.owl.' component.name '.class.getName());
+'
+	}
+'    }
+
+    public void stop(BundleContext arg0) throws Exception {
+	// TODO Auto-generated method stub
+
+    }
+
+}	
+'	
+
+  }
+  
+  uml.Package::generateNamespaceInterface() {
+    StdOut.println('Generating name space interface')
+    
+	file( self.name.replace("\\.", "/") + '/owl/' + ontologyName + "Namespace.java" )
+    
+'
+package ' self.name '.owl;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+
+public interface ' ontologyName 'Namespace {
+
+  static final String NAMESPACE = "' ontologyNamespace '#";
+
+}	
+'	
+
+  }  
+  
+  
+  uml.Classifier::toUpperFormat():String {
+    var txt:String
+    var res:String
+  
+    txt = self.name.trim()
+    res = ""
+
+    txt->forEach(aChar:String) {
+      if (aChar.isUpperCase(0)) {
+        res = res + "_";
+      }
+      res = res + aChar;
+    }  
+
+  	return res.toUpper()
+  }   
+
+  uml.NamedElement::getStereotypeValue(stereotypeName:String, tag:String):String {
+    // Find and return the value of a stereotype    
+   var mySType:uml.Stereotype
+   if (self.hasStereotype(stereotypeName)) {
+     mySType = self.getAppliedStereotype(stereotypeName);
+     return self.getValue(mySType, tag)
+   }
+   else {
+     StdOut.println("The class "+self.name+" do not have the expected stereotype : " + stereotypeName)
+     return ""
+   }
+  }
+
+
+	
+  uml.Interface::generateOntologyInterface() {
+	file( self.package.name.replace("\\.", "/") + '/owl/' + self.name + ".java" )
+                
+    //Start generating the code
+    'package ' self.package.name '.owl;\n\n'
+    
+    self.genImports()
+    
+	self.genInterfaceDeclaration()
+	    
+    ' {\n'
+    
+    self.genInterfaceProperties()
+    
+    '}\n'    
+  }
+
+
+
+  uml.Class::generateOntologyClass () {
+	file( self.package.name.replace("\\.", "/") + '/owl/' + self.name + ".java" )
+                
+    //Start generating the code
+    'package ' self.package.name '.owl;\n\n'
+    
+    self.genImports()
+  	self.genClassDeclaration()
+	    
+    ' {\n'
+   
+  	
+    self.genPropertyDeclaration() //will be rewritten to be output only
+    //self.genPropertiesForAssociations() // I guess this will be removed as all properties are created in the previous.
+    self.genStatic()
+    self.genConstructors()
+    self.genGetClassRestrictionsOnProperty()
+    self.genGetStandardPropertyURIs()
+    
+    self.genGetPropSerializationType()
+    self.genIsWellFormed()
+    self.genGetRDFSComment()
+    self.genGetRDFSLabel()
+    
+    self.genGetClassLevelRestrictions()
+   
+    self.genPropertyGettersAndSetters()
+   
+    '}\n'    
+  }
+  
+  /*
+   * Will get the properties for the class and put it into the propertyHashtable
+   * The properties are stored as as <class.name,hashtable<property.name, property>> records
+   */
+  uml.Class::createPropertyList() {
+ 	//look if there is an entry in the hashtable for the active classifier.
+ 	var pHash:Hashtable = propertyHashtable.get(self.name)
+ 	
+ 	self.ownedMember->forEach(att : uml.Property) {
+ 		//add property to list and update the hashtable. 
+ 	   	pHash.put(att.name, att) //key=property.name. ELement = property
+    }
+ 
+    //update propertyHashtable
+    if (!pHash.isEmpty()){
+ 		propertyHashtable.put(self.name,pHash) //key=class.name. Element = hashtable
+    	//stdout.println("INFO: Property hashtable updated for key " + self.name + " (size=" + pHash.size() +"). Total size=" + propertyHashtable.size() )
+   }
+  }
+  
+  /**
+   * This function will only deal with associations. It updates the navigable classifiers in the propertyHash
+   * with information about their navigable ends   *
+   */
+  uml.Association::createPropertyForAssociations() {
+    //get the navigable ends
+  	self.navigableOwnedEnd->forEach(p : uml.Property) {
+  		//stdout.println("Navigable property on association " + self.name + " - called " + p.name + " of type " + p.type.name )
+  		//must get the navigator classifier.
+  		self.memberEnd->forEach(prop : uml.Property) {
+  			if (!prop.name.equals(p.name)){
+  				//must get the global hashtable entry before updating it
+  				var naviHash:Hashtable = propertyHashtable.get(prop.type.name)
+  				naviHash.put(prop.type.name, p) //key= propertytype.name. Element=Property
+  				propertyHashtable.put(prop.type.name, naviHash) //key propertytype.name (the name of the class that can navigate)
+  			} //if
+  		}//foreach prop
+   	} //foreach p
+  }
+   
+  /*
+   * This function will find properties for the associations defined in the model and store them in the propertyHashtable hashtable
+   * Each association that is navigable will result in a propory at its corresponding member end.
+   * The records are stored as <association.name, hashtable<association.name,association>>	
+   */
+
+ uml.Classifier::createPropertyListForAssociations() {
+   
+    //now get the properties for this classifier from the global hashtable
+    Hashtable pHash = propertyHashtable.get(self.name)
+    
+    //for each association owned by the classifier, check for navigation and update local hashtable
+    self.getAssociations()->forEach(ass : uml.Association ) {
+      	//stdout.println("INFO: Found association:" + ass.name + " for " + self.name)
+      	     	
+      	//only add the assocations that are navigable for the classifier in question
+        ass.navigableOwnedEnd->forEach(c : uml.Classifier) {
+           	if (c.name.equals(ass.name)){
+        		pHash.put(ass.name, ass)  //key=association.name. Element= association
+        	}
+        }
+    }
+ 	
+ 	//update propertyHashtable
+    if (!pHash.isEmpty()){
+ 		propertyHashtable.put(self.name,pHash)  //key=classifier.name. Element=hashtable
+   }
+ }
+ 
+ uml.Class::genImports() {
+    'import java.util.Hashtable;\n\n'
+    
+    // Import universAAL packages. 
+    // Note that generator currently imports a fixed set of classes. This will be improved in the future 
+    'import org.universAAL.middleware.owl.Restriction;\n'
+	'import org.universAAL.middleware.rdf.TypeMapper;\n'
+    'import org.universAAL.middleware.service.owl.Service;\n'    
+    'import org.universAAL.ontology.phThing.Device;\n\n'
+  }
+
+  uml.Class::genStatic() {
+    '  \n  static {\n'
+    '    MY_URI = ' ontologyNamespaceReference '+ "' self.name.trim() '";\n' 
+    
+    //if this class is a specialization of Service it will need the restrictions hashtable.
+    var isService:boolean = false
+    self.general->forEach(sc : uml.Class) {
+    	if (sc.name.equals("Service")) {
+    	    isService=true    	  
+    	}
+    }
+    
+    
+    //get the property's hachtable and intialize the properties
+    Hashtable props = propertyHashtable.get(self.name)
+    
+    //properties first
+    props->forEach(att: uml.Property) {
+  	    '    PROP_' att.toUpperFormat() ' = ' ontologyNamespaceReference ' + "' att.name.trim() '";\n'
+  	    
+  	    if (isService) { //we have a service and must add a static restriction part
+  	    	'	addRestriction(Restriction.getAllValuesRestriction(PROP_' + att.toUpperFormat() + ',\n'
+  	    	'       'self.getURIExpressionForType(att.type.name.trim())'), new String[] { PROP_' + att.toUpperFormat()  ' }, restrictions);\n'
+  	    }
+	}
+	//association properties next. The filter may be obsolete as the po
+	props->forEach (ass : uml.Association) // | ass.endType.first().name.trim().equals(self.name.trim()) ) 
+	{
+	  //stdout.println("INFO: Generating static for associations: " + ass.name)
+	  '    PROP_' ass.toUpperFormat() ' = ' ontologyNamespaceReference ' + "' ass.name.trim() '";\n'
+	  
+	  if (isService) { //we have a service and must add a static restriction part
+  	    	'	addRestriction(Restriction.getAllValuesRestriction(PROP_' + ass.toUpperFormat() + ',\n'
+  	    	'       'self.getURIExpressionForType(ass.endType.name.trim())'), new String[] { PROP_' + ass.toUpperFormat()  ' }, restrictions);\n'
+  	    }
+	
+	}
+  	'\n'
+    '    register('self.name'.class);\n'
+    '  }\n'
+  }     
+  
+  /**
+   * This operation will define the properties on an interface.
+   * The interface properties are not (yet) in the properties hashtable.
+   */
+  uml.Interface::genInterfaceProperties() {
+     '  public static final String MY_URI = ' ontologyNamespaceReference ' + "' self.name.trim() '";\n' 
+    
+    self.ownedMember->forEach(att : uml.Property) {
+  	   if (att.type == null) {
+	        stdout.println("WARNING: No type defined for " + att.name +  ". Using string as default")
+	        '  public static final String PROP_' att.toUpperFormat() ' = ' ontologyNamespaceReference ' + "' att.name.trim() '";\n'
+	    }
+	    else {
+	    	'  public static final ' att.type 'PROP_' att.toUpperFormat() ' = ' ontologyNamespaceReference ' + "' att.name.trim() '";\n'
+	    	}
+		
+	}
+    '\n'
+  
+  }
+  /**
+   * Generate the class declaration.   
+   */
+  uml.Class::genClassDeclaration() {
+    'public ' if (self.isAbstract) {'abstract '} 'class ' self.name
+    if (self.superClass.isEmpty()) {
+      stdout.println("Warning: Class " + self.name + " has no super class")
+    }
+    else {  
+      ' extends '
+      self.superClass.first().name 
+      if (self.superClass.size() > 1) {
+        stdout.println("WARNING: Class " + self.name + " is defined to have multiple superclasses. Use interfaces instead - additional superclasses are igonered!")
+      }        
+    }
+    if (!self.interfaceRealization.isEmpty()) {
+      ' implements '
+      var firstInter:Boolean 
+      firstInter = true
+      self.interfaceRealization->forEach(inter:uml.InterfaceRealization) {
+        '' inter.supplier.first().name ' '
+        if (!firstInter) {','}          
+        firstInter = false
+      }
+    }
+  }
+
+
+ /**
+  * Generate the interface decklaration
+  */
+  uml.Interface::genInterfaceDeclaration() {
+    'public interface ' self.name
+    if (!self.generalization.isEmpty()) {
+      ' extends '
+      var firstInter:Boolean 
+      firstInter = true
+
+      self.generalization->forEach(gen : uml.Generalization) {
+        if (!firstInter) {','}          
+        '' gen.general.name ' '
+        firstInter = false
+      }
+    }
+  }
+  
+  /**
+   * This function will generate the property declarations for the class in question. The properties are taken from the 
+   * propertyHashtable.
+   */
+   uml.Classifier::genPropertyDeclaration() {
+  	//insert default identifier for each owlClass
+  	'  public static final String MY_URI;\n'
+  	
+  	//check if the classifier is a child of Service
+  	var isService:boolean = false
+  	self.general->forEach(c : uml.Class) {
+  		if (c.name.equals("Service")) {
+  			isService=true
+  		}
+  	}
+  	
+  	if (isService) {
+    //print required property declaration
+    '  public static Hashtable restrictions = new Hashtable();\n' 
+  	}
+  	
+  	//get the properties from the class in question from the propertyHashtable.
+  	var myProps:Hashtable = propertyHashtable.get(self.name)
+  	if (!myProps==null) {
+  	  	//define the properties from attribute definitions in uml
+  		myProps->forEach(att : uml.Property ) {
+  		    //iterate through each property and declare them as static
+	    	if (att.type == null) {
+	        	stdout.println("WARNING: No type defined for " + att.name  + ". Using string as default")
+	    	}
+        	'  public static final String PROP_' att.toUpperFormat() ';\n'
+        	
+  		}
+  		
+  		//define the properties from associations in uml
+  		myProps->forEach(ass : uml.Association) {
+  			//iterate through each property and declare them as static
+	        '  public static final String PROP_' ass.toUpperFormat() ';\n'
+  		}
+  	}
+  
+  	
+  }
+ 
+  
+  uml.Class::genConstructors() {
+    '
+  public ' self.name ' () {
+    super();
+  }
+  
+  public ' self.name ' (String uri) {
+    super(uri);
+  }\n'
+  }    
+  
+  
+  
+  uml.Class::genGetClassRestrictionsOnProperty() {
+'
+  public static Restriction getClassRestrictionsOnProperty(String propURI) {
+
+'    
+    unprotect {
+
+'    //Add any maunual modifications within this block
+'    
+    }
+
+'
+    if (propURI == null) {
+	  return null;
+    }
+'
+	//using the class's hashtable
+	Hashtable props = propertyHashtable.get(self.name)
+	
+	//go through the attributes first
+	props->forEach(prop : uml.Property) {
+	  '    else if (PROP_' prop.toUpperFormat() '.equals(propURI)) {\n'
+	  //handle 0..* cardinality
+	  if (prop.upper<0 && prop.lower==0) {
+	  '      return Restriction.getAllValuesRestriction(propURI, \n'
+	  '        ' self.getURIExpressionForType(prop.type.name.trim()) ');\n'
+	  '    }\n'
+	  }
+	  else {
+	  '      return Restriction.getAllValuesRestrictionWithCardinality(propURI, \n'	  
+      '        'self.getURIExpressionForType(prop.type.name.trim())', ' prop.upper ', ' prop.lower ');\n'
+      '    }\n'
+	  }
+	  	
+	}	
+	//association properties next. 
+	props->forEach (ass : uml.Association) 
+	{
+	  '    else if (PROP_' ass.memberEnd.last().toUpperFormat() '.equals(propURI)) {\n'
+	  //handle 0..* cardinality
+	  if (ass.memberEnd.last().upper<0 && ass.memberEnd.last().lower==0) {
+	  '   	 return Restriction.getAllValuesRestriction(propURI, \n'
+	  '        ' self.getURIExpressionForType(ass.memberEnd.last().type.name.trim()) ');\n'
+	  '    }\n'
+	  }
+	  else {
+	  '      return Restriction.getAllValuesRestrictionWithCardinality(propURI, \n'	  
+      '        'self.getURIExpressionForType(ass.endType.last().name.trim())', ' ass.memberEnd.last().upper ', ' ass.memberEnd.last().lower ');\n'
+      '    }\n'
+	  }
+	  
+	}	
+
+     
+    if (self.superClass.isEmpty()) {
+      '    return null;\n'
+    }
+    else {
+      '    return ' self.superClass.first().name '.getClassRestrictionsOnProperty(propURI);\n'	  	  
+    }
+    
+'  }\n\n'
+  }  
+  
+  uml.Class::getURIExpressionForType(typeName : String):String {
+    if (typeName == null) {
+      typeName = "String"
+    }
+    if ((typeName == "Boolean") || (typeName == "Integer") || (typeName == "String")) {
+      return "TypeMapper.getDatatypeURI(" + typeName + ".class)"
+    }
+    else if (typeName == "UnlimitedNatural") {
+      return "TypeMapper.getDatatypeURI(Long.class)"    
+    }
+    return typeName+".MY_URI"    
+  }
+
+  
+  /**
+   * Generation the property URI. 
+   * NOTE: THIS FUNCTION MAY BE SIMPLIFIED USING THE HASHTABLE
+   */
+ 
+ //TODO SIMPLIFY
+   uml.Class::genGetStandardPropertyURIs() {
+ 	//get the properties from propertyHash
+ 	var props:Hashtable = propertyHashtable.get(self.name)
+  	var numberOfProperties:Integer = props.size() //should include both association and property elements
+ 	
+ 	// First, find the number of properties URIs to add
+ 	//var numberOfProperties:Integer = self.getAssociations().size()
+	//var props:List = self.ownedMember->select(prop : uml.Property)
+ 	//numberOfProperties = numberOfProperties + props.size()
+ 	
+ 	if (numberOfProperties == 0) {
+ 	  // Do not generate method if there are no properties to add
+ 	  return
+ 	}
+ 	
+	// Generate method
+    '\n  public static String[] getStandardPropertyURIs() {\n'
+    if (self.superClass.isEmpty()) {
+      '    // First, create an array large enough to hold all my properties \n'
+	  '    String[] toReturn = new String['numberOfProperties'];\n\n'
+      '    // Next, copy each of my property URIs into the array \n'
+	  '    int index = 0;\n'
+    }
+    else {
+      '    // First, retrieve inherited properties and copy into an array large enough to hold inherited + own \n'
+      '    String[] inherited = 'self.superClass.first().name'.getStandardPropertyURIs();\n'
+	  '    String[] toReturn = new String[inherited.length + 'numberOfProperties'];\n'
+	  '    System.arraycopy(inherited, 0, toReturn, 0, inherited.length);\n\n'
+      '    // Next, copy each of my own property URIs into the array \n'
+	  '    int index = inherited.length;\n'
+    }
+	props->forEach(prop : uml.Property) {
+	  '    toReturn[index++] = PROP_' prop.toUpperFormat() ';\n'
+	}	
+
+    '    return toReturn;\n'
+    '  }\n'    
+   }
+
+  uml.Class::genPropertiesForAssociations() {
+      //generate 
+      self.getAssociations()->forEach(ass : uml.Association | ass.endType.first().name.trim().equals(self.name.trim())) {
+      '  public static final String PROP_'  ass.memberEnd.last().toUpperFormat() ';\n'
+      }
+		
+	}
+
+
+   uml.Class::genGetPropSerializationType() {
+   }
+
+   uml.Class::genIsWellFormed() {
+'
+  public boolean isWellFormed() {
+	return true '
+	
+	//get the hashtable
+	Hashtable props = propertyHashtable.get(self.name)
+	
+	//attributes first
+	props->forEach(att : uml.Property) {
+  	    '\n      && props.containsKey(PROP_'att.toUpperFormat()')'
+  	}
+  	
+  	//associations next
+ 	props->forEach (ass : uml.Association) // | ass.endType.first().name.trim().equals(self.name.trim()) ) 
+ 	{
+  	    '\n      && props.containsKey(PROP_'ass.memberEnd.last().toUpperFormat()') '
+ 	}  
+    ';
+  }\n'
+       
+   }  
+
+	/**
+     * For each direct child under Service, the getClassLevelRestrictions operation should be generated
+     */
+	uml.Class::genGetClassLevelRestrictions() {
+	  var isService:boolean = false
+	  //check if one of the generalization (multiple inheritance supported on a model-level) is a Service
+	  self.general->forEach(c : uml.Class){
+	    //this is a rather vulnerable check. 
+	    //TODO:Should include full namespace check
+	    if (c.name.equals("Service")) {
+	    	isService = true
+	    }
+	  
+	  if (isService) {
+'
+  protected Hashtable getClassLevelRestrictions() {
+	  return restrictions;
+  }
+'	
+	  }
+	}
+  }
+
+
+/**
+ * Create operation for RDFSComment
+ */
+   uml.Class::genGetRDFSComment() {
+'
+  public static String getRDFSComment() {
+'
+    if (self.ownedComment.isEmpty()) {
+      self.genGetRDFSCommentDefault()
+    }
+    else {
+     '    return "' self.ownedComment.first().body.trim() '";\n'
+    } 
+      
+'  }'
+
+   }
+  
+/**
+ *
+ */
+   uml.Class::genGetRDFSCommentDefault() {
+	 unprotect{
+'
+    //TODO: enter a description of the class here\'
+	return "Description of class 'self.name'";
+'     		
+ 	}
+   }
+  
+/**
+ *
+ */ 
+   uml.Class::genGetRDFSLabel() {
+ '
+  public static String getRDFSLabel() {
+    return "'self.name.trim()'";
+  }
+'    
+   
+   }
+
+
+/**
+ * Methods for generating getters and setters for properties.
+ * NOTE: CAN BE SIMPLIFIED USING HASHTABLE
+ */
+   uml.Class::genPropertyGettersAndSetters() {
+    //TODO: SIMPLIFY
+   	//iterate through each property and generate getter and setter methods 
+  	self.ownedMember->forEach(att : uml.Property) {
+		var theTypeName:String = "String"	
+		var methodName:String = att.name.trim().firstToUpper()
+		var propLongName:String = "PROP_" + att.toUpperFormat()
+		
+		if (att.type != null) {
+		  theTypeName = att.type.name
+		}
+
+		if (theTypeName == "Boolean") {
+		  self.genBooleanGetterAndSetter(methodName, propLongName)
+    	}  		  
+		else if (theTypeName == "UnlimitedNatural") {
+		  self.genLongGetterAndSetter(methodName, propLongName)
+		}
+   	    else if (theTypeName == "Integer") {
+		  self.genIntGetterAndSetter(methodName, propLongName)
+		}		
+		else {
+		  self.genObjectGetterAndSetter(methodName, propLongName, theTypeName)
+		}	
+	}
+ 
+ 	self.getAssociations()->forEach (ass : uml.Association | ass.endType.first().name.trim().equals(self.name.trim()) ) {
+      var methodName:String = ass.memberEnd.last().name.trim().firstToUpper()
+      var propLongName:String = "PROP_" + ass.toUpperFormat()
+      var theTypeName:String = ass.endType.last().name
+	  self.genObjectGetterAndSetter(methodName, propLongName, theTypeName)       	  
+	}
+     
+   }
+
+/**
+ *
+ */
+   uml.Class::genBooleanGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public boolean is' methodName '() {
+	Boolean b = (Boolean) props.get('propertyLongName');
+	return (b == null) ? false : b.booleanValue();
+  }		
+
+  public void set'methodName'(boolean newPropValue) {
+      props.put('propertyLongName', new Boolean(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */   
+   uml.Class::genIntGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public int get' methodName '() {
+	Integer i = (Integer) props.get('propertyLongName');
+	return (i == null) ? 0 : i.intValue();
+  }		
+
+  public void set'methodName'(int newPropValue) {
+      props.put('propertyLongName', new Integer(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */
+   uml.Class::genLongGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public long get' methodName '() {
+	Long l = (Long) props.get('propertyLongName');
+	return (l == null) ? 0 : l.longValue();
+  }		
+
+  public void set'methodName'(long newPropValue) {
+      props.put('propertyLongName', new Long(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */
+   uml.Class::genObjectGetterAndSetter(methodName:String, propertyLongName:String, typeName:String) {
+'
+  public 'typeName ' get' methodName '() {
+    return ('typeName')props.get('propertyLongName');
+  }		
+
+  public void set'methodName'('typeName' newPropValue) {
+    if (newPropValue != null)
+      props.put('propertyLongName', newPropValue);
+  }		
+'		
+   }
+   
+ uml.Package::generatePOMFile() {
+     file( self.name.replace("\\.", "/") + '/' + "pom.xml" )
+     
+     //set the projectInfo hashtable
+     projectInfo.put("name", self.name)
+     projectInfo.put("artefactId", self.name)
+     projectInfo.put("groupId", self.owner.getValue("owlOntology", "defaultNamespace"))
+     projectInfo.put("versionInfo",  self.owner.getValue("owlOntology", "versionInfo"))
+     
+     self.genPOMFileHeader()
+     
+  
+   }
+ 
+ /**
+  * This rule will populate the import model hashtable based on the external models imported in the model structure
+  * It iterates over the packageimport elements and extracts the model-name (artefactID) and the model's owlOntology defaultnamespace and version
+  */  
+ uml.Model::getImportList() {
+   //get the imported packages
+  self.packageImport->forEach(c : uml.PackageImport) {
+   	stdout.println("Found imported elements: " + c.importedPackage.name + " - " + c.importedPackage.getAppliedStereotypes())
+   	if (c.importedPackage.hasStereotype("owlOntology")) {
+   		stdout.println("Found owlOntology import. Adding import to list")
+   		
+   		//get the import name, default namespace and version to local hashtable
+   		var modelImport:Hashtable
+   		modelImport.put("name", c.importedPackage.name)
+   		modelImport.put("defaultNamespace", c.importedPackage.getValue("owlOntology", "defaultNamespace"))
+   		modelImport.put("versionInfo", c.importedPackage.getValue("owlOntology", "versionInfo"))
+   		
+   		//add hashtable to global list
+   		importedModels.put(c.importedPackage.name, modelImport)
+   		}
+   	   
+   	}
+ 	
+ }
+
+/**
+ * Prints the POM file header, adding the project groupid, artefactid, version, name and description.
+ */
+ uml.Package::genPOMFileHeader() {
+'<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+  	<groupId>' projectInfo.get("groupId") '</groupId>
+  	<artifactId>' projectInfo.get("artefactId") '</artifactId>
+  	<version>' projectInfo.get("versionInfo") '</version>
+  	<name>' projectInfo.get("name") '</name>
+ 	 <description/>
+  	<packaging>bundle</packaging>
+    	<dependencies>'
+    	//output dependencies for imported models
+    
+    	importedModels->forEach(i) {
+    	  stdout.println("object has type: " + i)
+ '	
+ 			<dependency>
+    			<groupId>'i.get("name")'</groupId>
+    			<artifactId>'i.get("defaultNamespace")'</artifactId>
+    			<version>'i.get("versionInfo")'</version>
+    		</dependency>'    	
+    	}			
+'			
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>1.0.1</version>
+			</dependency>
+			<!--
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.data.representation</artifactId>
+				<version>0.3.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.context</artifactId>
+				<version>0.3.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.io</artifactId>
+				<version>0.3.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.service</artifactId>
+				<version>0.3.0-SNAPSHOT</version>
+			</dependency>
+			-->
+		</dependencies>
+  	  <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-Activator>src.Activator</Bundle-Activator>
+							<Bundle-Description>${project.description}</Bundle-Description>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						</instructions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
+		<repositories>
+			<repository>
+				<id>central</id>
+				<name>Central Maven Repository</name>
+				<url>http://repo1.maven.org/maven2</url>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>apache-snapshots</id>
+				<name>Apache Snapshots</name>
+				<url>http://people.apache.org/repo/m2-snapshot-repository</url>
+				<releases>
+					<enabled>false</enabled>
+				</releases>
+				<snapshots>
+					<updatePolicy>daily</updatePolicy>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>uaal</id>
+				<name>universAAL Repositories</name>
+				<url>http://depot.universaal.org/maven-repo/releases/</url>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>uaal-snapshots</id>
+				<name>universAAL Snapshot Repositories</name>
+				<url>http://depot.universaal.org/maven-repo/snapshots/</url>
+				<releases>
+					<enabled>false</enabled>
+				</releases>
+			</repository>
+		</repositories>
+</project>
+'
+}
+
+/**
+ *
+ */   
+  uml.NamedElement::printHashtable() {
+  //this will just print the complete hashtable to console
+  stdout.println("PropertyHashtable has " + propertyHashtable.size() + " elements")
+  stdout.println("Keys: " + propertyHashtable.keys())
+  propertyHashtable.keys()->forEach(c) {
+  	stdout.println("Classifier:" + propertyHashtable.get(c))
+  	}
+  }
+   	
+ }
+
+
+}
+

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_gK1MYX8BEd-caYhVY1wSWQ" name="universAAL AAL Profile" metaclassReference="_khcnUH8BEd-caYhVY1wSWQ">
+  <eAnnotations xmi:id="_tY_20H8BEd-caYhVY1wSWQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_v_B4kIIFEeC8idfvEdI1KQ" name="universAALAALProfile" nsURI="http:///schemas/universAALAALProfile/_v-_cUIIFEeC8idfvEdI1KQ/10" nsPrefix="universAALAALProfile">
+      <eAnnotations xmi:id="_v_Fi8IIFEeC8idfvEdI1KQ" source="PapyrusVersion">
+        <details xmi:id="_v_Fi8YIFEeC8idfvEdI1KQ" key="Version" value="0.0.11"/>
+        <details xmi:id="_v_Fi8oIFEeC8idfvEdI1KQ" key="Comment" value=""/>
+        <details xmi:id="_v_Fi84IFEeC8idfvEdI1KQ" key="Copyright" value="Ståle Walderhaug, SINTEF"/>
+        <details xmi:id="_v_Fi9IIFEeC8idfvEdI1KQ" key="Date" value="2011-05-19"/>
+        <details xmi:id="_v_Fi9YIFEeC8idfvEdI1KQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_v_B4kYIFEeC8idfvEdI1KQ" name="uaal_Service">
+        <eAnnotations xmi:id="_v_B4koIFEeC8idfvEdI1KQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_v_CfoIIFEeC8idfvEdI1KQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_v_CfooIFEeC8idfvEdI1KQ" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_v_CfpIIFEeC8idfvEdI1KQ" name="targetRuntime" ordered="false" lowerBound="1" eType="_v_CfpoIFEeC8idfvEdI1KQ" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_v_CfpoIFEeC8idfvEdI1KQ" name="RuntimeEnvironments">
+        <eAnnotations xmi:id="_v_Cfp4IFEeC8idfvEdI1KQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_v_CfqIIFEeC8idfvEdI1KQ" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_v_CfqYIFEeC8idfvEdI1KQ" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_v_CfqoIFEeC8idfvEdI1KQ" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_63ZbgNgrEd-TMeKnU-0MlA" name="profile" nsURI="http:///schemas/profile/_63Y0cNgrEd-TMeKnU-0MlA/9" nsPrefix="profile">
+      <eAnnotations xmi:id="_63bQsNgrEd-TMeKnU-0MlA" source="PapyrusVersion">
+        <details xmi:id="_63bQsdgrEd-TMeKnU-0MlA" key="Version" value="0.0.10"/>
+        <details xmi:id="_63bQstgrEd-TMeKnU-0MlA" key="Comment" value=""/>
+        <details xmi:id="_63bQs9grEd-TMeKnU-0MlA" key="Copyright" value=""/>
+        <details xmi:id="_63bQtNgrEd-TMeKnU-0MlA" key="Date" value="2010-10-15"/>
+        <details xmi:id="_63bQtdgrEd-TMeKnU-0MlA" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_63ZbgdgrEd-TMeKnU-0MlA" name="uaal_Service">
+        <eAnnotations xmi:id="_63ZbgtgrEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_63Zbg9grEd-TMeKnU-0MlA" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_63ZbhdgrEd-TMeKnU-0MlA" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_63Zbh9grEd-TMeKnU-0MlA" name="targetRuntime" ordered="false" lowerBound="1" eType="_63ZbidgrEd-TMeKnU-0MlA" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_63ZbidgrEd-TMeKnU-0MlA" name="RuntimeEnvironments">
+        <eAnnotations xmi:id="_63ZbitgrEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_63Zbi9grEd-TMeKnU-0MlA" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_63ZbjNgrEd-TMeKnU-0MlA" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_63ZbjdgrEd-TMeKnU-0MlA" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_kKQeMNfIEd-TMeKnU-0MlA" name="profile" nsURI="http:///schemas/profile/_kKP3INfIEd-TMeKnU-0MlA/8" nsPrefix="profile">
+      <eAnnotations xmi:id="_kKRsUNfIEd-TMeKnU-0MlA" source="PapyrusVersion">
+        <details xmi:id="_kKRsUdfIEd-TMeKnU-0MlA" key="Version" value="0.0.9"/>
+        <details xmi:id="_kKRsUtfIEd-TMeKnU-0MlA" key="Comment" value=""/>
+        <details xmi:id="_kKRsU9fIEd-TMeKnU-0MlA" key="Copyright" value=""/>
+        <details xmi:id="_kKRsVNfIEd-TMeKnU-0MlA" key="Date" value="2010-10-14"/>
+        <details xmi:id="_kKRsVdfIEd-TMeKnU-0MlA" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_kKQeMdfIEd-TMeKnU-0MlA" name="uaal_Service">
+        <eAnnotations xmi:id="_kKQeMtfIEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kKQeM9fIEd-TMeKnU-0MlA" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_kKQeNdfIEd-TMeKnU-0MlA" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_kKQeN9fIEd-TMeKnU-0MlA" name="targetRuntime" ordered="false" lowerBound="1" eType="_kKQeOdfIEd-TMeKnU-0MlA" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_kKQeOdfIEd-TMeKnU-0MlA" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_kKQeOtfIEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_kKQeO9fIEd-TMeKnU-0MlA" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_kKQePNfIEd-TMeKnU-0MlA" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_kKQePdfIEd-TMeKnU-0MlA" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_3babQNfHEd-TMeKnU-0MlA" name="profile" nsURI="http:///schemas/profile/_3bZ0MNfHEd-TMeKnU-0MlA/7" nsPrefix="profile">
+      <eAnnotations xmi:id="_3bmBcNfHEd-TMeKnU-0MlA" source="PapyrusVersion">
+        <details xmi:id="_3bmBcdfHEd-TMeKnU-0MlA" key="Version" value="0.0.8"/>
+        <details xmi:id="_3bmBctfHEd-TMeKnU-0MlA" key="Comment" value=""/>
+        <details xmi:id="_3bmBc9fHEd-TMeKnU-0MlA" key="Copyright" value=""/>
+        <details xmi:id="_3bmBdNfHEd-TMeKnU-0MlA" key="Date" value="2010-10-14"/>
+        <details xmi:id="_3bmBddfHEd-TMeKnU-0MlA" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_3babQdfHEd-TMeKnU-0MlA" name="uaal_Service">
+        <eAnnotations xmi:id="_3babQtfHEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_3babQ9fHEd-TMeKnU-0MlA" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_3babRdfHEd-TMeKnU-0MlA" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_3babR9fHEd-TMeKnU-0MlA" name="targetRuntime" ordered="false" lowerBound="1" eType="_3babSdfHEd-TMeKnU-0MlA" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_3babSdfHEd-TMeKnU-0MlA" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_3babStfHEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_3babS9fHEd-TMeKnU-0MlA" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_3babTNfHEd-TMeKnU-0MlA" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_3babTdfHEd-TMeKnU-0MlA" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_Es6_gNfGEd-TMeKnU-0MlA" name="profile" nsURI="http:///schemas/profile/_Es5KUNfGEd-TMeKnU-0MlA/6" nsPrefix="profile">
+      <eAnnotations xmi:id="_Es-C0NfGEd-TMeKnU-0MlA" source="PapyrusVersion">
+        <details xmi:id="_Es-C0dfGEd-TMeKnU-0MlA" key="Version" value="0.0.7"/>
+        <details xmi:id="_Es-C0tfGEd-TMeKnU-0MlA" key="Comment" value=""/>
+        <details xmi:id="_Es-C09fGEd-TMeKnU-0MlA" key="Copyright" value=""/>
+        <details xmi:id="_Es-C1NfGEd-TMeKnU-0MlA" key="Date" value="2010-10-14"/>
+        <details xmi:id="_Es-C1dfGEd-TMeKnU-0MlA" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Es6_gdfGEd-TMeKnU-0MlA" name="uaal_Service">
+        <eAnnotations xmi:id="_Es6_gtfGEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Es6_g9fGEd-TMeKnU-0MlA" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Es6_hdfGEd-TMeKnU-0MlA" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Es7mkdfGEd-TMeKnU-0MlA" name="targetRuntime" ordered="false" lowerBound="1" eType="_Es7mk9fGEd-TMeKnU-0MlA" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_Es7mk9fGEd-TMeKnU-0MlA" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_Es7mlNfGEd-TMeKnU-0MlA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_Es7mldfGEd-TMeKnU-0MlA" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_Es7mltfGEd-TMeKnU-0MlA" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_Es7ml9fGEd-TMeKnU-0MlA" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_YRJCgNfFEd-nucDOyewRgQ" name="profile" nsURI="http:///schemas/profile/_YRIbcNfFEd-nucDOyewRgQ/5" nsPrefix="profile">
+      <eAnnotations xmi:id="_YRKQoNfFEd-nucDOyewRgQ" source="PapyrusVersion">
+        <details xmi:id="_YRKQodfFEd-nucDOyewRgQ" key="Version" value="0.0.6"/>
+        <details xmi:id="_YRKQotfFEd-nucDOyewRgQ" key="Comment" value=""/>
+        <details xmi:id="_YRKQo9fFEd-nucDOyewRgQ" key="Copyright" value=""/>
+        <details xmi:id="_YRKQpNfFEd-nucDOyewRgQ" key="Date" value="2010-10-14"/>
+        <details xmi:id="_YRKQpdfFEd-nucDOyewRgQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_YRJCgdfFEd-nucDOyewRgQ" name="uaal_Service">
+        <eAnnotations xmi:id="_YRJCgtfFEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_YRJCg9fFEd-nucDOyewRgQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_YRJChdfFEd-nucDOyewRgQ" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_YRJCh9fFEd-nucDOyewRgQ" name="targetRuntime" ordered="false" lowerBound="1" eType="_YRJCidfFEd-nucDOyewRgQ" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_YRJCidfFEd-nucDOyewRgQ" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_YRJCitfFEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_YRJCi9fFEd-nucDOyewRgQ" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_YRJCjNfFEd-nucDOyewRgQ" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_YRJCjdfFEd-nucDOyewRgQ" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_P_c5IdfFEd-nucDOyewRgQ" name="profile" nsURI="http:///schemas/profile/_P_c5INfFEd-nucDOyewRgQ/4" nsPrefix="profile">
+      <eAnnotations xmi:id="_P_eHQdfFEd-nucDOyewRgQ" source="PapyrusVersion">
+        <details xmi:id="_P_eHQtfFEd-nucDOyewRgQ" key="Version" value="0.0.5"/>
+        <details xmi:id="_P_eHQ9fFEd-nucDOyewRgQ" key="Comment" value=""/>
+        <details xmi:id="_P_eHRNfFEd-nucDOyewRgQ" key="Copyright" value=""/>
+        <details xmi:id="_P_eHRdfFEd-nucDOyewRgQ" key="Date" value="2010-10-14"/>
+        <details xmi:id="_P_eHRtfFEd-nucDOyewRgQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_P_c5ItfFEd-nucDOyewRgQ" name="uaal_Service">
+        <eAnnotations xmi:id="_P_c5I9fFEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_P_c5JNfFEd-nucDOyewRgQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_P_c5JtfFEd-nucDOyewRgQ" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_P_c5KNfFEd-nucDOyewRgQ" name="targetRuntime" ordered="false" lowerBound="1" eType="_P_c5KtfFEd-nucDOyewRgQ" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_P_c5KtfFEd-nucDOyewRgQ" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_P_c5K9fFEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_P_c5LNfFEd-nucDOyewRgQ" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_P_c5LdfFEd-nucDOyewRgQ" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_P_c5LtfFEd-nucDOyewRgQ" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_iRzEkNfEEd-nucDOyewRgQ" name="profile" nsURI="http:///schemas/profile/_iRxPYNfEEd-nucDOyewRgQ/3" nsPrefix="profile">
+      <eAnnotations xmi:id="_iR1g0NfEEd-nucDOyewRgQ" source="PapyrusVersion">
+        <details xmi:id="_iR1g0dfEEd-nucDOyewRgQ" key="Version" value="0.0.4"/>
+        <details xmi:id="_iR1g0tfEEd-nucDOyewRgQ" key="Comment" value="Added enumeration"/>
+        <details xmi:id="_iR1g09fEEd-nucDOyewRgQ" key="Copyright" value=""/>
+        <details xmi:id="_iR1g1NfEEd-nucDOyewRgQ" key="Date" value="2010-10-14"/>
+        <details xmi:id="_iR1g1dfEEd-nucDOyewRgQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_iRzEkdfEEd-nucDOyewRgQ" name="uaal_Service">
+        <eAnnotations xmi:id="_iRzEktfEEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_iRzEk9fEEd-nucDOyewRgQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_iRzEldfEEd-nucDOyewRgQ" name="location" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_iRzEl9fEEd-nucDOyewRgQ" name="targetRuntime" ordered="false" lowerBound="1" eType="_iRzEmdfEEd-nucDOyewRgQ" defaultValueLiteral="1"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_iRzEmdfEEd-nucDOyewRgQ" name="RuntimerEnvironments">
+        <eAnnotations xmi:id="_iRzEmtfEEd-nucDOyewRgQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_ApTrANfEEd-nucDOyewRgQ"/>
+        <eLiterals xmi:id="_iRzEm9fEEd-nucDOyewRgQ" name="OSGI_Mobile"/>
+        <eLiterals xmi:id="_iRzEnNfEEd-nucDOyewRgQ" name="OSGI_Embedded" value="1"/>
+        <eLiterals xmi:id="_iRzEndfEEd-nucDOyewRgQ" name="OSGI_Full" value="2"/>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_FAOicdbIEd-9jOJZUDPiqQ" name="profile" nsURI="http:///schemas/profile/_FAOicNbIEd-9jOJZUDPiqQ/2" nsPrefix="profile">
+      <eAnnotations xmi:id="_FAPJgdbIEd-9jOJZUDPiqQ" source="PapyrusVersion">
+        <details xmi:id="_FAPJgtbIEd-9jOJZUDPiqQ" key="Version" value="0.0.3"/>
+        <details xmi:id="_FAPJg9bIEd-9jOJZUDPiqQ" key="Comment" value=""/>
+        <details xmi:id="_FAPJhNbIEd-9jOJZUDPiqQ" key="Copyright" value=""/>
+        <details xmi:id="_FAPJhdbIEd-9jOJZUDPiqQ" key="Date" value="2010-10-13"/>
+        <details xmi:id="_FAPJhtbIEd-9jOJZUDPiqQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_FAOictbIEd-9jOJZUDPiqQ" name="uaal_Service">
+        <eAnnotations xmi:id="_FAOic9bIEd-9jOJZUDPiqQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_FAOidNbIEd-9jOJZUDPiqQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_hjSFgNbDEd-9jOJZUDPiqQ" name="profile" nsURI="http:///schemas/profile/_hjQ3YNbDEd-9jOJZUDPiqQ/1" nsPrefix="profile">
+      <eAnnotations xmi:id="_hjT6sdbDEd-9jOJZUDPiqQ" source="PapyrusVersion">
+        <details xmi:id="_hjT6stbDEd-9jOJZUDPiqQ" key="Version" value="0.0.2"/>
+        <details xmi:id="_hjT6s9bDEd-9jOJZUDPiqQ" key="Comment" value=""/>
+        <details xmi:id="_hjT6tNbDEd-9jOJZUDPiqQ" key="Copyright" value=""/>
+        <details xmi:id="_hjT6tdbDEd-9jOJZUDPiqQ" key="Date" value="2010-10-13"/>
+        <details xmi:id="_hjT6ttbDEd-9jOJZUDPiqQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_hjSFgdbDEd-9jOJZUDPiqQ" name="uaal_Service">
+        <eAnnotations xmi:id="_hjSFgtbDEd-9jOJZUDPiqQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_hjSFg9bDEd-9jOJZUDPiqQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_tY_20X8BEd-caYhVY1wSWQ" name="profile" nsURI="http:///schemas/profile/_tY-BoH8BEd-caYhVY1wSWQ/0" nsPrefix="profile">
+      <eAnnotations xmi:id="_tZBsAX8BEd-caYhVY1wSWQ" source="PapyrusVersion">
+        <details xmi:id="_tZBsAn8BEd-caYhVY1wSWQ" key="Version" value="0.0.1"/>
+        <details xmi:id="_tZBsA38BEd-caYhVY1wSWQ" key="Comment" value="Simple uaal_Service stereotype"/>
+        <details xmi:id="_tZBsBH8BEd-caYhVY1wSWQ" key="Copyright" value=""/>
+        <details xmi:id="_tZBsBX8BEd-caYhVY1wSWQ" key="Date" value="2010-06-23"/>
+        <details xmi:id="_tZBsBn8BEd-caYhVY1wSWQ" key="Author" value="stalew"/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_tY_20n8BEd-caYhVY1wSWQ" name="uaal_Service">
+        <eAnnotations xmi:id="_tY_2038BEd-caYhVY1wSWQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_lKGiwH8BEd-caYhVY1wSWQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_tY_21H8BEd-caYhVY1wSWQ" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:id="_khcnUH8BEd-caYhVY1wSWQ" alias="Class">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_lKGiwH8BEd-caYhVY1wSWQ" name="uaal_Service">
+    <ownedAttribute xmi:id="_pRi5QH8BEd-caYhVY1wSWQ" name="base_Class" association="_pRjgUH8BEd-caYhVY1wSWQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_zCX7QNfDEd-nucDOyewRgQ" name="location">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_6hh0cNfDEd-nucDOyewRgQ" name="targetRuntime" type="_ApTrANfEEd-nucDOyewRgQ">
+      <defaultValue xmi:type="uml:LiteralInteger" xmi:id="StateMachine-region-_lowerValue" value="1"/>
+    </ownedAttribute>
+    <icon xmi:id="EPackage-_icon.0" location="../icons/full/ovr16/EPackage.gif"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_pRjgUH8BEd-caYhVY1wSWQ" name="Extension_uaal_Service" memberEnd="_pRjgUX8BEd-caYhVY1wSWQ _pRi5QH8BEd-caYhVY1wSWQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_pRjgUX8BEd-caYhVY1wSWQ" name="extension_uaal_Service" type="_lKGiwH8BEd-caYhVY1wSWQ" aggregation="composite" association="_pRjgUH8BEd-caYhVY1wSWQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_ApTrANfEEd-nucDOyewRgQ" name="RuntimeEnvironments">
+    <ownedLiteral xmi:id="_GWiTkNfEEd-nucDOyewRgQ" name="OSGI_Mobile">
+      <classifier xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_K21O8NfEEd-nucDOyewRgQ" name="OSGI_Embedded">
+      <classifier xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_UkzJENfEEd-nucDOyewRgQ" name="OSGI_Full"/>
+  </packagedElement>
+</uml:Profile>

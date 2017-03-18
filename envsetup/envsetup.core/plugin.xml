@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<!--   <extension
+         point="org.eclipse.m2e.core.projectConfigurators">
+      <configurator
+            class="org.universaal.tools.envsetup.core.Importer"
+            id="org.universaal.tools.envsetup.core.Importer">
+      </configurator>
+   </extension>-->
+   
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.universaal.tools.envsetup.core.Startup">
+      </startup>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.universaal.tools.envsetup.openenvsetup"
+            name="Environment Setup">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.universaal.tools.envsetup.handlers.EnvSetupHandler"
+            commandId="org.universaal.tools.envsetup.openenvsetup">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.universaal.tools.AALStudio.menu?endof=view">
+         <command
+               commandId="org.universaal.tools.envsetup.openenvsetup"
+               id="org.universaal.tools.envsetup.menu.openenvsetup"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+</plugin>

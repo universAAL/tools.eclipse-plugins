@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UniversAALModel" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <xs:element name="Model">
+    <xs:complexType>
+          <xs:sequence>
+<xs:element name="Comment" type="xs:string"/>
+        <xs:element name="AbstractClasses">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+  <xs:attribute use="required" name="Name" type="xs:string" />
+   <xs:attribute use="required" name="Package" type="xs:string" />
+   <xs:attribute use="required" name="versionInfo" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

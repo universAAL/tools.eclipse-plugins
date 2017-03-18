@@ -1,0 +1,1 @@
+Classes of 1.2.0 are the same as 1.1.0, so they are taken from there: See getMainFolder() method of MWVersion120.java

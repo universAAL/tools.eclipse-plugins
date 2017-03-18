@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension point="org.eclipse.uml2.uml.dynamic_package">
+    <profile
+       	uri="http:///schemas/RDF/_0R6hACqWEd6tAp0dWJ5sSg/0" 
+    	location="pathmap://TwoUse_Profiles/RDF.profile.uml#_0"/>
+  </extension>
+
+  <extension
+     point="org.eclipse.uml2.uml.dynamic_package">
+    <profile 
+    	uri="http:///schemas/OWL/_V6llIH23Ed6vG7X4YNOLYQ/4" 
+    	location="pathmap://TwoUse_Profiles/OWL.profile.uml#_4"/>
+  </extension>
+  
+  <extension
+     point="org.eclipse.uml2.uml.dynamic_package">
+    <profile 
+    	uri="http:///schemas/SWRLprofile/_fKvyMKeWEd6XOZ-lFJtlZg/5" 
+    	location="pathmap://TwoUse_Profiles/SWRL.profile.uml#_5"/>
+  </extension>
+  
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.universaal.tools.owl2uml.commands.sampleCommand"
+            name="OWL2UML Transformation Tool">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.universaal.tools.owl2uml.commands.sampleCommand"
+            class="org.universaal.tools.owl2uml.handlers.SampleHandler">
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <command
+               commandId="org.universaal.tools.owl2uml.commands.sampleCommand"
+               icon="icons/transform-16.png"
+               label="Transform2UML"
+               style="push">
+               <visibleWhen>
+      <with variable="activeMenuSelection">
+         <iterate ifEmpty="false">
+            <adapt type="org.eclipse.core.resources.IFile">
+               <test property="org.eclipse.core.resources.name" value="*.owl" />
+            </adapt>
+         </iterate>
+      </with>
+   </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Sample Action Set"
+            visible="true"
+            id="org.universaal.tools.owl2uml.actionSet">
+         <action
+               label="&amp;Tranform an OWL RDF/XML ontology to UML"
+               icon="icons/transform-16.png"
+               class="org.universaal.tools.owl2uml.actions.SampleAction"
+               tooltip="Tranform an OWL RDF/XML ontology to UML"
+               menubarPath="org.universaal.tools.AALStudio.menu/transform"
+               toolbarPath="uAALGroup"
+               id="org.universaal.tools.owl2uml.actions.SampleAction">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>

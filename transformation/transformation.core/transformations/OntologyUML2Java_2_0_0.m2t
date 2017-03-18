@@ -1,0 +1,141 @@
+	/**
+ * transformation Ontology UML 2 Java transformation for universAAL
+ * date: 28/6/2011
+ * author: Erlend Stav, StŒle Walderhaug
+ * description: 
+ */
+
+import "OntologyUML2Java_1_3_0.m2t"
+
+texttransformation OntologyUML2Java_2_0_0 (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") extends OntologyUML2Java_1_3_0 {
+
+	uml.Model::generateActivator(ontNameList:Hashtable) {
+	  	StdOut.println("Generating activator for MW 2.0.0 and above")
+	  
+		// First, find package name for activator
+		var mainPacakageName:String = " "
+		self.ownedMember -> forEach( p:uml.Package ) {
+			mainPacakageName = p.name.substring(0, p.name.lastIndexOf("."))
+			//break	
+		}           
+				
+ 		file( javaBasePath + "/" + mainPacakageName.replace("\\.", "/") + '/' + ontologyName.firstToUpper() + "Activator.java" )
+    
+'
+package ' mainPacakageName ';
+
+import org.universAAL.middleware.container.ModuleContext;
+import org.universAAL.middleware.container.ModuleActivator;
+import org.universAAL.middleware.owl.OntologyManagement;
+'
+		//only importing valid ontologies - i.e. those that are put into the ontologyList
+		ontNameList.keys()-> forEach( oName:String ) {
+			'import 'oName'.*;\n'
+		}           
+
+'
+
+public class 'ontologyName.firstToUpper()'Activator implements ModuleActivator {
+
+'
+  ontNameList.keys()->forEach(oName:String){
+  '  'ontNameList.get(oName).firstToUpper()'Ontology _' ontNameList.get(oName) 'Ontology = new ' ontNameList.get(oName).firstToUpper() 'Ontology();\n'
+  }
+  '
+
+  public void start(ModuleContext mc) throws Exception {\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().register(mc, _' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+
+  public void stop(ModuleContext mc) throws Exception {\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().unregister(mc, _' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+}	
+'	
+
+  }
+
+
+ // generate Creator : TODO: Fix for 2.0.0
+ uml.Package::generateCreator(ontologyClassList:Hashtable) {
+          
+    var pName:String = self.getFullPackageName()
+    
+	file( javaBasePath + "/" + pName.substring(0, pName.lastIndexOf(".")).replace("\\.", "/") + '/creator/' + ontologyName.firstToUpper() + "OWLCreator.java" )
+    
+'
+package ' pName.substring(0, pName.lastIndexOf(".")) '.creator;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import org.universAAL.middleware.owl.OntologyManagement;
+import org.universAAL.middleware.serialization.MessageContentSerializer;
+import org.universAAL.middleware.serialization.turtle.TurtleSerializer;
+import ' pName '.' ontologyName.firstToUpper() 'Ontology;
+
+public class ' ontologyName.firstToUpper() 'OWLCreator {
+
+	private static ' ontologyName.firstToUpper() 'Ontology ontology = new ' ontologyName.firstToUpper() 'Ontology();
+	private static MessageContentSerializer contentSerializer = new TurtleSerializer();
+
+	public static void main(String[] args) {
+		OntologyManagement.getInstance().register(null, ontology);
+		String serializedOntology = contentSerializer.serialize(ontology);
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("' ontologyName.firstToUpper() '.owl", false));
+			out.write(serializedOntology);
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Exception ");
+
+		}
+		
+		File file = new File("' ontologyName.firstToUpper() '.owl");
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		IRI documentIRI = IRI.create(file);
+		OWLOntology owlOntology;
+		try {
+			owlOntology = manager.loadOntologyFromOntologyDocument(documentIRI);
+			System.out.println("Loaded ontology: " + owlOntology);
+			
+			OWLOntologyFormat format = manager.getOntologyFormat(owlOntology);
+			 
+			RDFXMLOntologyFormat rdfxmlFormat = new RDFXMLOntologyFormat();
+			if(format.isPrefixOWLOntologyFormat()) {
+				rdfxmlFormat.copyPrefixesFrom(format.asPrefixOWLOntologyFormat());
+			}
+			manager.saveOntology(owlOntology, rdfxmlFormat, IRI.create(file));
+			System.out.println("Saved ontology " + owlOntology + " in file ' ontologyName.firstToUpper() '.owl");
+		} catch (OWLOntologyCreationException e1) {
+			e1.printStackTrace();
+		} catch (OWLOntologyStorageException e) {
+			e.printStackTrace();
+		}
+
+		return;
+	}
+
+}
+
+'
+  } 
+
+
+}
+

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: AAL Studio
+Bundle-SymbolicName: org.universaal.tools.aalstudio.core;singleton:=true
+Bundle-Version: 3.0.0
+Bundle-Activator: org.universaal.tools.aalstudio.core.Activator
+Bundle-Vendor: universAAL
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLProfile">
+       <profile
+            name="ODM_SoaML"
+            path="pathmap://UAAL/ODM_SoaML.profile.uml">
+      </profile>
+       <profile
+             name="SoaML"
+             path="pathmap://UAAL/SoaML.profile.uml">
+       </profile>
+        <profile
+             name="RDF"
+             path="pathmap://TwoUse_Profiles/RDF.profile.uml#_0">
+       </profile>
+        <profile
+             name="OWL"
+             path="pathmap://TwoUse_Profiles/OWL.profile.uml#_4">
+       </profile>
+        <profile
+             name="SWRL"
+             path="pathmap://TwoUse_Profiles/SWRL.profile.uml#_5">
+       </profile>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://UAAL/"
+            target="platform:/plugin/org.universaal.tools.profileplugin/model/">
+      </mapping>
+      
+      <mapping
+       source="pathmap://TwoUse_Profiles/"
+       target="platform:/plugin/org.universaal.tools.profileplugin/model/">
+    </mapping>
+    
+   </extension>
+
+ 
+  <extension point="org.eclipse.uml2.uml.dynamic_package">
+    <profile
+       	uri="http:///schemas/RDF/_0R6hACqWEd6tAp0dWJ5sSg/0" 
+    	location="pathmap://TwoUse_Profiles/RDF.profile.uml#_0"/>
+  </extension>
+
+  <extension
+     point="org.eclipse.uml2.uml.dynamic_package">
+    <profile 
+    	uri="http:///schemas/OWL/_V6llIH23Ed6vG7X4YNOLYQ/4" 
+    	location="pathmap://TwoUse_Profiles/OWL.profile.uml#_4"/>
+  </extension>
+  <extension
+     point="org.eclipse.uml2.uml.dynamic_package">
+    <profile 
+    	uri="http:///schemas/SWRLprofile/_fKvyMKeWEd6XOZ-lFJtlZg/5" 
+    	location="pathmap://TwoUse_Profiles/SWRL.profile.uml#_5"/>
+  </extension>
+  <extension
+        point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+     <paletteDefinition
+           ID="org.universaal.tools.profileplugin.ontologyPalette"
+           class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+           icon="platform:/plugin/org.eclipse.gmf.runtime.diagram.ui/icons/group.gif"
+           name="org.universaal.tools.profileplugin.ontologyPalette"
+           path="palettes/Palette_org.universaal.tools.profileplugin.ontologyPalette.xml"
+           provider="universAAL">
+        <Priority
+              name="Highest">
+        </Priority>
+        <editor
+              id="org.eclipse.papyrus.uml.diagram.clazz">
+        </editor>
+     </paletteDefinition>
+  </extension>
+  <extension
+        point="org.eclipse.papyrus.uml.diagram.common.paletteDefinition">
+     <paletteDefinition
+           ID="org.universaal.tools.profileplugin.serviceModelPalette"
+           class="org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider"
+           icon="platform:/plugin/org.eclipse.gmf.runtime.diagram.ui/icons/group.gif"
+           name="org.universaal.tools.profileplugin.serviceModelPalette"
+           path="palettes/Palette_org.universaal.tools.profileplugin.serviceModelPalette.xml"
+           provider="universAAL">
+        <Priority
+              name="Highest">
+        </Priority>
+        <editor
+              id="org.eclipse.papyrus.uml.diagram.clazz">
+        </editor>
+     </paletteDefinition>
+  </extension>
+</plugin>

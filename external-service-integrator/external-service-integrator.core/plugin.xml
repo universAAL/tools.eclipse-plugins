@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Sample Action Set"
+            visible="true"
+            id="org.universaal.tools.externalServiceIntegrator.actionSet">
+         <menu
+               label="Sample &amp;Menu"
+               id="sampleMenu">
+            <separator
+                  name="sampleGroup">
+            </separator>
+         </menu>
+         <action
+               label="&amp;Import WSDL description"
+               icon="icons/import-document-16.png"
+               class="org.universaal.tools.externalserviceintegrator.actions.ImportWSDL"
+               tooltip="Import WSDL descriptions"
+               menubarPath="org.universaal.tools.AALStudio.menu/import"
+               toolbarPath="sampleGroup"
+               id="org.universaal.tools.externalserviceintegrator.actions.ImportWSDL">
+         </action>
+      </actionSet>
+   </extension>
+   <extension point="org.eclipse.ui.startup">
+     <startup class="org.universaal.tools.externalserviceintegrator.StartupClass"/>
+   </extension>
+</plugin>

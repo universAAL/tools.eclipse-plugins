@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="AAL Studio"
+            id="org.universaal.tools.AALStudio.wizards">
+      </category>
+      <wizard
+            name="universAAL Project"
+            icon="icons/newuaal_proj.png"
+            category="org.universaal.tools.AALStudio.wizards"
+            class="org.universaal.tools.newwizard.plugin.wizards.NewProjectWizard"
+            id="org.universaal.tools.newwizard.plugin.wizards.NewProjectWizard"
+            project="true">
+      </wizard>
+      <wizard
+            category="org.universaal.tools.AALStudio.wizards"
+            class="org.universaal.tools.newwizard.plugin.wizards.NewItemWizard"
+            icon="icons/newuaal_clss.png"
+            id="org.universaal.tools.newwizard.plugin.wizards.NewItemWizard"
+            name="universAAL Class">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="universAAL"
+            id="org.universaal.tools.newwizard.plugin.command">
+      </category>
+      <command
+            name="Create a new application project"
+            categoryId="org.universaal.tools.newwizard.plugin.command"
+            id="org.universaal.tools.newwizard.plugin.command.startNewWizard">
+      </command>
+      <command
+            name="Create a new wrapper class"
+            categoryId="org.universaal.tools.newwizard.plugin.command"
+            id="org.universaal.tools.newwizard.plugin.command.startNewItemWizard">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.universaal.tools.newwizard.plugin.command.startNewWizard"
+            class="org.universaal.tools.newwizard.plugin.commands.NewProjectCommandHandler">
+      </handler>
+      <handler
+            commandId="org.universaal.tools.newwizard.plugin.command.startNewItemWizard"
+            class="org.universaal.tools.newwizard.plugin.commands.NewItemCommandHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.universaal.tools.AALStudio.menu?after=newproject">
+         <command
+               commandId="org.universaal.tools.newwizard.plugin.command.startNewWizard"
+               id="org.universaal.tools.newwizard.plugin.menu.newproject"
+               mnemonic="P"
+               icon="icons/newuaal_proj.png">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.universaal.tools.AALStudio.menu?after=new">
+         <command
+               commandId="org.universaal.tools.newwizard.plugin.command.startNewItemWizard"
+               icon="icons/newuaal_clss.png"
+               id="org.universaal.tools.newwizard.plugin.menu.newitem"
+               mnemonic="C">
+         </command>
+      </menuContribution>
+   </extension >
+   <extension point="org.eclipse.help.contexts">
+      <contexts file="helpdoc.xml"  />
+   </extension>
+
+</plugin>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<requirements>
+
+	<requirement id="org.universAAL.platform.version" name="MW_Version">
+		<values>
+			<value>0.3.0-SNAPSHOT</value>
+			<value>1.0.0</value>
+			<value>1.1.0</value>
+			<value>1.2.0</value>
+			<value>1.3.0</value>
+			<value>2.0.0</value>
+			<value>3.0.0</value>
+		</values>
+	</requirement>
+
+	<requirement id="org.universAAL.container.name" name="Container_Name">
+		<values>
+			<value>karaf</value>
+			<value>tomcat</value>
+			<value>equinox</value>
+			<value>felix</value>
+			<value>android</value>
+			<value>osgi-amdroid</value>
+		</values>
+	</requirement>
+
+	<requirement id="org.universAAL.container.version" name="Container_Version">
+		<values>
+			<value>0.3.0-SNAPSHOT</value>
+			<value>1.0.0</value>
+			<value>1.1.0</value>
+			<value>1.2.0</value>
+			<value>1.3.0</value>
+			<value>2.0.0</value>
+			<value>3.0.0</value>
+		</values>
+	</requirement>
+
+	<requirement id="org.universAAL.container.platform" name="Platform_Requirement">
+		<values>
+			<value>Java</value>
+			<value>.NET</value>
+			<value>Android</value>
+			<value>OSGi</value>
+			<value>OSGi-Android</value>
+		</values>
+	</requirement>
+
+	<requirement id="org.universAAL.container.os" name="OS_Requirement">
+		<values>
+			<value>Windows</value>
+			<value>Linux</value>
+			<value>MacOS</value>
+		</values>
+	</requirement>
+
+</requirements>

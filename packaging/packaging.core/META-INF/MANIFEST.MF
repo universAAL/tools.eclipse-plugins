@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: AAL Studio Application Packager
+Bundle-SymbolicName: org.universaal.tools.packaging.tool; singleton:=true
+Bundle-Version: 1.3.0
+Bundle-Activator: org.universaal.tools.packaging.tool.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ javax.xml,
+ org.eclipse.ui.ide,
+ org.eclipse.ui;bundle-version="3.7.0",
+ org.slf4j.api;bundle-version="1.7.2",
+ org.eclipse.m2e.core,
+ org.eclipse.m2e.maven.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.apache.maven,
+ org.apache.maven.plugin.descriptor,
+ org.apache.maven.project,
+ org.eclipse.core.resources,
+ org.eclipse.jdt.internal.core,
+ org.eclipse.m2e.core.ui.internal.actions,
+ org.eclipse.ui.console
+Bundle-Vendor: universAAL
+Bundle-ClassPath: .,
+ lib/ui.handler.gui.swing-2.0.0-sources.jar

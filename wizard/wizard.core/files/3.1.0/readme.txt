@@ -1,0 +1,1 @@
+Classes of 3.X.0 are the same as 3.0.0, so they are taken from there: See getMainFolder() method of MWVersion310.java

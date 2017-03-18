@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_pJZm8GkXEeGIl7HiYaL9OA" name="Datatypes">
+  <packagedElement xmi:type="uml:Package" xmi:id="_U7uacGkcEeGIl7HiYaL9OA" name="org.universaal.ontology.datatypes">
+    <packagedElement xmi:type="uml:DataType" xmi:id="_XWBvIGkbEeGIl7HiYaL9OA" name="Locale"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_bOsCwGkbEeGIl7HiYaL9OA" name="XMLGregorianCalendar"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_esVOUGkbEeGIl7HiYaL9OA" name="Duration"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_gObTMGkbEeGIl7HiYaL9OA" name="Double"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_ir6pUGkbEeGIl7HiYaL9OA" name="Float"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_gtLPQGkcEeGIl7HiYaL9OA" name="Long"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_0N0ScGkeEeGXyoAu4GMQ6g" name="Integer"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_1blGEGkeEeGXyoAu4GMQ6g" name="Boolean"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_2boN0GkeEeGXyoAu4GMQ6g" name="String"/>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_M0LU4NIKEeKw_dHjReEqbg" name="Resource"/>
+  </packagedElement>
+</uml:Model>

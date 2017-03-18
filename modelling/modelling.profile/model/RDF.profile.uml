@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_TEtTYHGwEdyoJ7Xxsdx7ug" name="RDF" metaclassReference="_-sqikHG3EdyoJ7Xxsdx7ug _6HYHkHG5Edy77ZJS0h87Og _9CZcUHG7Edy77ZJS0h87Og _tf8zYHHBEdy77ZJS0h87Og _u7pqcHHDEdy77ZJS0h87Og _lCN4cHHJEdyJCIsYxONIwQ _XY8UcHHLEdyJCIsYxONIwQ _1pNN8HHLEdyJCIsYxONIwQ _vUpqMHHMEdyJCIsYxONIwQ _pa2IwHHNEdyJCIsYxONIwQ _yer_cPEoEd22qdP9ePGRWQ">
+  <eAnnotations xmi:id="_0R8WMCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_0R89QCqWEd6tAp0dWJ5sSg" name="RDF" nsURI="http:///schemas/RDF/_0R6hACqWEd6tAp0dWJ5sSg/0" nsPrefix="RDF">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89QSqWEd6tAp0dWJ5sSg" name="NamespaceDefinition">
+        <eAnnotations xmi:id="_0R89QiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_r5h34HGwEdyoJ7Xxsdx7ug"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R89QyqWEd6tAp0dWJ5sSg" name="namespacePrefix" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R89RSqWEd6tAp0dWJ5sSg" name="namespaceURI" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89RyqWEd6tAp0dWJ5sSg" name="rdfDocument">
+        <eAnnotations xmi:id="_0R89SCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_YVYQ4HGyEdyoJ7Xxsdx7ug"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R89SSqWEd6tAp0dWJ5sSg" name="defaultNamespace" ordered="false" unique="false" defaultValueLiteral="">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R89SyqWEd6tAp0dWJ5sSg" name="xmlBase" ordered="false" unique="false" upperBound="-1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89TSqWEd6tAp0dWJ5sSg" name="statementForDocument" ordered="false" unique="false" lowerBound="1" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//InstanceSpecification"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89TyqWEd6tAp0dWJ5sSg" name="namespaceDefinition" ordered="false" unique="false" upperBound="-1" eType="_0R89QSqWEd6tAp0dWJ5sSg"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89USqWEd6tAp0dWJ5sSg" name="base_Package" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89UyqWEd6tAp0dWJ5sSg" name="uniformResourceIdentifier">
+        <eAnnotations xmi:id="_0R89VCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_zUqLsHG7Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89VSqWEd6tAp0dWJ5sSg" name="base_LiteralString" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89VyqWEd6tAp0dWJ5sSg" name="uriReference">
+        <eAnnotations xmi:id="_0R89WCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_HISuQHG8Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89WSqWEd6tAp0dWJ5sSg" name="base_LiteralString" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89WyqWEd6tAp0dWJ5sSg" name="uri" ordered="false" unique="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89XSqWEd6tAp0dWJ5sSg" name="blankNode" eSuperTypes="_0R89ZCqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R89XiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_oAKjMHG8Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R89XyqWEd6tAp0dWJ5sSg" name="nodeID" ordered="false" unique="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89YSqWEd6tAp0dWJ5sSg" name="rdfsResource" ordered="false" unique="false" upperBound="-1" eType="_0R89ZCqWEd6tAp0dWJ5sSg"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R89ZCqWEd6tAp0dWJ5sSg" name="rdfsResource">
+        <eAnnotations xmi:id="_0R89ZSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_jvUjoHG9Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89ZiqWEd6tAp0dWJ5sSg" name="base_InstanceSpecification" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//InstanceSpecification"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89aCqWEd6tAp0dWJ5sSg" name="uriRef" ordered="false" unique="false" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R89aiqWEd6tAp0dWJ5sSg" name="memberOf" ordered="false" unique="false" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kUSqWEd6tAp0dWJ5sSg" name="rdfGraph">
+        <eAnnotations xmi:id="_0R9kUiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_qJO2kHG-Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kUyqWEd6tAp0dWJ5sSg" name="base_Package" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kVSqWEd6tAp0dWJ5sSg" name="graphName" ordered="false" unique="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kVyqWEd6tAp0dWJ5sSg" name="statementForGraph" ordered="false" unique="false" lowerBound="1" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//InstanceSpecification"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kWSqWEd6tAp0dWJ5sSg" name="rdfsLiteral">
+        <eAnnotations xmi:id="_0R9kWiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_nPGyUHG_Edy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kWyqWEd6tAp0dWJ5sSg" name="base_LiteralString" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kXSqWEd6tAp0dWJ5sSg" name="RDFStatement">
+        <eAnnotations xmi:id="_0R9kXiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_B2DbwHHAEdy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R9kXyqWEd6tAp0dWJ5sSg" name="reification" ordered="false" unique="false" lowerBound="1" eType="_0R9kZyqWEd6tAp0dWJ5sSg" defaultValueLiteral="none"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kYSqWEd6tAp0dWJ5sSg" name="subject" ordered="false" unique="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//InstanceSpecification"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kYyqWEd6tAp0dWJ5sSg" name="predicate" ordered="false" unique="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//AssociationClass"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kZSqWEd6tAp0dWJ5sSg" name="object" ordered="false" unique="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//InstanceSpecification"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_0R9kZyqWEd6tAp0dWJ5sSg" name="ReificationKind">
+        <eAnnotations xmi:id="_0R9kaCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_WGpqUHHEEdy77ZJS0h87Og"/>
+        <eLiterals xmi:id="_0R9kaSqWEd6tAp0dWJ5sSg" name="none"/>
+        <eLiterals xmi:id="_0R9kaiqWEd6tAp0dWJ5sSg" name="reified" value="1"/>
+        <eLiterals xmi:id="_0R9kayqWEd6tAp0dWJ5sSg" name="reifiedOnly" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kbCqWEd6tAp0dWJ5sSg" name="reifies">
+        <eAnnotations xmi:id="_0R9kbSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Mpb-cHHDEdy77ZJS0h87Og"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kbiqWEd6tAp0dWJ5sSg" name="base_Dependency" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Dependency"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kcCqWEd6tAp0dWJ5sSg" name="uriReferenceNode" eSuperTypes="_0R89ZCqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9kcSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_t3N_sHHIEdyJCIsYxONIwQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kcyqWEd6tAp0dWJ5sSg" name="plainLiteral" eSuperTypes="_0R9kWSqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9kdCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Hwg48HHJEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R9kdSqWEd6tAp0dWJ5sSg" name="language" ordered="false" unique="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9keCqWEd6tAp0dWJ5sSg" name="rdfsComment">
+        <eAnnotations xmi:id="_0R9keSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_hBmisHHJEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9keiqWEd6tAp0dWJ5sSg" name="base_Comment" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Comment"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_0R9kfCqWEd6tAp0dWJ5sSg" name="language" ordered="false" unique="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kfiqWEd6tAp0dWJ5sSg" name="rdfsLabel" eSuperTypes="_0R9kcyqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9kfyqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_zsjl8HHJEdyJCIsYxONIwQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kgSqWEd6tAp0dWJ5sSg" name="rdfXMLLiteral" eSuperTypes="_0R9khCqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9kgiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_6EjCwHHJEdyJCIsYxONIwQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9khCqWEd6tAp0dWJ5sSg" name="typedLiteral" eSuperTypes="_0R9kWSqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9khSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_LqK1oHHKEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9khiqWEd6tAp0dWJ5sSg" name="datatypeURI" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kiSqWEd6tAp0dWJ5sSg" name="rdfsClass">
+        <eAnnotations xmi:id="_0R9kiiqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RUCywHHLEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kiyqWEd6tAp0dWJ5sSg" name="base_Class" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kjSqWEd6tAp0dWJ5sSg" name="uriRef" ordered="false" unique="false" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kjyqWEd6tAp0dWJ5sSg" name="rdfsDatatype">
+        <eAnnotations xmi:id="_0R9kkCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_woaNkHHLEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kkSqWEd6tAp0dWJ5sSg" name="base_DataType" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//DataType"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kkyqWEd6tAp0dWJ5sSg" name="uriRef" ordered="false" unique="false" lowerBound="1" upperBound="-1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9klSqWEd6tAp0dWJ5sSg" name="rdfsIsDefinedBy" eSuperTypes="_0R9kmCqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9kliqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_OIoKMHHMEdyJCIsYxONIwQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kmCqWEd6tAp0dWJ5sSg" name="rdfsSeeAlso">
+        <eAnnotations xmi:id="_0R9kmSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_UUHcEHHMEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kmiqWEd6tAp0dWJ5sSg" name="base_Dependency" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Dependency"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9knCqWEd6tAp0dWJ5sSg" name="rdfsSubClassOf">
+        <eAnnotations xmi:id="_0R9knSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_qjm9EHHMEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kniqWEd6tAp0dWJ5sSg" name="base_Generalization" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Generalization"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9koCqWEd6tAp0dWJ5sSg" name="rdfProperty">
+        <eAnnotations xmi:id="_0R9koSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Vc5MkHHNEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9koiqWEd6tAp0dWJ5sSg" name="uriRef" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//LiteralString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kpCqWEd6tAp0dWJ5sSg" name="base_AssociationClass" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//AssociationClass"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kpiqWEd6tAp0dWJ5sSg" name="base_Property" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Property"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kqCqWEd6tAp0dWJ5sSg" name="base_Association" ordered="false" unique="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Association"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kqiqWEd6tAp0dWJ5sSg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9krCqWEd6tAp0dWJ5sSg" name="rdfGlobal" eSuperTypes="_0R9koCqWEd6tAp0dWJ5sSg">
+        <eAnnotations xmi:id="_0R9krSqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_GKwCwHHOEdyJCIsYxONIwQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9ksyqWEd6tAp0dWJ5sSg" name="rdfsRange">
+        <eAnnotations xmi:id="_0R9ktCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Zd32wCqWEd6tAp0dWJ5sSg"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9ktSqWEd6tAp0dWJ5sSg" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9ktyqWEd6tAp0dWJ5sSg" name="rdfsDomain">
+        <eAnnotations xmi:id="_0R9kuCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_eERaICqWEd6tAp0dWJ5sSg"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kuSqWEd6tAp0dWJ5sSg" name="base_Association" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Association"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_0R9kuyqWEd6tAp0dWJ5sSg" name="rdfsSubPropertyOf">
+        <eAnnotations xmi:id="_0R9kvCqWEd6tAp0dWJ5sSg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_R34YQHHOEdyJCIsYxONIwQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_0R9kvSqWEd6tAp0dWJ5sSg" name="base_Generalization" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/3.0.0/UML#//Generalization"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:id="_-sqikHG3EdyoJ7Xxsdx7ug" alias="InstanceSpecification">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+  </elementImport>
+  <elementImport xmi:id="_6HYHkHG5Edy77ZJS0h87Og" alias="Package">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+  </elementImport>
+  <elementImport xmi:id="_9CZcUHG7Edy77ZJS0h87Og" alias="LiteralString">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+  </elementImport>
+  <elementImport xmi:id="_tf8zYHHBEdy77ZJS0h87Og" alias="AssociationClass">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#AssociationClass"/>
+  </elementImport>
+  <elementImport xmi:id="_u7pqcHHDEdy77ZJS0h87Og" alias="Dependency">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+  </elementImport>
+  <elementImport xmi:id="_lCN4cHHJEdyJCIsYxONIwQ" alias="Comment">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+  </elementImport>
+  <elementImport xmi:id="_XY8UcHHLEdyJCIsYxONIwQ" alias="Class">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+  </elementImport>
+  <elementImport xmi:id="_1pNN8HHLEdyJCIsYxONIwQ" alias="DataType">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#DataType"/>
+  </elementImport>
+  <elementImport xmi:id="_vUpqMHHMEdyJCIsYxONIwQ" alias="Generalization">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Generalization"/>
+  </elementImport>
+  <elementImport xmi:id="_pa2IwHHNEdyJCIsYxONIwQ" alias="Property">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+  </elementImport>
+  <elementImport xmi:id="_yer_cPEoEd22qdP9ePGRWQ" alias="Association">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+  </elementImport>
+  <packageImport xmi:id="_TEtTYXGwEdyoJ7Xxsdx7ug">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_r5h34HGwEdyoJ7Xxsdx7ug" name="NamespaceDefinition">
+    <ownedAttribute xmi:id="_3u4VQHGwEdyoJ7Xxsdx7ug" name="namespacePrefix" visibility="public" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Am2bgXGxEdyoJ7Xxsdx7ug" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Am2bgHGxEdyoJ7Xxsdx7ug" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_Am2bgnGxEdyoJ7Xxsdx7ug">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_NeMhYHGxEdyoJ7Xxsdx7ug" name="namespaceURI" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_YVYQ4HGyEdyoJ7Xxsdx7ug" name="rdfDocument">
+    <ownedAttribute xmi:id="_bbkJQHGzEdyoJ7Xxsdx7ug" name="defaultNamespace" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_mH2s0XGzEdyoJ7Xxsdx7ug" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mH2s0HGzEdyoJ7Xxsdx7ug"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_aBrDsHHrEdywpu1ay-rZkA" value=""/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_mk-tsHGzEdyoJ7Xxsdx7ug" name="xmlBase" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oH7HIHGzEdyoJ7Xxsdx7ug" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oH1AgHGzEdyoJ7Xxsdx7ug"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_BfWFkHG4EdyoJ7Xxsdx7ug" name="statementForDocument" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_pvVQMHG7Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_pvPJkHG7Edy77ZJS0h87Og" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ZTtdMHG5Edy77ZJS0h87Og" name="namespaceDefinition" type="_r5h34HGwEdyoJ7Xxsdx7ug" isUnique="false">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZTzj0XG5Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZTzj0HG5Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__-VT4XG5Edy77ZJS0h87Og" name="base_Package" isUnique="false" association="__92ywHG5Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="__92ywHG5Edy77ZJS0h87Og" name="Extension_RDFDocument" memberEnd="__-VT4HG5Edy77ZJS0h87Og __-VT4XG5Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__-VT4HG5Edy77ZJS0h87Og" name="extension_RDFDocument" type="_YVYQ4HGyEdyoJ7Xxsdx7ug" aggregation="composite" association="__92ywHG5Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_zUqLsHG7Edy77ZJS0h87Og" name="uniformResourceIdentifier">
+    <ownedAttribute xmi:id="_-Qni8HG7Edy77ZJS0h87Og" name="base_LiteralString" isUnique="false" association="_-QC7MHG7Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+    </ownedAttribute>
+    <icon xmi:id="_zjFCMHG7Edy77ZJS0h87Og"/>
+    <icon xmi:id="_zjLI0HG7Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_-QC7MHG7Edy77ZJS0h87Og" name="Extension_UniformResourceIdentifier" memberEnd="_-QhcUHG7Edy77ZJS0h87Og _-Qni8HG7Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_-QhcUHG7Edy77ZJS0h87Og" name="extension_UniformResourceIdentifier" type="_zUqLsHG7Edy77ZJS0h87Og" aggregation="composite" association="_-QC7MHG7Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_HISuQHG8Edy77ZJS0h87Og" name="uriReference">
+    <ownedAttribute xmi:id="_Ka-nAHG8Edy77ZJS0h87Og" name="base_LiteralString" isUnique="false" association="_KaZ_QHG8Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_MgBA4HG8Edy77ZJS0h87Og" name="uri" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TNsZ0XG8Edy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TNsZ0HG8Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <icon xmi:id="_HWzrYHG8Edy77ZJS0h87Og"/>
+    <icon xmi:id="_HWzrYXG8Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_KaZ_QHG8Edy77ZJS0h87Og" name="Extension_URIReference" memberEnd="_Ka4gYHG8Edy77ZJS0h87Og _Ka-nAHG8Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Ka4gYHG8Edy77ZJS0h87Og" name="extension_URIReference" type="_HISuQHG8Edy77ZJS0h87Og" aggregation="composite" association="_KaZ_QHG8Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_oAKjMHG8Edy77ZJS0h87Og" name="blankNode">
+    <generalization xmi:id="_51XMsHHIEdyJCIsYxONIwQ" general="_jvUjoHG9Edy77ZJS0h87Og"/>
+    <ownedAttribute xmi:id="_I9YyMHG9Edy77ZJS0h87Og" name="nodeID" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MrrB0HG9Edy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Mrk7MHG9Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_Ur39IHG-Edy77ZJS0h87Og" name="rdfsResource" type="_jvUjoHG9Edy77ZJS0h87Og" isUnique="false">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UsEKYXG-Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UsEKYHG-Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <icon xmi:id="_oSN8gHG8Edy77ZJS0h87Og"/>
+    <icon xmi:id="_oSN8gXG8Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_jvUjoHG9Edy77ZJS0h87Og" name="rdfsResource">
+    <ownedAttribute xmi:id="_rghPEHG9Edy77ZJS0h87Og" name="base_InstanceSpecification" isUnique="false" association="_rgVB0HG9Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_zqjRQHG9Edy77ZJS0h87Og" name="uriRef" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5PuxEHG9Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5PoqcHG9Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_6MSf8HG9Edy77ZJS0h87Og" name="memberOf" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9Bjc4XG9Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9Bjc4HG9Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <icon xmi:id="_j_REIHG9Edy77ZJS0h87Og"/>
+    <icon xmi:id="_j_XKwHG9Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_rgVB0HG9Edy77ZJS0h87Og" name="Extension_rdfsResource" memberEnd="_rgbIcHG9Edy77ZJS0h87Og _rghPEHG9Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_rgbIcHG9Edy77ZJS0h87Og" name="extension_rdfsResource" type="_jvUjoHG9Edy77ZJS0h87Og" aggregation="composite" association="_rgVB0HG9Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_qJO2kHG-Edy77ZJS0h87Og" name="rdfGraph">
+    <ownedAttribute xmi:id="_soiKkHG-Edy77ZJS0h87Og" name="base_Package" isUnique="false" association="_soP2sHG-Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_2gyCEHG-Edy77ZJS0h87Og" name="graphName" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6T1c8HG-Edy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6TvWUHG-Edy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_Paj_EHG_Edy77ZJS0h87Og" name="statementForGraph" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PawMUXG_Edy77ZJS0h87Og" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PawMUHG_Edy77ZJS0h87Og" value="1"/>
+    </ownedAttribute>
+    <icon xmi:id="_qUgScHG-Edy77ZJS0h87Og"/>
+    <icon xmi:id="_qUmZEHG-Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_soP2sHG-Edy77ZJS0h87Og" name="Extension_rdfGraph" memberEnd="_socD8HG-Edy77ZJS0h87Og _soiKkHG-Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_socD8HG-Edy77ZJS0h87Og" name="extension_rdfGraph" type="_qJO2kHG-Edy77ZJS0h87Og" aggregation="composite" association="_soP2sHG-Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_nPGyUHG_Edy77ZJS0h87Og" name="rdfsLiteral">
+    <ownedAttribute xmi:id="_s8yt4HG_Edy77ZJS0h87Og" name="base_LiteralString" isUnique="false" association="_s8UMwHG_Edy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+    </ownedAttribute>
+    <icon xmi:id="_nmBdgHG_Edy77ZJS0h87Og"/>
+    <icon xmi:id="_nmHkIHG_Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_s8UMwHG_Edy77ZJS0h87Og" name="Extension_rdfsLiteral" memberEnd="_s8snQHG_Edy77ZJS0h87Og _s8yt4HG_Edy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_s8snQHG_Edy77ZJS0h87Og" name="extension_rdfsLiteral" type="_nPGyUHG_Edy77ZJS0h87Og" aggregation="composite" association="_s8UMwHG_Edy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_B2DbwHHAEdy77ZJS0h87Og" name="RDFStatement">
+    <ownedAttribute xmi:id="_J7f44HHAEdy77ZJS0h87Og" name="reification" type="_WGpqUHHEEdy77ZJS0h87Og" isUnique="false">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_z5mVsHHEEdy77ZJS0h87Og" value="none"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_V51dsHHBEdy77ZJS0h87Og" name="subject" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kj4QQHHBEdy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kjyJoHHBEdy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_ytvt8HHBEdy77ZJS0h87Og" name="predicate" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#AssociationClass"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2uQ9EXHBEdy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2uQ9EHHBEdy77ZJS0h87Og"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__fvZwHHBEdy77ZJS0h87Og" name="object" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#InstanceSpecification"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GNUsEHHCEdy77ZJS0h87Og" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GNOlcHHCEdy77ZJS0h87Og"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Mpb-cHHDEdy77ZJS0h87Og" name="reifies">
+    <ownedAttribute xmi:id="_85k94HHDEdy77ZJS0h87Og" name="base_Dependency" isUnique="false" association="_85SqAHHDEdy77ZJS0h87Og">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+    </ownedAttribute>
+    <icon xmi:id="_Ne0uUHHDEdy77ZJS0h87Og"/>
+    <icon xmi:id="_Ne608HHDEdy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_85SqAHHDEdy77ZJS0h87Og" name="Extension_reifies" memberEnd="_85e3QHHDEdy77ZJS0h87Og _85k94HHDEdy77ZJS0h87Og">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_85e3QHHDEdy77ZJS0h87Og" name="extension_reifies" type="_Mpb-cHHDEdy77ZJS0h87Og" aggregation="composite" association="_85SqAHHDEdy77ZJS0h87Og"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_WGpqUHHEEdy77ZJS0h87Og" name="ReificationKind">
+    <ownedLiteral xmi:id="_b7IKYHHEEdy77ZJS0h87Og" name="none"/>
+    <ownedLiteral xmi:id="_dHVe0HHEEdy77ZJS0h87Og" name="reified"/>
+    <ownedLiteral xmi:id="_eZ89QHHEEdy77ZJS0h87Og" name="reifiedOnly"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_t3N_sHHIEdyJCIsYxONIwQ" name="uriReferenceNode">
+    <generalization xmi:id="_ziC0gHHIEdyJCIsYxONIwQ" general="_jvUjoHG9Edy77ZJS0h87Og"/>
+    <icon xmi:id="_uKs8YHHIEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_uKzDAHHIEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Hwg48HHJEdyJCIsYxONIwQ" name="plainLiteral">
+    <generalization xmi:id="_XiSIkHHJEdyJCIsYxONIwQ" general="_nPGyUHG_Edy77ZJS0h87Og"/>
+    <ownedAttribute xmi:id="_Y2neQHHJEdyJCIsYxONIwQ" name="language" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bs7kEXHJEdyJCIsYxONIwQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bs7kEHHJEdyJCIsYxONIwQ"/>
+    </ownedAttribute>
+    <icon xmi:id="_IQINIHHJEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_IQINIXHJEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_hBmisHHJEdyJCIsYxONIwQ" name="rdfsComment">
+    <ownedAttribute xmi:id="_nErfcHHJEdyJCIsYxONIwQ" name="base_Comment" isUnique="false" association="_nEM-UHHJEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Comment"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_o0a-wHHJEdyJCIsYxONIwQ" name="language" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rIvKwHHJEdyJCIsYxONIwQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rIpEIHHJEdyJCIsYxONIwQ"/>
+    </ownedAttribute>
+    <icon xmi:id="_hPo-sHHJEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_hPo-sXHJEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_nEM-UHHJEdyJCIsYxONIwQ" name="Extension_rdfsComment" memberEnd="_nEfSMHHJEdyJCIsYxONIwQ _nErfcHHJEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_nEfSMHHJEdyJCIsYxONIwQ" name="extension_rdfsComment" type="_hBmisHHJEdyJCIsYxONIwQ" aggregation="composite" association="_nEM-UHHJEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_zsjl8HHJEdyJCIsYxONIwQ" name="rdfsLabel">
+    <generalization xmi:id="_fVhLoPEnEd22qdP9ePGRWQ" general="_Hwg48HHJEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_z23YgHHJEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_z29fIHHJEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_6EjCwHHJEdyJCIsYxONIwQ" name="rdfXMLLiteral">
+    <generalization xmi:id="_YQnYwHHKEdyJCIsYxONIwQ" general="_LqK1oHHKEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_6Nh_oHHJEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_6Nh_oXHJEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_LqK1oHHKEdyJCIsYxONIwQ" name="typedLiteral">
+    <generalization xmi:id="_SGLPwHHKEdyJCIsYxONIwQ" general="_nPGyUHG_Edy77ZJS0h87Og"/>
+    <ownedAttribute xmi:id="_dGC2oHHKEdyJCIsYxONIwQ" name="datatypeURI" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+    </ownedAttribute>
+    <icon xmi:id="_L0G0wHHKEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_L0M7YHHKEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_RUCywHHLEdyJCIsYxONIwQ" name="rdfsClass">
+    <ownedAttribute xmi:id="_ZCqrUHHLEdyJCIsYxONIwQ" name="base_Class" isUnique="false" association="_ZCYXcHHLEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_aymX4HHLEdyJCIsYxONIwQ" name="uriRef" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j6tL4XHLEdyJCIsYxONIwQ" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j6tL4HHLEdyJCIsYxONIwQ"/>
+    </ownedAttribute>
+    <icon xmi:id="_Rd-x4HHLEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_Rd-x4XHLEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_ZCYXcHHLEdyJCIsYxONIwQ" name="Extension_rdfsClass" memberEnd="_ZCkksHHLEdyJCIsYxONIwQ _ZCqrUHHLEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_ZCkksHHLEdyJCIsYxONIwQ" name="extension_rdfsClass" type="_RUCywHHLEdyJCIsYxONIwQ" aggregation="composite" association="_ZCYXcHHLEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_woaNkHHLEdyJCIsYxONIwQ" name="rdfsDatatype">
+    <ownedAttribute xmi:id="_7OZU0XHLEdyJCIsYxONIwQ" name="base_DataType" isUnique="false" association="_7OHA8HHLEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#DataType"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_8zJsIHHLEdyJCIsYxONIwQ" name="uriRef" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-IUKcPEnEd22qdP9ePGRWQ" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-IKZcPEnEd22qdP9ePGRWQ" value="1"/>
+    </ownedAttribute>
+    <icon xmi:id="_w0Dc4HHLEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_w0JjgHHLEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_7OHA8HHLEdyJCIsYxONIwQ" name="Extension_RDFSDatatype" memberEnd="_7OZU0HHLEdyJCIsYxONIwQ _7OZU0XHLEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_7OZU0HHLEdyJCIsYxONIwQ" name="extension_RDFSDatatype" type="_woaNkHHLEdyJCIsYxONIwQ" aggregation="composite" association="_7OHA8HHLEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_OIoKMHHMEdyJCIsYxONIwQ" name="rdfsIsDefinedBy">
+    <generalization xmi:id="_b78wIHHMEdyJCIsYxONIwQ" general="_UUHcEHHMEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_OUYHMHHMEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_OUYHMXHMEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_UUHcEHHMEdyJCIsYxONIwQ" name="rdfsSeeAlso">
+    <ownedAttribute xmi:id="_XhjBYHHMEdyJCIsYxONIwQ" name="base_Dependency" isUnique="false" association="_Xg-ZoHHMEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Dependency"/>
+    </ownedAttribute>
+    <icon xmi:id="_UhAokHHMEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_UhAokXHMEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_Xg-ZoHHMEdyJCIsYxONIwQ" name="Extension_rdfsSeeAlso" memberEnd="_Xhc6wHHMEdyJCIsYxONIwQ _XhjBYHHMEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Xhc6wHHMEdyJCIsYxONIwQ" name="extension_rdfsSeeAlso" type="_UUHcEHHMEdyJCIsYxONIwQ" aggregation="composite" association="_Xg-ZoHHMEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_qjm9EHHMEdyJCIsYxONIwQ" name="rdfsSubClassOf">
+    <ownedAttribute xmi:id="_xgMUsHHMEdyJCIsYxONIwQ" name="base_Generalization" isUnique="false" association="_xf_gYHHMEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Generalization"/>
+    </ownedAttribute>
+    <icon xmi:id="_qtEbEHHMEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_qtEbEXHMEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_xf_gYHHMEdyJCIsYxONIwQ" name="Extension_rdfsSubClassOf" memberEnd="_xgFnAHHMEdyJCIsYxONIwQ _xgMUsHHMEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_xgFnAHHMEdyJCIsYxONIwQ" name="extension_rdfsSubClassOf" type="_qjm9EHHMEdyJCIsYxONIwQ" aggregation="composite" association="_xf_gYHHMEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Vc5MkHHNEdyJCIsYxONIwQ" name="rdfProperty">
+    <ownedAttribute xmi:id="_YIU4EHHNEdyJCIsYxONIwQ" name="uriRef" visibility="public" isUnique="false">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#LiteralString"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_d7voMHHNEdyJCIsYxONIwQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_d7phkHHNEdyJCIsYxONIwQ" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_kqpFIHH5Edywpu1ay-rZkA">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_jyUaAHHNEdyJCIsYxONIwQ" name="base_AssociationClass" isUnique="false" association="_jyCGIHHNEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#AssociationClass"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_qSI9IHHNEdyJCIsYxONIwQ" name="base_Property" isUnique="false" association="_qR2pQHHNEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Property"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_2oGE0fEoEd22qdP9ePGRWQ" name="base_Association" isUnique="false" association="_2mBBMPEoEd22qdP9ePGRWQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_4Sa-gSqVEd6tAp0dWJ5sSg" name="base_Class" association="_4SaXcCqVEd6tAp0dWJ5sSg">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <icon xmi:id="_VkKSMHHNEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_VkKSMXHNEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_jyCGIHHNEdyJCIsYxONIwQ" name="Extension_rdfProperty" memberEnd="_jyOTYHHNEdyJCIsYxONIwQ _jyUaAHHNEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_jyOTYHHNEdyJCIsYxONIwQ" name="extension_rdfProperty" type="_Vc5MkHHNEdyJCIsYxONIwQ" aggregation="composite" association="_jyCGIHHNEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_qR2pQHHNEdyJCIsYxONIwQ" name="Extension_rdfProperty" memberEnd="_qSC2gHHNEdyJCIsYxONIwQ _qSI9IHHNEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_qSC2gHHNEdyJCIsYxONIwQ" name="extension_rdfProperty" type="_Vc5MkHHNEdyJCIsYxONIwQ" aggregation="composite" association="_qR2pQHHNEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_GKwCwHHOEdyJCIsYxONIwQ" name="rdfGlobal">
+    <generalization xmi:id="_OGWnYHHOEdyJCIsYxONIwQ" general="_Vc5MkHHNEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_GUra0HHOEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_GUxhcHHOEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_R34YQHHOEdyJCIsYxONIwQ" name="rdfsSubPropertyOf">
+    <ownedAttribute xmi:id="_fWAKQXHOEdyJCIsYxONIwQ" name="base_Generalization" isUnique="false" association="_fUMMYHHOEdyJCIsYxONIwQ">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Generalization"/>
+    </ownedAttribute>
+    <icon xmi:id="_SCS4gHHOEdyJCIsYxONIwQ"/>
+    <icon xmi:id="_SCY_IHHOEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_fUMMYHHOEdyJCIsYxONIwQ" name="Extension_rdfsSubPropertyOf" memberEnd="_fWAKQHHOEdyJCIsYxONIwQ _fWAKQXHOEdyJCIsYxONIwQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_fWAKQHHOEdyJCIsYxONIwQ" name="extension_rdfsSubPropertyOf" type="_R34YQHHOEdyJCIsYxONIwQ" aggregation="composite" association="_fUMMYHHOEdyJCIsYxONIwQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_2mBBMPEoEd22qdP9ePGRWQ" name="Extension_rdfProperty" memberEnd="_2oGE0PEoEd22qdP9ePGRWQ _2oGE0fEoEd22qdP9ePGRWQ">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_2oGE0PEoEd22qdP9ePGRWQ" name="extension_rdfProperty" type="_Vc5MkHHNEdyJCIsYxONIwQ" aggregation="composite" association="_2mBBMPEoEd22qdP9ePGRWQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_4SaXcCqVEd6tAp0dWJ5sSg" name="Class_rdfProperty" memberEnd="_4Sa-gCqVEd6tAp0dWJ5sSg _4Sa-gSqVEd6tAp0dWJ5sSg">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_4Sa-gCqVEd6tAp0dWJ5sSg" name="extension_rdfProperty" type="_Vc5MkHHNEdyJCIsYxONIwQ" aggregation="composite" association="_4SaXcCqVEd6tAp0dWJ5sSg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Zd32wCqWEd6tAp0dWJ5sSg" name="rdfsRange">
+    <ownedAttribute xmi:id="_oVzUUiqWEd6tAp0dWJ5sSg" name="base_Association" association="_oVzUUCqWEd6tAp0dWJ5sSg">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_eERaICqWEd6tAp0dWJ5sSg" name="rdfsDomain">
+    <ownedAttribute xmi:id="_lsS7cSqWEd6tAp0dWJ5sSg" name="base_Association" association="_lsSUYCqWEd6tAp0dWJ5sSg">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Association"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_lsSUYCqWEd6tAp0dWJ5sSg" name="Association_rdfsDomain" memberEnd="_lsS7cCqWEd6tAp0dWJ5sSg _lsS7cSqWEd6tAp0dWJ5sSg">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_lsS7cCqWEd6tAp0dWJ5sSg" name="extension_rdfsDomain" type="_eERaICqWEd6tAp0dWJ5sSg" aggregation="composite" association="_lsSUYCqWEd6tAp0dWJ5sSg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_oVzUUCqWEd6tAp0dWJ5sSg" name="Association_rdfsRange" memberEnd="_oVzUUSqWEd6tAp0dWJ5sSg _oVzUUiqWEd6tAp0dWJ5sSg">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_oVzUUSqWEd6tAp0dWJ5sSg" name="extension_rdfsRange" type="_Zd32wCqWEd6tAp0dWJ5sSg" aggregation="composite" association="_oVzUUCqWEd6tAp0dWJ5sSg"/>
+  </packagedElement>
+</uml:Profile>

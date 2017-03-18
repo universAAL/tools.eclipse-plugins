@@ -1,0 +1,26 @@
+universAAL Build service/application tool
+
+Copyright 2008-2014 CERTH-ITI, http://www.iti.gr
+Information Technologies Institue (ITI)
+Centre for Research & Technology Hellas (CERTH)
+
+I. Included Software
+
+This does not include any software developed by 3rd parties
+
+
+II. Used Software
+
+This product uses software developed at
+The Apache Software Foundation (http://www.apache.org/).
+Licensed under the Apache License 2.0.
+
+This product uses software developed at
+Eclipse Foundation (www.eclipse.org)
+Copyright (c) 2011 Eclipse Foundation
+Licensed under Eclipse Public License v1.0
+
+
+III. License Summary
+- Apache License 2.0
+- Eclipse Public License v1.0

@@ -1,0 +1,81 @@
+/**
+ * transformation Ontology UML 2 Java transformation for universAAL
+ * date: 8/5/2013
+ * author: Erlend Stav, StŒle Walderhaug
+ * description: 
+ */
+
+import "OntologyUML2Java_1_1_0.m2t"
+
+texttransformation OntologyUML2Java_1_2_0 (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") extends OntologyUML2Java_1_1_0 {
+
+ 	uml.Package::processOntologyPackage() {
+		super.processOntologyPackage()
+ 	}
+/*
+  uml.Package::generatMainOntologyClassStaticImports() {
+'import org.universAAL.middleware.owl.BoundedValueRestriction;
+import org.universAAL.middleware.owl.DataRepOntology;
+import org.universAAL.middleware.owl.ManagedIndividual;
+import org.universAAL.middleware.owl.MergedRestriction;
+import org.universAAL.middleware.owl.OntClassInfoSetup;
+import org.universAAL.middleware.owl.Ontology;
+import org.universAAL.middleware.rdf.Resource;
+import org.universAAL.middleware.rdf.TypeMapper;
+import org.universAAL.middleware.service.owl.ServiceBusOntology;
+import org.universAAL.ontology.location.LocationOntology;
+'    
+  }
+ */ 
+	uml.Model::generateActivator(ontNameList:Hashtable) {
+	  	StdOut.println("Generating activator for MW 1.2.0")
+	  
+		// First, find package name for activator
+		var mainPacakageName:String = " "
+		self.ownedMember -> forEach( p:uml.Package ) {
+			mainPacakageName = p.name.substring(0, p.name.lastIndexOf("."))
+			//break	
+		}           
+				
+ 		file( javaBasePath + "/" + mainPacakageName.replace("\\.", "/") + '/' + ontologyName.firstToUpper() + "Activator.java" )
+    
+'
+package ' mainPacakageName ';
+
+import org.universAAL.middleware.container.ModuleContext;
+import org.universAAL.middleware.container.uAALModuleActivator;
+import org.universAAL.middleware.owl.OntologyManagement;
+'
+		//only importing valid ontologies - i.e. those that are put into the ontologyList
+		ontNameList.keys()-> forEach( oName:String ) {
+			'import 'oName'.*;\n'
+		}           
+
+'
+
+public class 'ontologyName.firstToUpper()'Activator implements uAALModuleActivator {
+
+'
+  ontNameList.keys()->forEach(oName:String){
+  '  'ontNameList.get(oName).firstToUpper()'Ontology _' ontNameList.get(oName) 'Ontology = new ' ontNameList.get(oName).firstToUpper() 'Ontology();\n'
+  }
+  '
+
+  public void start(ModuleContext mc) throws Exception {\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().register(_' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+
+  public void stop(ModuleContext mc) throws Exception {\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().unregister(_' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+}	
+'	
+
+  }  
+
+}
+

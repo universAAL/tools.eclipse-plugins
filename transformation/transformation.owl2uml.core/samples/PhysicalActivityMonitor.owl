@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:assert="http://www.owl-ontologies.com/assert.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns="http://ontology.universAAL.org/BiomedicalSensors.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://ontology.universAAL.org/BiomedicalSensors.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="AlertService">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="BiomedicalSensorService"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ManagedIndividual"/>
+  <owl:Class rdf:ID="Scale">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="SensorType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Scale"/>
+      <owl:Class rdf:ID="Zephyr"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Device"/>
+  <owl:Class rdf:ID="CompositeBiomedicalSensor">
+    <rdfs:subClassOf rdf:resource="#Device"/>
+  </owl:Class>
+  <owl:Class rdf:ID="BPmonitor">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#SensorType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Zephyr">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#SensorType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ConnectionsList">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="ConnectionType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#SensorType">
+    <rdfs:subClassOf rdf:resource="#ManagedIndividual"/>
+  </owl:Class>
+  <owl:Class rdf:about="#BiomedicalSensorService">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Service"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#ConnectionType">
+    <rdfs:subClassOf rdf:resource="#ManagedIndividual"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MeasuredEntity">
+    <rdfs:subClassOf rdf:resource="#ManagedIndividual"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="controls">
+    <rdfs:domain rdf:resource="#BiomedicalSensorService"/>
+    <rdfs:range rdf:resource="#CompositeBiomedicalSensor"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="lastMeasurements.">
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+    <rdfs:range rdf:resource="#MeasuredEntity"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="measurementUnit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="measurementTime">
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="terminologyPURL">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="measurementValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="measurementName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="terminologyCode">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="measurementError">
+    <rdfs:domain rdf:resource="#MeasuredEntity"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:FunctionalProperty rdf:ID="sensorType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+    <rdfs:range rdf:resource="#SensorType"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="brandNames">
+    <rdfs:domain rdf:resource="#BPmonitor"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Brand1_bp_monitor</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Brand2_bp_monitor</rdf:first>
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="monitorsAlerts">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:domain rdf:resource="#AlertService"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="connectionType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#ConnectionType"/>
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="isConnected">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="sensorName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="serviceURL">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#CompositeBiomedicalSensor"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="connectionMethod">
+    <rdfs:domain rdf:resource="#ConnectionsList"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >bluetooth</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >cable</rdf:first>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >wifi</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:FunctionalProperty>
+  <owl:DataRange>
+    <owl:oneOf rdf:parseType="Resource">
+      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+      >bluetooth</rdf:first>
+      <rdf:rest rdf:parseType="Resource">
+        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >wifi</rdf:first>
+        <rdf:rest rdf:parseType="Resource">
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >cable</rdf:first>
+        </rdf:rest>
+      </rdf:rest>
+    </owl:oneOf>
+  </owl:DataRange>
+  <rdf:List>
+    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >1</rdf:first>
+    <rdf:rest>
+      <rdf:List>
+        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >2</rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </rdf:List>
+    </rdf:rest>
+  </rdf:List>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->

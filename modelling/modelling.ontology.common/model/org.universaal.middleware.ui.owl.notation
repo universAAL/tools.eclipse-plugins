@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_oBCwYNJuEeKjT_DVDChv2Q" type="PapyrusUMLClassDiagram" name="UIBus" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_dg25sNJvEeKjT_DVDChv2Q" type="2008" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dg4H0NJvEeKjT_DVDChv2Q" source="ShadowFigure">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dg4H0dJvEeKjT_DVDChv2Q" key="ShadowFigure_Value" value="false"/>
+    </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dg4u4NJvEeKjT_DVDChv2Q" source="displayNameLabelIcon">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dg4u4dJvEeKjT_DVDChv2Q" key="displayNameLabelIcon_value" value="false"/>
+    </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dg4u4tJvEeKjT_DVDChv2Q" source="QualifiedName">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dg4u49JvEeKjT_DVDChv2Q" key="QualifiedNameDepth" value="1000"/>
+    </eAnnotations>
+    <children xmi:type="notation:DecorationNode" xmi:id="_dg4u5NJvEeKjT_DVDChv2Q" type="5029"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_dg4u5dJvEeKjT_DVDChv2Q" type="7017">
+      <children xmi:type="notation:Shape" xmi:id="_11N1cNJvEeKjT_DVDChv2Q" type="3012" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_11Y0kNJvEeKjT_DVDChv2Q" source="Stereotype_Annotation">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_11Y0kdJvEeKjT_DVDChv2Q" key="StereotypeWithQualifiedNameList" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_11Y0ktJvEeKjT_DVDChv2Q" key="StereotypeList" value="OWL::objectProperty"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_11Y0k9JvEeKjT_DVDChv2Q" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_11Y0lNJvEeKjT_DVDChv2Q" key="PropStereoDisplay" value=""/>
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_11Y0ldJvEeKjT_DVDChv2Q" key="StereotypePropertyLocation" value="Compartment"/>
+        </eAnnotations>
+        <element xmi:type="uml:Property" href="org.universaal.middleware.ui.owl.uml#_11IV4NJvEeKjT_DVDChv2Q"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_11N1cdJvEeKjT_DVDChv2Q"/>
+      </children>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_dg4u5tJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_dg4u59JvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_dg4u6NJvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dg4u6dJvEeKjT_DVDChv2Q"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_dg4u6tJvEeKjT_DVDChv2Q" type="7018">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_dg4u69JvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_dg4u7NJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_dg4u7dJvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dg4u7tJvEeKjT_DVDChv2Q"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_dg4u79JvEeKjT_DVDChv2Q" type="7019">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_dg4u8NJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_dg4u8dJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_dg4u8tJvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dg4u89JvEeKjT_DVDChv2Q"/>
+    </children>
+    <element xmi:type="uml:Class" href="org.universaal.middleware.ui.owl.uml#_dgr6kNJvEeKjT_DVDChv2Q"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dg25sdJvEeKjT_DVDChv2Q" x="63" y="252" width="289"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_r2C2kNJvEeKjT_DVDChv2Q" type="2008" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_r2DdoNJvEeKjT_DVDChv2Q" source="ShadowFigure">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_r2DdodJvEeKjT_DVDChv2Q" key="ShadowFigure_Value" value="false"/>
+    </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_r2DdotJvEeKjT_DVDChv2Q" source="displayNameLabelIcon">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_r2Ddo9JvEeKjT_DVDChv2Q" key="displayNameLabelIcon_value" value="false"/>
+    </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_r2EEsNJvEeKjT_DVDChv2Q" source="QualifiedName">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_r2EEsdJvEeKjT_DVDChv2Q" key="QualifiedNameDepth" value="1000"/>
+    </eAnnotations>
+    <children xmi:type="notation:DecorationNode" xmi:id="_r2EEstJvEeKjT_DVDChv2Q" type="5029"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_r2EEs9JvEeKjT_DVDChv2Q" type="7017">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_r2EEtNJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_r2EEtdJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_r2EEttJvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r2EEt9JvEeKjT_DVDChv2Q"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_r2EEuNJvEeKjT_DVDChv2Q" type="7018">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_r2EEudJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_r2EEutJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_r2EEu9JvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r2EEvNJvEeKjT_DVDChv2Q"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_r2EEvdJvEeKjT_DVDChv2Q" type="7019">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_r2EEvtJvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_r2EEv9JvEeKjT_DVDChv2Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_r2EEwNJvEeKjT_DVDChv2Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r2EEwdJvEeKjT_DVDChv2Q"/>
+    </children>
+    <element xmi:type="uml:Class" href="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.owl.uml#_7clzYKFGEeCPiYRKlVcMuQ"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r2C2kdJvEeKjT_DVDChv2Q" x="177" y="77"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_oBCwYdJuEeKjT_DVDChv2Q"/>
+  <element xmi:type="uml:Package" href="org.universaal.middleware.ui.owl.uml#_sOlH0NJuEeKjT_DVDChv2Q"/>
+  <edges xmi:type="notation:Connector" xmi:id="_zeM6wNJvEeKjT_DVDChv2Q" type="4002" source="_dg25sNJvEeKjT_DVDChv2Q" target="_r2C2kNJvEeKjT_DVDChv2Q" lineColor="0">
+    <children xmi:type="notation:DecorationNode" xmi:id="_zeOI4NJvEeKjT_DVDChv2Q" type="6007">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_zeOI4dJvEeKjT_DVDChv2Q" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_zeM6wdJvEeKjT_DVDChv2Q" fontName="Lucida Grande" fontHeight="11"/>
+    <element xmi:type="uml:Generalization" href="org.universaal.middleware.ui.owl.uml#_zd-4UNJvEeKjT_DVDChv2Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_zeM6wtJvEeKjT_DVDChv2Q" points="[-9, -50, 23, 131]$[-38, -161, -6, 20]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_zeYg8NJvEeKjT_DVDChv2Q" id="(0.4174757281553398,0.8)"/>
+  </edges>
+</notation:Diagram>

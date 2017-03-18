@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<version>
+	<middleware>
+		<bundleset>
+			<bundle level="1">mvn:org.universAAL.middleware/mw.schemas/2.0.4-SNAPSHOT</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.interfaces.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="3">mvn:org.universAAL.middleware/mw.container.xfaces.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="4">mvn:com.google.code.gson/gson/2.2.4</bundle>
+			<bundle level="5">mvn:org.universAAL.middleware/mw.brokers.api.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="6">mvn:org.universAAL.middleware/mw.managers.api.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="7">mvn:org.universAAL.middleware/mw.connectors.api.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="8">mvn:org.universAAL.middleware/mw.modules.api.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="9">wrap:mvn:org.osgi/org.osgi.compendium/4.1.0</bundle>
+			<bundle level="10">wrap:mvn:org.osgi/org.osgi.core/4.1.0</bundle>
+			<bundle level="11">mvn:org.apache.felix/org.apache.felix.log/1.0.1</bundle>
+			<bundle level="12">mvn:org.apache.felix/org.apache.felix.configadmin/1.2.4</bundle>
+			<bundle level="13">mvn:org.apache.felix/org.apache.felix.fileinstall/3.1.10</bundle>
+			<bundle level="14">mvn:org.ops4j.pax.confman/pax-confman-propsloader/0.2.2</bundle>
+			<bundle level="15">mvn:org.apache.felix/org.osgi.core/1.0.1</bundle>
+			<bundle level="16">mvn:org.apache.felix/org.osgi.service.obr/1.0.2</bundle>
+			<bundle level="17">mvn:org.apache.felix/org.apache.felix.shell/1.4.1</bundle>
+			<bundle level="18">wrap:mvn:xmlpull/xmlpull/1.1.3.1</bundle>
+			<bundle level="19">wrap:mvn:net.sf.kxml/kxml2/2.2.2</bundle>
+			<bundle level="20">mvn:org.apache.felix/org.apache.felix.bundlerepository/1.4.2</bundle>
+			<bundle level="21">mvn:org.ops4j.pax.logging/pax-logging-api/1.6.2</bundle>
+			<bundle level="22">mvn:org.universAAL.middleware/mw.container.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="23">mvn:org.universAAL.middleware/mw.data.representation.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="24">wrap:mvn:org.bouncycastle/jce.jdk13/144</bundle>
+			<bundle level="25">mvn:org.jgroups/jgroups/3.4.0.Final</bundle>
+			<bundle level="26">mvn:org.universAAL.middleware/mw.modules.communication.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="27">mvn:org.universAAL.middleware/mw.connectors.communication.jgroups.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="28">mvn:org.universAAL.middleware/mw.brokers.control.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="29">mvn:org.universAAL.middleware/mw.modules.aalspace.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="30">mvn:org.universAAL.thirdparty/jslp.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="31">mvn:org.universAAL.middleware/mw.connectors.discovery.slp.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="32">mvn:org.universAAL.middleware/mw.managers.aalspace.osgi/2.0.4-SNAPSHOT</bundle>
+			<bundle level="33">wrap:mvn:org.universAAL.middleware/mw.bus.model.osgi/2.0.4-SNAPSHOT</bundle>
+		</bundleset>
+	</middleware>
+
+	<features>
+		<bundleset name="UI bus">
+			<bundle>mvn:org.universAAL.ui/ui.dm/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.profile.ui.mainmenu/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.profile.userid/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.impairment/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.profile.ui.preferences/2.0.4-SNAPSHOT</bundle>
+		</bundleset>
+		<bundleset name="Swing UI Handler">
+			<bundle>mvn:org.universAAL.ui/ui.dm/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.profile.ui.mainmenu/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.profile.userid/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.impairment/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ui/ui.handler.gui.swing/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ui/ui.handler.gui.swing.classicLAF/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ui/ui.handler.gui.swing.bluesteelLAF/2.0.4-SNAPSHOT</bundle>
+		</bundleset>
+		<bundleset name="CHE">
+			<bundle>mvn:org.openrdf.sesame/sesame-runtime-osgi/2.6.0</bundle>
+			<bundle>mvn:org.universAAL.context/ctxt.che/2.0.4-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.che/2.0.4-SNAPSHOT</bundle>
+		</bundleset>
+		<bundleset name="Log Monitor">
+			<bundle>mvn:org.universAAL.tools/tools.log_mon/2.0.4-SNAPSHOT</bundle>
+		</bundleset>
+	</features>
+
+	<relevant>
+		<artifactset>
+			<artifact>org.universAAL.middleware/mw.container.xfaces.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.container.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.model.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.data.representation.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.service.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.context.osgi/2.0.4-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.data.serialization.osgi/2.0.4-SNAPSHOT</artifact>
+		</artifactset>
+	</relevant>
+
+	<ignore>
+		<artifactset>
+			<artifact>org.apache.felix/org.apache.felix.main</artifact>
+			<artifact>org.apache.felix/org.apache.felix.framework</artifact>
+			<artifact>org.apache.felix/org.osgi.core</artifact>
+			<artifact>org.apache.felix/org.apache.felix.artifactrepository</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell.tui</artifact>
+			<artifact>org.apache.felix/org.osgi.compendium</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.apache.felix/javax.servlet</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>org.universAAL.middleware/mw.composite</artifact>
+			<artifact>javax.media/jmf</artifact>
+			<artifact>org.apache.felix/org.osgi.foundation</artifact>
+			<artifact>org.apache.felix/org.apache.felix.log</artifact>
+			<artifact>org.osgi/org.osgi.core</artifact>
+			<artifact>org.osgi/org.osgi.osgi</artifact>
+			<artifact>org.osgi/org.osgi.compendium</artifact>
+		</artifactset>
+	</ignore>
+</version>

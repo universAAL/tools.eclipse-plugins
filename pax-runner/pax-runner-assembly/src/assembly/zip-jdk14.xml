@@ -1,0 +1,24 @@
+<assembly>
+  <id>jdk14</id>
+  <baseDirectory>pax-runner-${project.version}</baseDirectory>
+  <formats>
+    <format>zip</format>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>target/classes/jdk14</directory>
+      <outputDirectory>bin</outputDirectory>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0555</fileMode>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>org.ops4j.pax.runner:pax-runner:jar:jdk14</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
+</assembly>

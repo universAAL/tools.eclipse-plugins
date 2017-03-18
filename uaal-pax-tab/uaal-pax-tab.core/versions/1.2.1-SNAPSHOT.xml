@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<version>
+	<middleware>
+		<bundleset>
+			<bundle level="1">mvn:org.universAAL.middleware/mw.container.xfaces.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="2">mvn:org.universAAL.middleware/mw.acl.interfaces.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="3">mvn:org.ops4j.pax.logging/pax-logging-api/1.6.2</bundle>
+			<bundle level="4">mvn:org.ops4j.pax.logging/pax-logging-service/1.6.2</bundle>
+			<bundle level="5">mvn:org.apache.felix/org.osgi.compendium/1.4.0</bundle>
+			<bundle level="6">mvn:org.apache.felix/org.apache.felix.log/1.0.1</bundle>
+			<bundle level="7">mvn:org.apache.felix/org.apache.felix.configadmin/1.2.4</bundle>
+			<bundle level="8">mvn:org.apache.felix/org.apache.felix.fileinstall/3.1.10</bundle>
+			<bundle level="9">mvn:org.ops4j.pax.confman/pax-confman-propsloader/0.2.2</bundle>
+			<bundle level="10">mvn:org.apache.felix/org.apache.felix.bundlerepository/1.4.2</bundle>
+			<bundle level="11">mvn:org.universAAL.middleware/mw.container.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="12">wrap:mvn:org.bouncycastle/jce.jdk13/144</bundle>
+			<bundle level="13">mvn:org.universAAL.middleware/mw.acl.upnp.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="14">mvn:org.apache.felix/org.apache.felix.upnp.basedriver/0.8.0</bundle>
+			<bundle level="15">mvn:org.universAAL.middleware/mw.bus.model.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="16">mvn:org.universAAL.middleware/mw.data.representation.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="17">mvn:org.universAAL.middleware/mw.bus.service.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="18">mvn:org.universAAL.middleware/mw.bus.context.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="18">mvn:org.universAAL.middleware/mw.bus.ui.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="19">mvn:org.universAAL.middleware/mw.data.serialization.osgi/1.2.1-SNAPSHOT</bundle>
+			<bundle level="20">wrap:mvn:java3d/vecmath/1.3.1</bundle>
+			<bundle level="21">wrap:mvn:java3d/j3d-core/1.3.1</bundle>
+			<bundle level="22">wrap:mvn:jp.go.ipa/jgcl/1.0</bundle>
+		</bundleset>
+	</middleware>
+
+	<features>
+		<bundleset name="UI bus">
+			<bundle>mvn:org.universAAL.middleware/mw.bus.ui.osgi/1.2.1-SNAPSHOT</bundle>
+		</bundleset>
+		<bundleset name="CHE">
+			<bundle>mvn:org.universAAL.context/ctxt.che/1.2.1-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.ontology/ont.che/1.2.1-SNAPSHOT</bundle>
+		</bundleset>
+		<bundleset name="Log Monitor">
+			<bundle>mvn:org.universAAL.tools/tools.log_mon/1.2.1-SNAPSHOT</bundle>
+		</bundleset>
+	</features>
+
+	<relevant>
+		<artifactset>
+			<artifact>org.universAAL.middleware/mw.container.xfaces.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.acl.interfaces.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.container.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.model.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.data.representation.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.service.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.bus.context.osgi/1.2.1-SNAPSHOT</artifact>
+			<artifact>org.universAAL.middleware/mw.data.serialization.osgi/1.2.1-SNAPSHOT</artifact>
+		</artifactset>
+	</relevant>
+
+	<ignore>
+		<artifactset>
+			<artifact>org.apache.felix/org.apache.felix.main</artifact>
+			<artifact>org.apache.felix/org.apache.felix.framework</artifact>
+			<artifact>org.apache.felix/org.osgi.core</artifact>
+			<artifact>org.apache.felix/org.apache.felix.artifactrepository</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell</artifact>
+			<artifact>org.apache.felix/org.apache.felix.shell.tui</artifact>
+			<artifact>org.apache.felix/org.osgi.compendium</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.apache.felix/javax.servlet</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-service</artifact>
+			<artifact>org.ops4j.pax.logging/pax-logging-api</artifact>
+			<artifact>java3d/j3d-core/1.3.1</artifact>
+			<artifact>java3d/vecmath/1.3.1</artifact>
+			<artifact>jp.go.ipa/jgcl/1.0</artifact>
+			<artifact>org.bouncycastle/jce.jdk13/144</artifact>
+			<artifact>org.universAAL.middleware/mw.composite</artifact>
+			<artifact>javax.media/jmf</artifact>
+			<artifact>org.apache.felix/org.osgi.foundation</artifact>
+			<artifact>org.apache.felix/org.apache.felix.log</artifact>
+			<artifact>org.osgi/org.osgi.core</artifact>
+			<artifact>org.osgi/org.osgi.osgi</artifact>
+			<artifact>org.osgi/org.osgi.compendium</artifact>
+		</artifactset>
+	</ignore>
+</version>

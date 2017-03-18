@@ -1,0 +1,21 @@
+Main-Class:\
+  org.ops4j.pax.runner.Run
+
+Bundle-SymbolicName:\
+  ${bundle.symbolicName}
+
+Bundle-Version>:\
+  ${pom.version}
+
+Private-Package:\
+  !org.slf4j.impl,\
+  !org.apache.commons.logging,\
+  *
+
+-removeheaders:\
+  Export-Package,\
+  Include-Resource,\
+  Private-Package,\
+  Embed-Dependency,\
+  Embed-Transitive
+

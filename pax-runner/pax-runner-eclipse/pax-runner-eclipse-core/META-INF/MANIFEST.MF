@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: OPS4J Pax Runner - Eclipse Plugin Core
+Bundle-SymbolicName: org.ops4j.pax.runner.eclipse.core;singleton:=true
+Bundle-Version: 1.9.0.0
+Bundle-Vendor: OPS4J.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: .,
+ pax-runner-1.9.0.jar
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.pde.launching,
+ org.eclipse.pde.core,
+ org.eclipse.pde.ui,
+ org.eclipse.jdt.launching,
+ org.eclipse.core.resources,
+ org.eclipse.debug.core
+

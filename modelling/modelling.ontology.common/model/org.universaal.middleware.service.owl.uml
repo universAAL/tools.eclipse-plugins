@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:OWL="http:///schemas/OWL/_8v6kUJ2UEeCA1PJ4jAflww/8" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http:///schemas/OWL/_8v6kUJ2UEeCA1PJ4jAflww/8 pathmap://TwoUse_Profiles/OWL.profile.uml#_8wB5EJ2UEeCA1PJ4jAflww">
+  <uml:Model xmi:id="_ar8DoPqREeCQQaPCMdH-vA" name="org.universaal.middleware.service.owl">
+    <packageImport xmi:id="_9MS5UPqREeCQQaPCMdH-vA">
+      <importedPackage xmi:type="uml:Model" href="org.universaal.middleware.owl.uml#_0huTAKFGEeCPiYRKlVcMuQ"/>
+    </packageImport>
+    <packageImport xmi:id="_dfYk8NJtEeKjT_DVDChv2Q">
+      <importedPackage href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_U7uacGkcEeGIl7HiYaL9OA"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Xx5jADuNEeGWHJDQ6prNGQ" name="org.universAAL.middleware.service.owl">
+      <packagedElement xmi:type="uml:Class" xmi:id="_utGr4PqREeCQQaPCMdH-vA" name="Service" isAbstract="true">
+        <generalization xmi:id="_ATCn0PqSEeCQQaPCMdH-vA">
+          <general xmi:type="uml:Class" href="org.universaal.middleware.owl.uml#_7clzYKFGEeCPiYRKlVcMuQ"/>
+        </generalization>
+        <ownedAttribute xmi:id="_GxvwoPqSEeCQQaPCMdH-vA" name="instance_level_restrictions"/>
+        <ownedAttribute xmi:id="_Lh67EPqSEeCQQaPCMdH-vA" name="number_of_value_restrictions"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zjw40PqREeCQQaPCMdH-vA" name="InitialServiceDialog">
+        <generalization xmi:id="_XfYyoPqSEeCQQaPCMdH-vA" general="_1-3pUPqREeCQQaPCMdH-vA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_1-3pUPqREeCQQaPCMdH-vA" name="UserInterfaceService" isAbstract="true">
+        <generalization xmi:id="_WfXgEPqSEeCQQaPCMdH-vA" general="_utGr4PqREeCQQaPCMdH-vA"/>
+        <ownedAttribute xmi:id="_pj9LUPqSEeCQQaPCMdH-vA" name="correlated_service_class">
+          <type xmi:type="uml:DataType" href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_M0LU4NIKEeKw_dHjReEqbg"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_tDGywPqSEeCQQaPCMdH-vA" name="has_info_retrieval_process">
+          <type xmi:type="uml:DataType" href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_M0LU4NIKEeKw_dHjReEqbg"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_ueqKwPqSEeCQQaPCMdH-vA" name="description">
+          <type xmi:type="uml:DataType" href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_2boN0GkeEeGXyoAu4GMQ6g"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_yGvEsPqSEeCQQaPCMdH-vA" name="has_vendor">
+          <type xmi:type="uml:DataType" href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_M0LU4NIKEeKw_dHjReEqbg"/>
+        </ownedAttribute>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_LGqtAPqTEeCQQaPCMdH-vA">
+      <eAnnotations xmi:id="_LHhBkPqTEeCQQaPCMdH-vA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://TwoUse_Profiles/OWL.profile.uml#_8wB5EJ2UEeCA1PJ4jAflww"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://TwoUse_Profiles/OWL.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_LHhooPqTEeCQQaPCMdH-vA">
+      <eAnnotations xmi:id="_LInNwPqTEeCQQaPCMdH-vA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://TwoUse_Profiles/RDF.profile.uml#_0R89QCqWEd6tAp0dWJ5sSg"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://TwoUse_Profiles/RDF.profile.uml#_TEtTYHGwEdyoJ7Xxsdx7ug"/>
+    </profileApplication>
+  </uml:Model>
+  <OWL:objectProperty xmi:id="_Vfi_ANIJEeKw_dHjReEqbg" base_Property="_GxvwoPqSEeCQQaPCMdH-vA"/>
+  <OWL:datatypeProperty xmi:id="_YPNqQNIJEeKw_dHjReEqbg" base_Property="_Lh67EPqSEeCQQaPCMdH-vA" isFunctional="true"/>
+  <OWL:objectProperty xmi:id="_0InaENIJEeKw_dHjReEqbg" base_Property="_pj9LUPqSEeCQQaPCMdH-vA"/>
+  <OWL:datatypeProperty xmi:id="_6sObkNIKEeKw_dHjReEqbg" base_Property="_ueqKwPqSEeCQQaPCMdH-vA" isFunctional="true"/>
+  <OWL:objectProperty xmi:id="_JwiIQNILEeKw_dHjReEqbg" base_Property="_tDGywPqSEeCQQaPCMdH-vA" isFunctional="true"/>
+  <OWL:objectProperty xmi:id="_UNWFYNILEeKw_dHjReEqbg" base_Property="_yGvEsPqSEeCQQaPCMdH-vA"/>
+  <OWL:owlOntology xmi:id="_wFVf8NILEeKw_dHjReEqbg" defaultNamespace="http://ontology.universAAL.org/ServiceBus.owl" base_Package="_Xx5jADuNEeGWHJDQ6prNGQ"/>
+</xmi:XMI>

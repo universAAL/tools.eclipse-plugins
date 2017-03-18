@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.universaal.tools.aalstudio.feature_3.0.0.jar" id="org.universaal.tools.aalstudio.feature" version="3.0.0">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.universaal.tools.newwizard.feature_1.2.2.jar" id="org.universaal.tools.newwizard.feature" version="1.2.2">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.eclipse.mofscript_1.4.0.3.jar" id="org.eclipse.mofscript" version="1.4.0.3">
+      <category name="universaal_prereq"/>
+   </feature>
+   <feature url="features/org.universaal.tools.transformationfeature_1.3.0.jar" id="org.universaal.tools.transformationfeature" version="1.3.0">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.universaal.tools.profilefeature_1.2.0.jar" id="org.universaal.tools.profilefeature" version="1.2.0">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.universaal.tools.owl2uml.feature_1.1.1.jar" id="org.universaal.tools.owl2uml.feature" version="1.1.1">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.universaal.tools.envsetup.feature_1.0.0.jar" id="org.universaal.tools.envsetup.feature" version="1.0.0">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.universaal.tools.uaal.runner.ui.feature_2.0.0.jar" id="org.universaal.tools.uaal.runner.ui.feature" version="2.0.0">
+      <category name="universaal_tools"/>
+   </feature>
+   <feature url="features/org.ops4j.pax.runner.eclipse.core.feature_1.9.0.0.jar" id="org.ops4j.pax.runner.eclipse.core.feature" version="1.9.0.0">
+      <category name="universaal_prereq"/>
+   </feature>
+   <feature url="features/org.ops4j.pax.runner.eclipse.ui.feature_1.9.0.0.jar" id="org.ops4j.pax.runner.eclipse.ui.feature" version="1.9.0.0">
+      <category name="universaal_prereq"/>
+   </feature>
+   <category-def name="universaal_tools" label="AAL Studio tools">
+      <description>
+         Tools for development of AAL applications using the universAAL platform
+      </description>
+   </category-def>
+   <category-def name="universaal_prereq" label="AAL Studio prerequisites">
+      <description>
+         3rd party tools needed by the AAL Studio
+      </description>
+   </category-def>
+</site>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Primitive Types"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.uri_mapping">
+      <mapping
+            source="pathmap://AAL_ONTOLOGIES/"
+            target="platform:/plugin/org.universaal.tools.modelling.ontology.common/model/">
+      </mapping>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Middleware Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.owl.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Service Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.service.owl.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Physical World Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.phThing.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Device Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.device.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Unit Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.unit.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+   <extension
+         point="org.eclipse.papyrus.uml.extensionpoints.UMLLibrary">
+      <library
+            iconpath="icons/uaal-16.png"
+            name="universAAL Measurement Ontology"
+            path="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.measurement.uml"
+            provider="universAAL">
+      </library>
+   </extension>
+
+</plugin>

@@ -1,0 +1,1660 @@
+	/**
+ * transformation Ontology UML 2 Java transformation for universAAL
+ * date: 28/6/2011
+ * author: Erlend Stav, StŒle Walderhaug
+ * description: 
+ */
+
+import "validateOntUML.m2t"
+
+texttransformation OntologyUML2Java_1_1_0 (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") {
+
+
+/**
+ * Change required:
+ * - update POM file
+ * - add new ontology class
+ * -- create OntClassInfoSetup variable for each ontology class with createNewAbstractOntClassInfo / createNewOntClassInfo
+ * -- in second loop, add all other info for each ontology class incl. comment, resourceLabel, superclass, then the following:
+ * -- add support for properties
+ * -- add support for restrictions
+ * -- add support for enumerations
+ * -- add suppport for imports
+ */
+
+
+  var ontologyNamespace:String
+  var ontologyName:String
+  var ontologyNamespaceReference:String
+  var propertyHashtable: Hashtable  
+  var projectInfo: Hashtable
+  var importedModels: Hashtable
+  var javaBasePath:String
+  var testBasePath:String
+  var javaOWLSupport:String
+  var datatypeImportMap:Hashtable 
+  
+  var ontologyClassList:Hashtable 
+  var ontologyEnumerationList:Hashtable 
+  var subPackageList:Hashtable
+  
+  
+ 
+   /**
+   * Main (entry point)
+   */
+    
+  uml.Model::main() {
+    StdOut.println("Validating model before transformation")
+    if (self.checkModel()) {
+      StdOut.println("=====================================================")
+      StdOut.println("Validation succeeded - proceeding with transformation")
+      StdOut.println("=====================================================")
+    }  
+    else {
+      StdOut.println("=======================================================================")
+      StdOut.println("Validaton errors found - please correct the model before transformation")
+      return
+    }
+    
+    
+    
+    var defaultOntologyNamespace:String
+  	var defaultOntologyName:String
+  	
+  	var ontologyNameList:Hashtable
+   
+    javaBasePath = getEnv("org.universaal.tools.transformationcommand.javadir")
+    testBasePath = getEnv("org.universaal.tools.transformationcommand.testdir")
+    javaOWLSupport = getEnv("org.universaal.tools.transformationcommand.javaowlsupport")
+    
+    if (self.hasStereotype("owlOntology")) {
+      
+      StdOut.println("WARNING!!! The owlOntology stereotype should NOW be applied to the root package(s).")
+      StdOut.println("Remember to set all required values (defaultnamespace and name) for each package!") 
+      StdOut.println("Continuing with transformation...") 
+      StdOut.println("");
+      
+      defaultOntologyName = self.name 
+      defaultOntologyNamespace = self.getStereotypeValue("owlOntology", "defaultNamespace")
+ 
+    }
+    
+   
+  	// Initiate a hashmap that contains the supported datatypes and their corresponding java import statements
+    self.initDatatypeImportMap()
+    //must create the import list.
+    self.getImportList()
+         
+  	self.ownedMember -> forEach( p:uml.Package ){   
+  	   ontologyClassList = null
+       ontologyEnumerationList = null
+       subPackageList = null
+        
+  	   if (!p.hasStereotype("owlOntology")) {
+			StdOut.println("WARNING!!! The package " + p.name + " is not stereotyped with owlOntology!")  
+			if(defaultOntologyName==null) {
+				StdOut.println("It is required to set the owlOntology stereotype on ALL root package.")
+				StdOut.println("To perform the transformation, add this information to the model.")
+				StdOut.println("Skipping package " + p.name.trim())
+     			StdOut.println("");
+ 				break
+			}
+			else {
+				StdOut.println("Continuing transformation of package with information from the owlOntology sterotype of the model root.")
+			}
+		}
+    	//TODO: HANDLE unset packages
+    
+    	ontologyName = p.name.substring(p.name.lastIndexOf(".")+1, p.name.size()) //get the last segment of the packagename 
+    	StdOut.println("Generating Java classes for package: " + ontologyName)
+    
+    	ontologyNamespace = p.getStereotypeValue("owlOntology", "defaultNamespace")
+    	if (ontologyNamespace.equals("")) {
+    	  ontologyNamespace = defaultOntologyNamespace
+    	}
+    	StdOut.println("Namespace: "+ontologyNamespace) 
+    	ontologyNamespaceReference =  ontologyName +  'Ontology.NAMESPACE'       
+       
+      
+        //recursively create the ontology classes and enumerations
+        p.processOntologyPackage()  
+		subPackageList.remove(p.getFullPackageName().trim()) //remove own reference      
+           
+		//then the main ontology class and the factories for each package.		
+		StdOut.println("Handling main ontology class for :" + p.name) 
+		
+   		p.generateMainOntologyClass(ontologyClassList, ontologyEnumerationList)
+  	
+   		
+   		p.generateFactory(ontologyClassList)
+   		
+   		if (javaOWLSupport.equals("true"))
+   			p.generateCreator(ontologyClassList)
+   		
+   		//at the package to list of ontologies
+   		ontologyNameList.put(p.name.trim(), ontologyName)
+   		
+  	}
+
+
+	StdOut.println("Handling activator of :" + self.name) 
+   	self.generateActivator(ontologyNameList)
+
+	StdOut.println("Generating test:" + self.name) 
+   	self.generateTest()
+ 
+ 
+	//StdOut.println("Generating the POM file")
+	//create the POM file for the project
+	//self.generatePOMFile() 
+  }
+ 
+ 	uml.Package::processOntologyPackage() {
+			//add package name to list of packages
+			subPackageList.put(self.getFullPackageName().trim(), "") 	    
+ 	    
+ 	      	//Create a hashtable containing the properties of the classes in the model.  		
+   			StdOut.println("Handling properties of classes (not interfaces) in the package: " + self.name)
+   			self.ownedElement->forEach(c : uml.Class) {
+   				c.createPropertyList()
+  				c.createPropertyListForAssociations()
+   			}
+			//now see if there are any associations that own both its ends
+			self.ownedElement->forEach(ass : uml.Association) {ass.createPropertyForAssociations()}	
+
+		  	StdOut.println("Handling classes of package :" + self.name) 
+  			//Generate a java-class for each class in the ontology
+			self.ownedElement -> forEach( component:uml.Class ) { // | component.hasStereotype("owlClass") ){
+			    ontologyClassList.put(component.name, component)
+				component.generateOntologyClass()
+			}
+   		
+			self.ownedElement -> forEach( component:uml.Enumeration ) { // | component.hasStereotype("owlClass") ){
+			    ontologyEnumerationList.put(component.name, component)
+				component.generateEnumerationClass()
+			}
+ 	
+ 	 		//generate subpackages
+ 	 		self.ownedMember->forEach(subPack : uml.Package) {
+ 	 			subPack.processOntologyPackage()
+ 	 		}
+ 	}
+ 
+	uml.Model::generateActivator(ontNameList:Hashtable) {
+		// First, find package name for activator
+		var mainPacakageName:String = " "
+		self.ownedMember -> forEach( p:uml.Package ) {
+			mainPacakageName = p.name.substring(0, p.name.lastIndexOf("."))
+			//break	
+		}           
+    
+		file( javaBasePath + "/" + mainPacakageName.replace("\\.", "/") + '/osgi/' + "Activator.java" )
+    
+'
+package ' mainPacakageName '.osgi;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.universAAL.middleware.owl.OntologyManagement;
+'
+		//only importing valid ontologies - i.e. those that are put into the ontologyList
+		ontNameList.keys()-> forEach( oName:String ) {
+			'import 'oName'.*;\n'
+		}           
+
+'
+
+public class Activator implements BundleActivator {
+
+  static BundleContext context = null;
+'
+  ontNameList.keys()->forEach(oName:String){
+  '  'ontNameList.get(oName).firstToUpper()'Ontology _' ontNameList.get(oName) 'Ontology = new ' ontNameList.get(oName).firstToUpper() 'Ontology();\n'
+  }
+  '
+
+  public void start(BundleContext context) throws Exception {
+    Activator.context = context;\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().register(_' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+
+  public void stop(BundleContext arg0) throws Exception {\n'
+    ontNameList.keys()->forEach(oName:String){ 
+    '    OntologyManagement.getInstance().unregister(_' ontNameList.get(oName) 'Ontology);\n'
+    }
+'  }
+}	
+'	
+
+  }
+
+
+  uml.Model::generateTest() {
+    file( testBasePath + "/org/universAAL/ontology/test/ArtifactIntegrationTest.java" )
+"package org.universAAL.ontology.test;
+
+import org.universAAL.itests.IntegrationTest;
+
+/**
+ * Here developer's of this artifact should code their integration tests.
+ * 
+ */
+public class ArtifactIntegrationTest extends IntegrationTest {
+
+    public void testComposite() {
+	logAllBundles();
+    }
+
+}
+"    
+  }
+
+
+  uml.Package::generatMainOntologyClassStaticImports() {
+'import org.universAAL.middleware.owl.IntRestriction;
+import org.universAAL.middleware.owl.FloatRestriction;
+import org.universAAL.middleware.owl.DoubleRestriction;
+import org.universAAL.middleware.owl.LongRestriction;
+import org.universAAL.middleware.owl.DataRepOntology;
+import org.universAAL.middleware.owl.ManagedIndividual;
+import org.universAAL.middleware.owl.MergedRestriction;
+import org.universAAL.middleware.owl.OntClassInfoSetup;
+import org.universAAL.middleware.owl.Ontology;
+import org.universAAL.middleware.rdf.TypeMapper;
+import org.universAAL.middleware.service.owl.ServiceBusOntology;
+import org.universAAL.ontology.location.LocationOntology;
+import org.universAAL.ontology.phThing.PhThingOntology;
+import org.universAAL.ontology.shape.ShapeOntology;
+import org.universAAL.ontology.space.SpaceOntology;
+'    
+  }
+
+
+  uml.Package::generateMainOntologyClass(ontologyClassList:Hashtable, ontologyEnumerationList:Hashtable) {
+   
+	file( javaBasePath + "/" + self.name.replace("\\.", "/") + '/' + ontologyName.firstToUpper() + "Ontology.java" )
+	//Stdout.println("MAIN: creating main ontology class. Should contain " + ontologyClassList.size() + " classes and " + ontologyEnumerationList.size() + " enumerations" )
+
+	var importName:String
+	importName= self.getFullPackageName()
+    
+		
+'
+package ' importName ';
+
+' self.generatMainOntologyClassStaticImports()
+'
+' 
+//use the import hastables to generate a complete list of imports.
+//for each class in the ontologyClassList, get the import classes and put them into a new hashtable.
+//use the same hashtable for all classes, meaning that duplicate entries will be overwritten. 
+
+var factoryImportList: Hashtable
+
+	factoryImportList.put("org.universAAL.middleware.rdf.Resource", " ")
+
+	ontologyClassList->forEach(c : uml.Class) {
+		var importList:Hashtable = c.getImportsForClass()
+		importList.keys()->forEach(impString:String) {
+    		//insert the key into the factoryImportList
+    		factoryImportList.put(impString, c)
+    	}
+    }
+
+	subPackageList.keys()->forEach(impString:String) {
+    	//insert the key into the factoryImportList
+    	factoryImportList.put(impString + ".*", "")
+    }
+    
+    
+	//now print the import statements
+    factoryImportList.keys()->forEach(impString:String) {
+ 		'import 'impString';\n'
+ 	}
+ 
+	'\n'
+
+'
+//import the factory for this ontology
+import ' importName.substring(0, importName.lastIndexOf(".")) '.' ontologyName.firstToUpper() 'Factory;
+
+
+/**
+ * This class provides the main representation of the 'ontologyName' ontology 
+ * for the universAAL platform.
+ *
+ * @author Generated by the OntologyUML2Java transformation of AAL Studio
+ */
+public final class ' ontologyName.firstToUpper() 'Ontology extends Ontology {
+
+  private static ' ontologyName.firstToUpper() 'Factory factory = new ' ontologyName.firstToUpper() 'Factory();
+  public static final String NAMESPACE ="' ontologyNamespace '#";
+	
+  public ' ontologyName.firstToUpper() 'Ontology() {
+    super(NAMESPACE);
+  }
+
+  public void create() {
+    Resource r = getInfo();
+    r.setResourceComment("' self.owner.getFirstCommentText() '");
+    r.setResourceLabel("'ontologyName'");
+    addImport(DataRepOntology.NAMESPACE);
+    addImport(ServiceBusOntology.NAMESPACE);
+    addImport(LocationOntology.NAMESPACE);
+    addImport(PhThingOntology.NAMESPACE);
+    addImport(ShapeOntology.NAMESPACE);
+    addImport(SpaceOntology.NAMESPACE);
+    // TODO: Add any additionally imported ontologies here
+    \n'
+		
+		if (!ontologyEnumerationList.isEmpty()) {
+            '\n    // ******* Declaration of enumeration classes of the ontology ******* //\n'        		  
+			ontologyEnumerationList->forEach(enumClass : uml.Enumeration) {
+			  '    OntClassInfoSetup oci_' enumClass.name' = createNewAbstractOntClassInfo('enumClass.name'.MY_URI);\n'
+			}
+		}
+			  
+		'\n    // ******* Declaration of regular classes of the ontology ******* //\n'
+
+		//create a ontclassinfo for each ontology class in the ontologyClassList
+		var index:Integer
+		index = 0
+		
+		ontologyClassList->forEach(c: uml.Class) {	
+			if (c.isAbstract) { 
+				'    OntClassInfoSetup oci_' c.name.trim() ' = createNewAbstractOntClassInfo(' c.name.trim() '.MY_URI);\n'
+			}
+			else {
+				'    OntClassInfoSetup oci_' c.name.trim() ' = createNewOntClassInfo(' c.name.trim() '.MY_URI, factory, ' index ');\n'
+				index+=1
+			} //end check for abstract class
+		}
+			
+			
+		if (!ontologyEnumerationList.isEmpty()) {
+		    '\n    // ******* Add content to enumeration classes of the ontology ******* //\n\n'        		  
+			ontologyEnumerationList->forEach(enumClass : uml.Enumeration) {
+			  var oci:String = "oci_" + enumClass.name.trim()
+			  '    ' oci '.setResourceComment("' enumClass.getFirstCommentText() '");\n'
+			  '    ' oci '.setResourceLabel("'enumClass.name.trim() '");\n'
+			  if (!enumClass.isAbstract) {
+			    enumClass.generalization->forEach(gen:uml.Generalization) {
+			      '    ' oci '.addSuperClass('gen.general.name'.MY_URI);\n'
+			    }
+			    '    ' oci '.toEnumeration(new ManagedIndividual[] {\n'
+			    '      '
+			    var litCount:Integer = 0
+			    enumClass.ownedLiteral->forEach(lit:uml.EnumerationLiteral) {
+			      if (litCount > 0) { 
+			        ','
+			      }
+			      ' 'enumClass.name.trim()'.'lit.name.trim()
+			      litCount = litCount + 1;
+			      //TODO: Add linebreak if many?
+			    }
+			    ' });\n\n'
+			    
+			  }					  
+			}
+		}
+
+	   '\n    // ******* Add content to regular classes of the ontology ******* //\n'	
+		
+		ontologyClassList->forEach(c: uml.Class) {		  
+		  var oci:String = "oci_"  + c.name.trim()
+			'    'oci '.setResourceComment("' c.getFirstCommentText() '");\n'
+			'    'oci '.setResourceLabel("' c.name.trim() '");\n' 
+			
+			//add reference to the superclass. In case of multiple inheritance, use the first entry in set
+			if (c.superClass.size()>0) {
+				c.superClass->forEach(sc: uml.Class) {
+					'    'oci '.addSuperClass(' sc.name '.MY_URI); \n'	
+			  	}	
+			}
+		
+			//using the class's hashtable for properties
+			Hashtable props = propertyHashtable.get(c.name)
+			Boolean isObjectProperty = true //true=objectproperty, false=datatypeproperty, default=true
+			Boolean isFunctional = true //true/false, default=true
+			//go through the attributes first
+			props->forEach(prop : uml.Property) {
+				//get stereotype and check for datatypeproperty. Otherwise objectproperty.
+				isObjectProperty = true
+				isFunctional = true
+				if (prop.hasStereotype("datatypeProperty")) { //datatypeProperty
+					isObjectProperty = false
+					isFunctional = prop.getValue("datatypeProperty", "isFunctional")
+				}
+				else  if (prop.hasStereotype("objectProperty")) {
+				  	isFunctional = prop.getValue("objectProperty", "isFunctional")
+				}
+				else {
+					if (prop.isDataType()) {
+						isObjectProperty = false
+					}		  
+				}			
+				
+				
+				if (isObjectProperty) {
+			  		if (isFunctional){ //default = true
+						'    ' oci '.addObjectProperty(' c.name'.PROP_' prop.toUpperFormat() ').setFunctional();\n'
+					}
+					else {
+						'    ' oci '.addObjectProperty(' c.name'.PROP_' prop.toUpperFormat() ');\n'
+					}
+				}
+				else {
+					if (isFunctional){ //default = true
+						'    ' oci '.addDatatypeProperty(' c.name'.PROP_' prop.toUpperFormat() ').setFunctional();\n'
+					}
+					else {
+						'    ' oci '.addDatatypeProperty(' c.name'.PROP_' prop.toUpperFormat() ');\n'
+					}//isfunctional = true
+				}
+				
+		
+		 		 //handle 0..* cardinality
+		  		if (prop.upper<0 && prop.lower==0) {
+					'      	' oci '.addRestriction(MergedRestriction.getAllValuesRestriction(' c.name '.PROP_' prop.toUpperFormat() ',  \n'
+					'       	' self.getURIExpressionForType(prop.type.name.trim()) '));\n'
+		 		} //if 0..*
+		  		else if (!prop.type.name.trim().equals("") ) {  //this is a datatype property that has been set.
+						'    ' oci '.addRestriction(MergedRestriction\n'
+						'      .getAllValuesRestrictionWithCardinality(' c.name '.PROP_' prop.toUpperFormat() ', \n'	  
+						if (prop.defaultValue.name.equals("values")) { 
+							'          ' prop.getBoundingRestriction(c.name) ', ' prop.lower ', ' prop.upper ')'
+						} else {
+							'          'self.getURIExpressionForType(prop.type.name.trim())', ' prop.lower ', ' prop.upper ')'
+						}
+/*						if (prop.defaultValue.name.equals("values")) { //TODO: this is a temporary solution. See doc for more info
+							//TODO: must check for property type. Now supporting Integer only
+							'\n      ' prop.getBoundingRestriction(c.name)
+						}*/
+						');\n'
+		 		 	} //else if
+		 		else {    //default when unset type
+		 		  	'    ' oci '.addRestriction(MergedRestriction.getCardinalityRestriction(' c.name '.PROP_' prop.toUpperFormat() ', ' prop.lower ', ' prop.upper '));\n'
+		 		}
+		 	} //forEach	prop
+	 		'\n'
+		} //forEach class
+'  }
+}
+'
+  }
+		
+  uml.Model::initDatatypeImportMap() {
+    datatypeImportMap.put("Boolean", " ")
+    datatypeImportMap.put("Integer", " ")
+    datatypeImportMap.put("Float", " ")
+    datatypeImportMap.put("UnlimitedNatural", " ")
+    datatypeImportMap.put("Long", " ")
+    datatypeImportMap.put("String", " ")
+    datatypeImportMap.put("Float", " ")
+    datatypeImportMap.put("Double", " ")
+    datatypeImportMap.put("XMLGregorianCalendar", "javax.xml.datatype.XMLGregorianCalendar")
+    datatypeImportMap.put("Duration", "javax.xml.datatype.Duration")
+    datatypeImportMap.put("Locale", "java.util.Locale")
+    datatypeImportMap.put("Resource","org.universAAL.middleware.rdf.Resource")
+  }		
+		
+		
+		
+  uml.Property::isDataType() {
+	var theTypeName:String = "String"	
+	
+	if (self.type != null) {
+		  theTypeName = self.type.name
+	}
+	var isDatatype:boolean = (datatypeImportMap.get(theTypeName) != null)
+	
+	return isDatatype
+  }
+
+  uml.Property::getDataTypeImport() {
+	var theTypeName:String = "String"	
+	
+	if (self.type != null) {
+		  theTypeName = self.type.name
+	}
+	return datatypeImportMap.get(theTypeName)
+  }
+  
+ // generate Creator 
+ uml.Package::generateCreator(ontologyClassList:Hashtable) {
+          
+    var pName:String = self.getFullPackageName()
+    
+	file( javaBasePath + "/" + pName.substring(0, pName.lastIndexOf(".")).replace("\\.", "/") + '/creator/' + ontologyName.firstToUpper() + "OWLCreator.java" )
+    
+'
+package ' pName.substring(0, pName.lastIndexOf(".")) '.creator;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyFormat;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import org.universAAL.middleware.owl.OntologyManagement;
+import org.universAAL.middleware.sodapop.msg.MessageContentSerializer;
+import org.universAAL.serialization.turtle.TurtleParser;
+import ' pName '.' ontologyName.firstToUpper() 'Ontology;
+
+public class ' ontologyName.firstToUpper() 'OWLCreator {
+
+	private static ' ontologyName.firstToUpper() 'Ontology ontology = new ' ontologyName.firstToUpper() 'Ontology();
+	private static MessageContentSerializer contentSerializer = new TurtleParser();
+
+	public static void main(String[] args) {
+		OntologyManagement.getInstance().register(ontology);
+		String serializedOntology = contentSerializer.serialize(ontology);
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("' ontologyName.firstToUpper() '.owl", false));
+			out.write(serializedOntology);
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Exception ");
+
+		}
+		
+		File file = new File("' ontologyName.firstToUpper() '.owl");
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		IRI documentIRI = IRI.create(file);
+		OWLOntology owlOntology;
+		try {
+			owlOntology = manager.loadOntologyFromOntologyDocument(documentIRI);
+			System.out.println("Loaded ontology: " + owlOntology);
+			
+			OWLOntologyFormat format = manager.getOntologyFormat(owlOntology);
+			 
+			RDFXMLOntologyFormat rdfxmlFormat = new RDFXMLOntologyFormat();
+			if(format.isPrefixOWLOntologyFormat()) {
+				rdfxmlFormat.copyPrefixesFrom(format.asPrefixOWLOntologyFormat());
+			}
+			manager.saveOntology(owlOntology, rdfxmlFormat, IRI.create(file));
+			System.out.println("Saved ontology " + owlOntology + " in file ' ontologyName.firstToUpper() '.owl");
+		} catch (OWLOntologyCreationException e1) {
+			e1.printStackTrace();
+		} catch (OWLOntologyStorageException e) {
+			e.printStackTrace();
+		}
+
+		return;
+	}
+
+}
+
+'
+  } 
+  
+  // generate Factory 
+  uml.Package::generateFactory(ontologyClassList:Hashtable) {
+          
+    var pName:String = self.getFullPackageName()
+    
+	file( javaBasePath + "/" + pName.substring(0, pName.lastIndexOf(".")).replace("\\.", "/") + '/' + ontologyName.firstToUpper() + "Factory.java" )
+    
+'
+package ' pName.substring(0, pName.lastIndexOf(".")) ';
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.universAAL.middleware.rdf.Resource;
+import org.universAAL.middleware.rdf.impl.ResourceFactoryImpl;
+
+'
+
+
+//The factory is now in another package than the classes. Must import the classes.
+//At the time this rule is invoked, all the relevant classes are in ontologyClassList and the enums in ontologyEnumList
+
+ontologyClassList->forEach(c : uml.Class) {
+	'
+import ' + c.getFullPackageName() + ';'
+}
+
+
+'
+
+public class ' ontologyName.firstToUpper() 'Factory extends ResourceFactoryImpl {
+
+
+  public Resource createInstance(String classURI, String instanceURI, int factoryIndex) {
+
+	switch (factoryIndex) {
+'
+	var classIndex:Integer = 0
+	ontologyClassList.values()->forEach(component:uml.Class) {
+	  // Generate factory entry only for concrete classes
+	  if (component.isAbstract == false) {
+		'     case ' classIndex ':\n'
+		'       return new 'component.name'(instanceURI);\n'
+		classIndex = classIndex + 1
+	  }
+	}
+'
+	}
+	return null;
+  }
+}
+'
+  }
+
+
+  uml.Property::getBoundingRestriction(className: String):String {
+    var txt:String
+    var res:String
+  
+  	var typeName:String
+  
+    //get the default value string specification. This string holds the range - min, max.
+    //TODO: add support for more ranges and sets.
+    txt = self.defaultValue.value.trim()
+ 
+    res = ""
+  
+  
+    typeName = self.type.name
+ 	if (typeName.equals("UnlimitedNatural")) {
+ 	  typeName = "Long"
+ 	} 
+ 	
+  
+    //currently only integer is supported
+    if (self.type.name.equals("Integer")) {
+      res = "new IntRestriction(new Integer(" + txt.substringBefore("..") + "), true, new Integer(" + txt.substringAfter("..")+  "), true)"
+ //	  res = ".addRestriction(new BoundingValueRestriction(" + className + ".PROP_" + self.toUpperFormat() 
+//  	  res = res + ", new Integer(" + txt.substringBefore("..") + "), true, new Integer(" + txt.substringAfter("..")+  "), true))"
+    } 
+    else if (typeName.equals("Float") || typeName.equals("Double") || typeName.equals("Long")) {
+      res = "new " + typeName + "Restriction(new " + typeName + "(" + txt.substringBefore("..") + "), true, new " + typeName + "(" + txt.substringAfter("..")+  "), true)"
+    }
+ 
+    return res //empty or a boundingrestriction.
+  }
+  
+  
+  uml.Classifier::toUpperFormat():String {
+    var txt:String
+    var res:String
+    var isFirst:Boolean
+  
+    txt = self.name.trim()
+    res = ""
+
+	isFirst = true
+    txt->forEach(aChar:String) {
+      if ((!isFirst) && aChar.isUpperCase(0)) {
+        res = res + "_";
+      }
+      res = res + aChar;
+	  isFirst = false
+    }  
+  	return res.toUpper()
+  }   
+
+ /* uml.Classifier::getFullPackageName():String {
+  var txt:String
+  var res:String //final result
+  var sub:String //if there are subpackages
+  
+  txt = self.qualifiedName.trim()
+  res = ""
+  sub = ""
+  
+  res = txt.substringAfter("::").substringBefore("::") //this will be the root package name
+  sub = txt.substringAfter(res).substringBefore(self.name.trim())
+  
+  if (sub.lastIndexOf(":")>1){ //strip of leading and trailing :: 
+ 	sub = sub.substring(2, sub.size()-2).replace("::", ".")
+ 	res = res + "." + sub
+  }
+  
+  return res
+  
+  
+  
+  }
+  
+  */
+  
+  uml.NamedElement::getStereotypeValue(stereotypeName:String, tag:String):String {
+    // Find and return the value of a stereotype    
+   var mySType:uml.Stereotype
+   if (self.hasStereotype(stereotypeName)) {
+     mySType = self.getAppliedStereotype(stereotypeName);
+     return self.getValue(mySType, tag)
+   }
+   else {
+     //StdOut.println(self.name+" do not have the expected stereotype : " + stereotypeName)
+     return ""
+   }
+  }
+
+
+  uml.NamedElement::getFirstCommentText():String {
+    if (self.ownedComment.isEmpty()) {
+      return ""
+    }
+    else {
+      // Checking the body for null do not work, so instead we check that the body is of type String
+      if (self.ownedComment.first().body.oclGetType().equals("String"))
+        return self.ownedComment.first().body.trim()
+      else
+        return ""
+    }    
+  }  
+
+
+  uml.Class::generateOntologyClass () {
+    file( javaBasePath + "/" + self.getFullOwnerPackageName().replace("\\.", "/") + '/' + self.name + ".java" )
+                
+    //Start generating the code
+    'package ' self.getFullOwnerPackageName() ';\n\n'
+    
+    self.genImports()
+    
+    /* Unprotect parts removed because of bug in MOFscript
+    unprotect{
+       '\n  //Add any manual imports here between the #BlockStart and #BlockEnd comments to preserve the code during transformation\n'
+    } 
+	'\n'
+    */
+
+'/**
+ * Ontological representation of ' self.name ' in the ' ontologyName ' ontology. 
+ * Methods included in this class are the mandatory ones for representing an
+ * ontological concept in Java classes for the universAAL platform. In addition
+ * getters and setters for properties are included.
+ * 
+ * @author 
+ * @author Generated by the OntologyUML2Java transformation of AAL Studio
+ */
+'        
+  	self.genClassDeclaration()
+	    
+    ' {\n'
+   
+  	
+    self.genPropertyDeclaration()
+
+    self.genConstructors()
+    self.genGetClassURI()
+    
+    self.genGetPropSerializationType()
+    self.genIsWellFormed()
+    
+    //self.genGetClassLevelRestrictions()
+   
+    self.genPropertyGettersAndSetters()
+
+	/*
+	'\n'
+    unprotect{
+       '\n//Add any user defined code here between the #BlockStart and #BlockEnd comments to preserve the code during transformation\n'
+    } 
+	*/
+   
+    '\n}\n'    
+  }
+
+  uml.Enumeration::generateEnumerationClass () {
+  	file( javaBasePath + "/" + self.getFullOwnerPackageName().replace("\\.", "/") + '/' + self.name + ".java" )
+              
+    //Start generating the code
+    'package ' self.getFullOwnerPackageName() ';\n\n'
+    
+  	'import org.universAAL.middleware.owl.ManagedIndividual;\n\n'
+  
+  	self.genEnumClassDeclaration()
+	    
+    ' {\n'
+   
+    self.genPropertyDeclaration()
+
+	if (self.isAbstract) {
+	  self.genAbstractEnumerationContent()
+	}
+	else {
+	  var enumCount:Integer = 0
+	  self.ownedLiteral->forEach(enumLit : uml.EnumerationLiteral) {
+	    '  public static final int 'enumLit.toUpperFormat()' = 'enumCount';\n'
+	    enumCount = enumCount + 1	    
+	  }
+	  '\n'
+	  
+      '  private static final String[] names = {\n'
+      '    '
+      var firstEnum:Boolean = true
+	  self.ownedLiteral->forEach(enumLit : uml.EnumerationLiteral) {
+	    if (!firstEnum) {
+	      	','
+	    }	    
+	    '"'enumLit.name.trim()'"'
+	    firstEnum = false
+	  }
+      ' };\n\n'
+      
+	  self.ownedLiteral->forEach(enumLit : uml.EnumerationLiteral) {
+	    '  public static final 'self.name' ' enumLit.name.trim() ' = new ' self.name '(' enumLit.toUpperFormat()');\n'
+	  }	
+    
+      // Generate privat constructor
+'
+  private int order;
+
+  private 'self.name'(int order) {
+    super('ontologyName.firstToUpper()'Ontology.NAMESPACE + names[order]);
+    this.order = order;
+  }
+
+  public int getPropSerializationType(String propURI) {
+    return PROP_SERIALIZATION_OPTIONAL;
+  }
+
+  public boolean isWellFormed() {
+    return true;
+  }
+
+  public String name() {
+    return names[order];
+  }
+
+  public int ord() {
+    return order;
+  }
+'	  
+	  
+      self.genGetClassURI()
+      '\n'
+          
+      '  public static 'self.name' get'self.name'ByOrder(int order) {\n'
+	  '    switch (order) {\n'
+	  self.ownedLiteral->forEach(enumLit : uml.EnumerationLiteral) {
+	    '      case 'enumLit.toUpperFormat()':\n'
+        '        return 'enumLit.name.trim()';\n'
+	  }	
+	  '    default:\n'
+	  '      return null;'
+	  '    }\n'
+	  '  }\n\n'
+
+
+'  public static final 'self.name' valueOf(String name) {
+	if (name == null)
+	    return null;
+
+	if (name.startsWith('ontologyName.firstToUpper()'Ontology.NAMESPACE))
+	    name = name.substring('ontologyName.firstToUpper()'Ontology.NAMESPACE.length());
+
+	for (int i = 'self.ownedLiteral.first().toUpperFormat()'; i <= 'self.ownedLiteral.last().toUpperFormat()'; i++)
+	    if (names[i].equals(name))
+		return get'self.name'ByOrder(i);
+
+	return null;
+  }
+'    
+    
+    
+	}
+	
+   
+    '}\n'    
+  }
+
+  uml.Enumeration::genAbstractEnumerationContent() {
+'
+  protected 'self.name'(String uri) {
+    super(uri);
+  }
+    
+  public String getClassURI() {
+	return MY_URI;
+  }
+'	    
+  }  
+
+  uml.Enumeration::genEnumClassDeclaration() {
+    var superClassName:String = "ManagedIndividual"
+    if (!self.generalization.isEmpty()) {
+     superClassName = self.generalization.first().general.name
+    }
+    'public ' if (self.isAbstract) {'abstract '} 'class ' self.name ' extends ' superClassName
+  }
+
+  
+  /*
+   * Will get the properties for the class and put it into the propertyHashtable
+   * The properties are stored as as <class.name,hashtable<property.name, property>> records
+   */
+  uml.Class::createPropertyList() {
+ 	//look if there is an entry in the hashtable for the active classifier.
+ 	var pHash:Hashtable = propertyHashtable.get(self.name)
+ 	
+ 	self.ownedMember->forEach(att : uml.Property) {
+ 		//add property to list and update the hashtable. 
+ 	   	pHash.put(att.name, att) //key=property.name. ELement = property
+    }
+ 
+    //update propertyHashtable
+    if (!pHash.isEmpty()){
+ 		propertyHashtable.put(self.name,pHash) //key=class.name. Element = hashtable
+    	//stdout.println("INFO: Property hashtable updated for key " + self.name + " (size=" + pHash.size() +"). Total size=" + propertyHashtable.size() )
+   }
+  }
+  
+  /**
+   * This function will only deal with associations. It updates the navigable classifiers in the propertyHash
+   * with information about their navigable ends   *
+   */
+  uml.Association::createPropertyForAssociations() {
+    //get the navigable ends
+  	self.navigableOwnedEnd->forEach(p : uml.Property) {
+  		//stdout.println("Navigable property on association " + self.name + " - called " + p.name + " of type " + p.type.name )
+  		//must get the navigator classifier.
+  		self.memberEnd->forEach(prop : uml.Property) {
+  			if (!prop.name.equals(p.name)){
+  				//must get the global hashtable entry before updating it
+  				var naviHash:Hashtable = propertyHashtable.get(prop.type.name)
+  				naviHash.put(prop.type.name, p) //key= propertytype.name. Element=Property
+  				propertyHashtable.put(prop.type.name, naviHash) //key propertytype.name (the name of the class that can navigate)
+  			} //if
+  		}//foreach prop
+   	} //foreach p
+  }
+   
+  /*
+   * This function will find properties for the associations defined in the model and store them in the propertyHashtable hashtable
+   * Each association that is navigable will result in a propory at its corresponding member end.
+   * The records are stored as <association.name, hashtable<association.name,association>>	
+   */
+
+ uml.Classifier::createPropertyListForAssociations() {
+   
+    //now get the properties for this classifier from the global hashtable
+    Hashtable pHash = propertyHashtable.get(self.name)
+    
+    //for each association owned by the classifier, check for navigation and update local hashtable
+    self.getAssociations()->forEach(ass : uml.Association ) {
+      	//stdout.println("INFO: Found association:" + ass.name + " for " + self.name)
+      	     	
+      	//only add the assocations that are navigable for the classifier in question
+        ass.navigableOwnedEnd->forEach(c : uml.Classifier) {
+           	if (c.name.equals(ass.name)){
+        		pHash.put(ass.name, ass)  //key=association.name. Element= association
+        	}
+        }
+    }
+ 	
+ 	//update propertyHashtable
+    if (!pHash.isEmpty()){
+ 		propertyHashtable.put(self.name,pHash)  //key=classifier.name. Element=hashtable
+   }
+ }
+ 
+ uml.Class::genImports() {
+    //'import java.util.Hashtable;\n' TODO: Add if class level restrictions are used
+    if (self.hasArrayProperties()) {
+		'import java.util.ArrayList;\n'
+		'import java.util.List;\n\n'
+    }
+	//must import the main ontology class package. As we support n levels we need to get the name of the root package
+	//hence, we must get the name of the root package. This name is in the qualified name variable, but must be extrakted
+	var mainPackageName:String 
+	mainPackageName = self.qualifiedName.substringAfter("::").substringBefore("::")
+	if (!self.package.name.trim().equals(mainPackageName)){
+	'import ' mainPackageName '.' ontologyName.firstToUpper() 'Ontology;\n'
+	}
+
+    //get the other imports. Duplicate imports for classes in main ont package may occur
+    var importList:Hashtable = self.getImportsForClass()
+    importList.keys()->forEach(impString:String) {
+      	if (!self.package.name.trim().equals(impString)){
+	    	'import 'impString';\n'
+    	}
+    }
+    '\n\n'
+  }
+
+
+  uml.Class::getImportsForClass():Hashtable {
+    var classesReferredTo:Hashtable
+    var ownPackageName:String = self.package.getFullPackageName()
+    
+    //get superclasses to import
+	self.generalization->forEach(gen:uml.Generalization) {
+	 	var genPackageName:String = gen.general.package.getFullPackageName() 
+	 	 	
+		if (!ownPackageName.equals(genPackageName)) {
+			var importName:String = genPackageName + "." + gen.general.name
+			classesReferredTo.put(importName,gen.general)
+		}
+	}
+	//defaults to ManagedIndividual if superclass not set
+	if (classesReferredTo.isEmpty())
+	  classesReferredTo.put("org.universAAL.middleware.owl.ManagedIndividual", " ")
+	  
+    
+	// Next, find properties  
+	var props:Hashtable = propertyHashtable.get(self.name)  
+	props->forEach(prop : uml.Property) {
+	  
+	  
+	  if (prop.isDataType()) {
+	    var importStr:String = prop.getDataTypeImport()
+	    if (!importStr.equals(" ")) {
+			classesReferredTo.put(importStr,prop)	      
+	    }
+	  }
+	  else {
+	    var propTypePackageName:String = prop.type.package.getFullPackageName()
+		if (!ownPackageName.equals(propTypePackageName)) {
+			var importName:String = propTypePackageName + "." + prop.type.name
+			classesReferredTo.put(importName,prop)
+		}
+	  }
+	}
+	return classesReferredTo  
+  } 
+
+
+  
+
+  //get the full name of the root package
+  uml.Classifier::getFullOwnerPackageName():String {
+    if (self.owner!=null) {
+      return self.owner.getFullPackageName()
+    }
+  	return ""
+  }
+  
+ 
+  uml.Classifier::getFullPackageName():String {
+  	if(self.owner !=null) {
+  	  var targetName:String
+  	  targetName = self.owner.getFullPackageName() 
+  	  if (targetName.equals("")) {
+  	  	return self.name.trim()
+  	  }
+  	  else {
+  	  	return targetName.trim() + "." + self.name
+  	  }
+  	}
+  	else {
+  		return ""
+  	}
+  }
+
+  uml.Class::genPropertyDeclaration() {
+    '  public static final String MY_URI = ' ontologyNamespaceReference.firstToUpper() '\n'
+    '    + "' self.name.trim() '";\n' 
+    
+    //get the property's hashtable and intialize the properties
+    Hashtable props = propertyHashtable.get(self.name)
+    
+    //properties first
+    props->forEach(att: uml.Property) {
+  	    '  public static final String PROP_' att.toUpperFormat() ' = ' ontologyNamespaceReference.firstToUpper() '\n'
+  	    '    + "' att.name.trim() '";\n'
+	}
+
+	//association properties next. The filter may be obsolete as the po
+	props->forEach (ass : uml.Association) // | ass.endType.first().name.trim().equals(self.name.trim()) ) 
+	{
+	  //stdout.println("INFO: Generating static for associations: " + ass.name)
+	  '  public static final String PROP_' ass.toUpperFormat() ' = ' ontologyNamespaceReference.firstToUpper() '\n'
+	  '    + "' ass.name.trim() '";\n'
+	  
+	}
+  	'\n'
+  }     
+
+  
+  uml.Class::genConstructors() {
+    '
+  public ' self.name ' () {
+    super();
+  }
+  
+  public ' self.name ' (String uri) {
+    super(uri);
+  }\n'
+  }    
+  
+  uml.Class::genGetClassURI() {
+    '
+  public String getClassURI() {
+    return MY_URI;
+  }\n'
+  }    
+  
+ 
+  
+
+  
+  /**
+   * TODO: Revise to correct scheme for subclassing with the new ontology encoding. 
+   *
+   * Generate the class declaration.   
+   */
+  uml.Class::genClassDeclaration() {
+    var superClassName: String = "ManagedIndividual"
+    
+    'public ' if (self.isAbstract) {'abstract '} 'class ' self.name
+    if (self.superClass.isEmpty()) {
+      stdout.println("Warning: Class " + self.name + " has no super class. Script will default to" + superClassName )
+      ' extends ' superClassName
+    }
+    else {  
+      ' extends '
+      self.superClass.first().name 
+      if (self.superClass.size() > 1) {
+        stdout.println("WARNING: Class " + self.name + " is defined to have multiple superclasses. Use interfaces instead - additional superclasses are igonered!")
+      }        
+    }
+    if (!self.interfaceRealization.isEmpty()) {
+      ' implements '
+      var firstInter:Boolean 
+      firstInter = true
+      self.interfaceRealization->forEach(inter:uml.InterfaceRealization) {
+        '' inter.supplier.first().name ' '
+        if (!firstInter) {','}          
+        firstInter = false
+      }
+    }
+  }
+  
+  uml.Class::getURIExpressionForType(typeName : String):String {
+    if (typeName == null) {
+      typeName = "String"
+    }
+    if (datatypeImportMap.get(typeName) != null) {
+      // This is a datatype
+      if (typeName == "UnlimitedNatural") {
+      	return "TypeMapper.getDatatypeURI(Long.class)"    
+      }
+ 	  else {
+ 	    return "TypeMapper.getDatatypeURI(" + typeName + ".class)"
+ 	  }   
+    }
+    return typeName+".MY_URI"    
+  }
+
+  
+  uml.Class::genPropertiesForAssociations() {
+      //generate 
+      self.getAssociations()->forEach(ass : uml.Association | ass.endType.first().name.trim().equals(self.name.trim())) {
+      '  public static final String PROP_'  ass.memberEnd.last().toUpperFormat() ';\n'
+      }
+		
+  }
+
+
+   uml.Class::genGetPropSerializationType() {
+
+     /*unprotect{
+'
+  // The default implementation of getPropSerializationType below can be edited or deleted as needed, and changes
+  // will between the #BlockStart and #BlockEnd comments will be preserve during transformation
+' */
+'  
+  public int getPropSerializationType(String propURI) {
+'
+	//get the property hashtable
+	Hashtable props = propertyHashtable.get(self.name)
+	
+	//attributes first
+	props->forEach(att : uml.Property) {
+  	    '    if (PROP_'att.toUpperFormat()'.equals(propURI))\n'
+  	    '      return PROP_SERIALIZATION_FULL;\n'
+  	}
+  	
+  	//associations next
+ 	props->forEach (ass : uml.Association) 
+ 	{
+  	    '    if (PROP_'ass.memberEnd.last().toUpperFormat()'.equals(propURI))\n'
+  	    '      return PROP_SERIALIZATION_FULL;\n'
+ 	}  
+	
+	if (self.generalization.isEmpty()) {
+'    return PROP_SERIALIZATION_FULL;'
+	}
+	else if ((self.generalization.size() == 1) && (self.generalization.first().general.name == "ManagedIndividual")) {
+'    return PROP_SERIALIZATION_FULL;'
+	}
+	else { 
+'    return super.getPropSerializationType(propURI);'
+	}
+ 
+'
+  } 
+'
+    //}
+  }
+
+   uml.Class::genIsWellFormed() {
+'
+  public boolean isWellFormed() {
+	return super.isWellFormed() '
+	
+	//get the hashtable
+	Hashtable props = propertyHashtable.get(self.name)
+	
+	//attributes first
+	props->forEach(att : uml.Property) {
+  	    '\n      && hasProperty(PROP_'att.toUpperFormat()')'
+  	}
+  	
+  	//associations next
+ 	props->forEach (ass : uml.Association) // | ass.endType.first().name.trim().equals(self.name.trim()) ) 
+ 	{
+  	    '\n      && hasProperty(PROP_'ass.memberEnd.last().toUpperFormat()') '
+ 	}  
+    ';
+  }\n'
+       
+   }  
+    
+
+	/**
+     * For each direct child under Service, the getClassLevelRestrictions operation should be generated
+     */
+	uml.Class::genGetClassLevelRestrictions() {
+	  var isService:boolean = false
+	  //check if one of the generalization (multiple inheritance supported on a model-level) is a Service
+	  self.general->forEach(c : uml.Class){
+	    //this is a rather vulnerable check. 
+	    //TODO:Should include full namespace check
+	    if (c.name.equals("Service")) {
+	    	isService = true
+	    }
+	  
+	  if (isService) {
+'
+  protected Hashtable getClassLevelRestrictions() {
+	  return restrictions;
+  }
+'	
+	  }
+	}
+  }
+
+
+/**
+ * Methods for generating getters and setters for properties.
+ * NOTE: CAN BE SIMPLIFIED USING HASHTABLE
+ */
+   uml.Class::genPropertyGettersAndSetters() {
+    //TODO: SIMPLIFY
+   	//iterate through each property and generate getter and setter methods 
+  	self.ownedMember->forEach(att : uml.Property) {
+		var theTypeName:String = "String"	
+		var methodName:String = att.name.trim().firstToUpper()
+		var propLongName:String = "PROP_" + att.toUpperFormat()
+		
+		if (att.type != null) {
+		  theTypeName = att.type.name
+		}
+
+		if ((att.upper > 1) or (att.upper == -1)) {
+		  var includeAddMethod:Boolean = att.lower < 2
+		  self.genArrayGetterAndSetter(methodName, propLongName, theTypeName, includeAddMethod)
+		}
+		else if (theTypeName == "Boolean") {
+		  self.genBooleanGetterAndSetter(methodName, propLongName)
+    	}  		  
+		else if ((theTypeName == "UnlimitedNatural") || (theTypeName == "Long")) {
+		  self.genLongGetterAndSetter(methodName, propLongName)
+		}
+   	    else if (theTypeName == "Integer") {
+		  self.genIntGetterAndSetter(methodName, propLongName)
+		}		
+   	    else if (theTypeName == "Float") {
+		  self.genFloatGetterAndSetter(methodName, propLongName)
+		}		
+		else {
+		  self.genObjectGetterAndSetter(methodName, propLongName, theTypeName)
+		}	
+	}
+   }
+
+   uml.Class::hasArrayProperties():boolean {
+  	self.ownedMember->forEach(att : uml.Property) {
+		if ((att.upper > 1) or (att.upper == -1)) {
+		  return true
+		}
+	}
+	return false
+   }
+
+
+
+
+   uml.Class::genArrayGetterAndSetter(methodName:String, propertyLongName:String, typeName:String, includeAdd:boolean) {
+'
+  public 'typeName'[] get'methodName'() {
+    Object propList = getProperty('propertyLongName');
+    if (propList instanceof List)
+      return ('typeName'[]) ((List) propList).toArray(new 'typeName'[0]);
+    else if (propList != null)
+      return new 'typeName'[] {('typeName')propList}; // Handle special case of a single item not contained in a list
+    return new 'typeName'[0];
+  }
+'
+  if (includeAdd) {
+'
+  public void add'methodName'('typeName' newValue) {
+    Object propList = getProperty('propertyLongName');
+    List newList;
+    if (propList instanceof List)
+      newList = (List)propList;
+    else {
+      newList = new ArrayList();
+      if (propList != null)
+        newList.add(propList); // Handle special case of a single previous item not contained in a list
+    }
+    newList.add(newValue);
+    changeProperty('propertyLongName', newList);
+  }
+'
+  } else {
+'
+  // No add'methodName'() method was generated because the lower cardinality of this
+  // property is >= 2, and the generic add method implementation do not support this constraint
+'    
+  }
+'  
+
+  public void set'methodName'('typeName'[] propertyValue) {
+    List propList = new ArrayList(propertyValue.length);
+    for (int i = 0; i < propertyValue.length; i++) {
+      propList.add(propertyValue[i]);
+    }
+    changeProperty('propertyLongName', propList);
+  }
+'		
+ 
+   }
+
+
+
+/**
+ *
+ */
+   uml.Class::genBooleanGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public boolean is' methodName '() {
+	Boolean b = (Boolean) getProperty('propertyLongName');
+	return (b == null) ? false : b.booleanValue();
+  }		
+
+  public void set'methodName'(boolean newPropValue) {
+      changeProperty('propertyLongName', new Boolean(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */   
+   uml.Class::genIntGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public int get' methodName '() {
+	Integer i = (Integer) getProperty('propertyLongName');
+	return (i == null) ? 0 : i.intValue();
+  }		
+
+  public void set'methodName'(int newPropValue) {
+      changeProperty('propertyLongName', new Integer(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */
+   uml.Class::genLongGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public long get' methodName '() {
+	Long l = (Long) getProperty('propertyLongName');
+	return (l == null) ? 0 : l.longValue();
+  }		
+
+  public void set'methodName'(long newPropValue) {
+      changeProperty('propertyLongName', new Long(newPropValue));
+  }		
+'		
+   }
+
+/**
+ *
+ */
+   uml.Class::genFloatGetterAndSetter(methodName:String, propertyLongName:String) {
+'
+  public float get' methodName '() {
+	Float f = (Float) getProperty('propertyLongName');
+	return (f == null) ? 0 : f.floatValue();
+  }		
+
+  public void set'methodName'(float newPropValue) {
+      changeProperty('propertyLongName', new Float(newPropValue));
+  }		
+'		
+   }
+
+
+/**
+ *
+ */
+   uml.Class::genObjectGetterAndSetter(methodName:String, propertyLongName:String, typeName:String) {
+'
+  public 'typeName ' get' methodName '() {
+    return ('typeName')getProperty('propertyLongName');
+  }		
+
+  public void set'methodName'('typeName' newPropValue) {
+    if (newPropValue != null)
+      changeProperty('propertyLongName', newPropValue);
+  }		
+'		
+   }
+   
+ uml.Package::generatePOMFile() {
+     file("pom.xml" )
+     //file( self.name.replace("\\.", "/") + '/' + "pom.xml" )
+     
+     //set the projectInfo hashtable
+     projectInfo.put("name", self.name.trim())
+     projectInfo.put("artefactId", self.name.trim())
+     projectInfo.put("groupId", self.name.trim())  //TODO: Find what this should be - was previously package name
+     //projectInfo.put("versionInfo",  self.getValue("owlOntology", "versionInfo").trim())
+     projectInfo.put("versionInfo", "0.1.0-SNAPSHOT") //TODO: find where to get the verison info from with multiple packages
+     self.genPOMFileHeader()
+   }
+ 
+ /**
+  * This rule will populate the import model hashtable based on the external models imported in the model structure
+  * It iterates over the packageimport elements and extracts the model-name (artefactID) and the model's owlOntology defaultnamespace and version
+  */  
+ uml.Model::getImportList() {
+   //get the imported packages
+  self.packageImport->forEach(c : uml.PackageImport) {
+   	//stdout.println("Found imported elements: " + c.importedPackage.name + " - " + c.importedPackage.getAppliedStereotypes())
+   	if (c.importedPackage.hasStereotype("owlOntology")) {
+   		//stdout.println("Found owlOntology import. Adding import to list")
+   		
+   		//get the import name, default namespace and version to local hashtable
+   		var modelImport:Hashtable
+   		modelImport.put("name", c.importedPackage.name)
+   		modelImport.put("defaultNamespace", c.importedPackage.getValue("owlOntology", "defaultNamespace"))
+   		modelImport.put("versionInfo", c.importedPackage.getValue("owlOntology", "versionInfo"))
+   		
+   		//add hashtable to global list
+   		importedModels.put(c.importedPackage.name, modelImport)
+   		}
+   	   
+   	}
+ 	
+ }
+
+/**
+ * Prints the POM file header, adding the project groupid, artefactid, version, name and description.
+ */
+ uml.Package::genPOMFileHeader() {
+'<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+  	<groupId>' projectInfo.get("groupId") '</groupId>
+  	<artifactId>' projectInfo.get("artefactId") '</artifactId>
+  	<version>' projectInfo.get("versionInfo") '</version>
+  	<name>' projectInfo.get("name") '</name>
+ 	<description>' 
+ 	if (self.owner.ownedComment.first() != null) { 	  
+ 		''self.owner.ownedComment.first().body''
+ 	}
+ 	else {
+ 	  'No further description provided'
+ 	}
+ 	'</description>
+ 	<properties>
+ 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 	</properties>
+  	<packaging>bundle</packaging>
+    	<dependencies>'
+    	//output dependencies for imported models
+    
+/*    	importedModels->forEach(i) {
+    	  stdout.println("object has type: " + i)
+ '	
+ 			<dependency>
+    			<groupId>'i.get("name")'</groupId>
+    			<artifactId>'i.get("defaultNamespace")'</artifactId>
+    			<version>'i.get("versionInfo")'</version>
+    		</dependency>'    	
+    	} Need to find out how to set the right version numbers in models, and what to do with the -SNAPSHOT extension - for now use hardcoded*/ 			
+'			
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>1.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.data.serialization</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+'//			<!--
+'			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.data.representation</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.context</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+'/*			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.io</artifactId>
+				<version>1.1.0</version>
+			</dependency> */
+'			<dependency>
+				<groupId>org.universAAL.middleware</groupId>
+				<artifactId>mw.bus.service</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+			<dependency>
+           		<groupId>org.universAAL.ontology</groupId>
+           		<artifactId>ont.phWorld</artifactId>
+				<version>1.1.0</version>
+       		</dependency>						
+'//			-->
+'		</dependencies>
+  	  <build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-Activator>'self.name.trim()'.Activator</Bundle-Activator>
+							<Bundle-Description>${project.description}</Bundle-Description>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							<Export-Package>'self.name.trim()'.owl.*</Export-Package>
+							<Private-Package>'self.name.trim()'.*</Private-Package>							
+						</instructions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
+		<repositories>
+			<repository>
+				<id>central</id>
+				<name>Central Maven Repository</name>
+				<url>http://repo1.maven.org/maven2</url>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>apache-snapshots</id>
+				<name>Apache Snapshots</name>
+				<url>http://people.apache.org/repo/m2-snapshot-repository</url>
+				<releases>
+					<enabled>false</enabled>
+				</releases>
+				<snapshots>
+					<updatePolicy>daily</updatePolicy>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>uaal</id>
+				<name>universAAL Repositories</name>
+				<url>http://depot.universaal.org/maven-repo/releases/</url>
+				<snapshots>
+					<enabled>false</enabled>
+				</snapshots>
+			</repository>
+			<repository>
+				<id>uaal-snapshots</id>
+				<name>universAAL Snapshot Repositories</name>
+				<url>http://depot.universaal.org/maven-repo/snapshots/</url>
+				<releases>
+					<enabled>false</enabled>
+				</releases>
+			</repository>
+		</repositories>
+</project>
+'
+}
+
+/**
+ *
+ */   
+  uml.Classifier::printHashtable() {
+  //this will just print the complete hashtable to console
+  stdout.println("PropertyHashtable has " + propertyHashtable.size() + " elements")
+  stdout.println("Keys: " + propertyHashtable.keys())
+  propertyHashtable.keys()->forEach(c) {
+  	stdout.println("Classifier:" + propertyHashtable.get(c))
+  	}
+  }
+   	
+ }
+
+}
+

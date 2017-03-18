@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="org.universaal.uaalpax.ui.UniversAALTab"
+            group="org.eclipse.pde.ui.launcher.EquinoxLauncherTabGroup"
+            id="org.ops4j.pax.uaal.ui.UniversAALTab"
+            name="uAAL Runner Eclipse Plugin Tab">
+      </tab>
+    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.universaal.uaalpax.command.runnerCategory"
+            name="universAAL">
+      </category>
+      <command
+            categoryId="org.universaal.uaalpax.command.runnerCategory"
+            id="org.universaal.uaalpax.command.newRunConfig"
+            name="Create a new uAAL Run Config">
+            <commandParameter 
+         		id="org.universaal.uaalpax.commandparameters.runDebugMode" 
+         		name="Run/Debung mode"> 
+  			</commandParameter> 
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.universaal.tools.AALStudio.menu?after=new">
+         <command
+               commandId="org.universaal.uaalpax.command.newRunConfig"
+               icon="icons/newuaal_clss.png"
+               id="org.universaal.uaalpax.menu.newRunConfig"
+               style="push">
+			   <commandParameter 
+         		id="org.universaal.uaalpax.commandparameters.runDebugMode" 
+         		name="Run/Debung mode"> 
+  			</commandParameter> 
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.universaal.uaalpax.handlers.NewRunConfigHandler"
+            commandId="org.universaal.uaalpax.command.newRunConfig">
+      </handler>
+   </extension>
+</plugin>

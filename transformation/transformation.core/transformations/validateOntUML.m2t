@@ -1,0 +1,519 @@
+texttransformation validateOntologyUml (in uml:"http://www.eclipse.org/uml2/3.0.0/UML") {
+	
+	var classHashtable:hashtable
+	var enumerationHashtable:hashtable
+	var associationHashtable:hashtable
+	
+	var generalEntityTree:hashtable
+	var listOfUpperOntology:hashtable
+	var datatypeImportMap:hashtable
+	
+	var errorsList:list
+	var generalErrors:integer = 0
+	var errors:integer = 0
+	var warnings:integer = 0
+	var tot_errors:integer = 0
+	var tot_warnings:integer = 0
+	var validChars:string = "[A-Za-z0-9_]"
+	
+	var debugEnabled:boolean = false
+	var logEnabled:boolean = true
+	
+	var theModel:string
+	
+	uml.Model::main(){
+	  	self.checkModel()
+	}
+	
+	uml.Model::checkModel():boolean {
+		// Init
+	    theModel = self.name
+	    
+	   	verbose("----\nStart validation of UML ontology model "+self.name+"\n----\n\n",false,true)
+	   	verbose("Initializing\n", false, true)
+		if (self.hasStereotype("owlOntology")) {
+		    verbose("*The owlOntology stereotype should NOW be applied to the root package(s).\nRemember to set all required values (defaultnamespace and name) for each package!\n",true,true)
+		}
+	   	
+	   	// Create the list of upper ontology entities
+	    self.createSuperentitiesList()
+	    self.val_initDatatypeImportMap()
+	    
+	    if(listOfUpperOntology.size() == 0){
+	    	verbose("*No upper ontology defined!!\n",true,false)
+	    } else {
+	        self.ownedMember -> forEach( p:uml.Package ) {
+				verbose("Start Processing Model Packages\n", false, true)
+				if (!p.hasStereotype("owlOntology")) {
+					verbose("*The package " + p.name + " is not stereotyped with owlOntology!\nIt is required to set the owlOntology stereotype on ALL root packages.\n",true,true)
+				}
+				p.validateOntologyPackage()
+		 	}
+	 	}
+	    
+	    verbose("\n----\nCheck Report: ",false,true)
+	    
+	    if(!errorsList.isEmpty()) { 
+			verbose(errorsList.size()+" problem(s) ("+tot_errors+" error(s), "+tot_warnings+" warning(s)) occurred when validating UML ontology model "+self.name+"\n----\n\n",false,true)
+			if(!debugEnabled){
+				errorsList->forEach(e){
+					verbose(e,false,true);
+				}
+			}
+			return (tot_errors == 0)
+		} else {
+			verbose("EVERYTHING'S OK!\n----\n",false,false)
+			return true
+		}
+		
+	}
+	
+	uml.Package::validateOntologyPackage(){
+		
+	  	verbose("\n§§   PACKAGE "+self.name+"   §§\n\n",false,true)
+	  	self.createEntityListAndTree()
+	  	self.createEnumerationHashtable()
+		
+		verbose("\n--- Class Check ---\n",false,true)
+  		var classList:list = classHashtable.keys()
+   		
+   		if(classList.size() != 0){
+	  		verbose("Checking for unnamed Class or Class with the same name... ",false,true) 
+	   		self.checkEmpty(classList)
+	   		self.checkUnity(classList)
+	   		self.checkErrors()
+			
+			classList->forEach(entity : uml.Class) {
+	  		  	verbose("Class "+entity.getName()+"...",false,true)
+			
+				verbose("\nChecking for right generalization of "+entity.getName()+"...\n",false,false)
+				generalErrors = 0
+				if(entity.checkRightGeneralization(entity) == 0) verbose ("OK!\n",false,false)
+				
+				verbose("\nChecking for right naming conventions of "+entity.getName()+"...\n",false,false)
+				entity.checkNamingConventions()
+	    		
+	    		var PropertyList:list = classHashtable.get(entity)
+				if(PropertyList.size() == 0) verbose("!"+entity.oclGetType()+" "+entity.getName()+": No property found\n",true,false)
+				else {
+					
+					self.checkEmpty(PropertyList)
+					self.checkUnity(PropertyList)
+					
+					PropertyList->forEach(p:uml.Property){
+						if(p.type == null) verbose("!"+entity.oclGetType()+" "+entity.getName()+": Property "+p.getName()+" has UNDEFINED type\n",true,false)
+						else if(!p.val_isDataType()) verbose("!"+entity.getName()+": Property "+p.getName()+" has UNKNOWN type\n",true,false)
+						p.checkNamingConventions()
+					}
+				}
+				
+				self.checkErrors()
+			} 
+		} else verbose ("No Class found\n",false,true)
+		
+		verbose("\n--- Associations Check ---\n",false,true)
+		var AssList:list = associationHashtable.keys()
+		if(AssList.size() > 0){
+			verbose("Checking for unnamed Associations... ",false,true) 
+	   		self.checkEmpty(AssList)
+	   		self.checkErrors()
+			//self.checkUnity(AssList)
+			AssList->forEach(ass:uml.Association){
+			  	var class:list = associationHashtable.get(ass).get('class')
+			  	
+				var members:list = ass.memberEnd
+			  	var prefix:string
+			  	
+			  	if(class.size()==0) prefix = "Association "+ass.getName()
+			  	else if(class.size()==1) prefix = "Association "+ass.getName()+" (Class "+class.first().getName()+")"
+			  	else prefix = "Association "+ass.getName()+" between "+class.first().getName()+" and "+class.last().getName()
+			  
+			  	verbose(prefix+"...",false,true) 
+	   		
+			  
+			  	if (ass.name.trim().replace(validChars,"").size()!=0) verbose("*"+prefix+" has invalid characters in name\n",true,false)
+			  	
+			  	if(members.first().name.trim().size() != 0 || members.last().name.trim().size() != 0)
+					/*verbose(prefix+" has unnamed memberEnd(s)\n",true,false)
+				else */{
+					if(members.first().name.trim().toLower() == members.last().name.trim().toLower())
+						verbose("!"+prefix+" has the same memberEnd name\n",true,false)
+			  		if (members.first().name.trim().replace(validChars,"").size()!=0) verbose("*"+prefix+" has invalid characters\n",true,false)
+			  		if (members.last().name.trim().replace(validChars,"").size()!=0) verbose("*"+prefix+": memberEnd "+members.last().name.trim()+" has invalid characters\n",true,false)
+				}
+				self.checkErrors()
+			}
+			
+		} else verbose ("No Associations found\n",false,true)
+		
+		verbose("\n--- Enumeration Check ---\n",false,true)
+  		if(enumerationHashtable.size()>0){
+  			var EnumKeys:list = enumerationHashtable.keys()
+  			verbose("Checking for unnamed Enumerations or Enumerations with the same name... ",false,true) 
+	   		self.checkEmpty(EnumKeys)
+  			self.checkUnity(EnumKeys)
+  			self.checkErrors()
+	  		EnumKeys->forEach(key:uml.Enumeration){
+	  			verbose("Enumeration "+key.getName()+"...",false,true)
+	  			key.checkNamingConventions()
+		  		var literals:list = enumerationHashtable.get(key)
+		      	if(literals.size()>0){
+			    	self.checkEmpty(literals)
+			    	self.checkUnity(literals)
+			    	literals->forEach(lit:uml.EnumerationLiteral){
+			    		lit.checkNamingConventions()
+			    	}
+			    } else verbose("!Enumeration "+key.name+" is empty\n",true,false)
+			    
+			    self.checkErrors()
+			    
+	  		}
+  		} else verbose ("No Enumerations found\n",false,true)
+		
+	}
+	
+	uml.Classifier::getName():string {
+		var name:string = self
+  		name = name.replace("\\([^\\)]*","")
+  		name = name.replace("\\)","").trim()
+  		name = "<<unnamed>> ("+name+")"
+  		if (self.name.trim().size() !=0 ) name = self.name
+  		return name
+	}
+	
+	uml.Class::createEntityListAndTree(){
+		verbose("Building Model Class list and tree (including Associations)...",false,true) 
+		self.ownedElement->forEach(c:uml.Class){
+			c.updateclassHashtable()
+			c.updateGeneralEntityTreeHashtable()
+			c.updateAssociationHashtable()
+		}
+		self.checkErrors()
+	}
+	
+	uml.Package::createEnumerationHashtable(){
+		verbose("Creating Enumerations' hashtable...",false,true) 
+		self.ownedElement->forEach(enum: uml.Enumeration){
+		  	var EnumList:list = ''
+		  	if(enum.ownedLiteral.size()>0){
+				enum.ownedLiteral->forEach(literal: uml.EnumerationLiteral){
+				  	literal.name = literal.name.trim()
+					EnumList.add(literal)
+				}
+			} 
+			enumerationHashtable.put(enum,EnumList)
+		}
+		
+		self.checkErrors()
+	}
+	
+	uml.Class::updateclassHashtable(){
+	  	self.name = self.name.trim()
+	  	classHashtable.put(self,self.getProperties())
+	}
+	
+	uml.Class::getProperties():list {
+		var pList:list = ''
+		
+		self.ownedMember->forEach(att : uml.Property) {
+			if(att.association == null) {
+			  	att.name = att.name.trim()
+				pList.add(att)
+			}
+		}
+		return pList
+	}
+	
+	uml.Class::updateGeneralEntityTreeHashtable() {
+	  	if(self.general.size() > 0){
+	  		generalEntityTree.put(self, self.general) // key: derived class, value: parent class list
+		}
+	}
+	
+	uml.Classifier::updateAssociationHashtable(){
+		
+		self.name = self.name.trim()
+		
+		self.getAssociations()->forEach(ass:uml.Association){
+			
+			ass.name = ass.name.trim()
+			
+			var class:list
+			var ht:hashtable
+			
+			if(associationHashtable.get(ass) == null){
+				
+				class.add(self)
+				
+				ht.put('class',class)
+				
+				associationHashtable.put(ass,ht)
+				
+			} else {
+
+				ht = associationHashtable.get(ass)
+				
+				class = ht.get('class')
+				class.add(self)
+				
+				ht.put('class',class)
+				
+				associationHashtable.put(ass,ht)
+
+			}
+		}
+		
+	}
+	
+	uml.Package::checkEmpty(someList:list):boolean {
+		var ret:boolean = true
+		var howmany:integer = 0
+		var parent:string
+		var type:string
+		
+		someList->forEach(e) {
+		  	var elementProps:hashtable = e.getElementProps()
+		  	if(parent == null) parent = elementProps.get('parent')
+		  	if(type == null) type = elementProps.get('type')
+			verbose("INFO: Element name:"+elementProps.get('name')+", element type:"+type+"\n", false, false)
+			if(elementProps.get('name').size() == 0) {
+        		howmany = howmany + 1
+        		ret = false
+        		if(type=='Association'){
+				  	var class:list = associationHashtable.get(e).get('class')
+				  	var suffix:string
+				  	if(class.size()==1) suffix = " (Class "+class.first().getName()+")"
+				  	else suffix = " between "+class.first().getName()+" and "+class.last().getName()
+				  	
+					verbose("!"+parent+"Found unnamed "+type+" "+suffix+"\n",true,false)
+				}
+			}
+			
+		}
+		
+		if(howmany > 0 && type!='Association'){
+			verbose("*"+parent+"Found "+howmany+" unnamed "+type+"\n",true,false)
+		}
+		
+		return ret
+		
+	}
+	
+	uml.Package::checkUnity (someList:list):boolean {
+		var repeatedElements:hashtable
+		var res:boolean = true
+		var parent:string 
+		
+		someList->forEach(e) {
+		  	var elementProps:hashtable = e.getElementProps()
+			var repetitions:integer = repeatedElements.get(elementProps.get('name').toLower()+":"+elementProps.get('type'))
+			if(parent == null) parent = elementProps.get('parent')
+			
+			if (repetitions == null) repetitions = 1
+			else repetitions = repetitions + 1
+			repeatedElements.put(elementProps.get('name').toLower()+":"+elementProps.get('type'), repetitions)
+			
+		}
+	  
+		if(!repeatedElements.isEmpty()) {
+	
+			var repeatedEntitiesNames:list = repeatedElements.keys()
+		     
+			repeatedEntitiesNames->forEach(e){
+				var times:integer = repeatedElements.get(e)
+				var eName:string  = e.substring(0, e.lastIndexOf(":"))
+				var eType:string  = e.substring(e.lastIndexOf(":")+1, e.size())
+		    	
+		    	if(times >1){
+		    		verbose("*"+parent+"Multiple "+eType+" with same (case-independent) name ("+times+" duplicates of "+eName+")\n",true,false)
+		    		res = false
+		    	}
+			}
+		}
+		return res
+ 
+	}
+
+	uml.Classifier::getElementProps(){
+	  	var pHash:hashtable
+	  	pHash.put('name',self.name);
+		pHash.put('type',self.oclGetType());
+		if(!self.oclGetType().equals('Property')){
+			pHash.put('parent','');
+		} else {
+			var prop:uml.Property
+			prop = self
+			pHash.put('parent','Class '+prop.class.getName()+': ');
+		}
+		return pHash
+	}
+	
+
+	uml.Class::checkRightGeneralization(class:uml.Class):integer {
+	  	var ontKeys:list = listOfUpperOntology.keys()
+		ontKeys->forEach(ontName){
+		  	
+		  	var listOfUpperOntologyEntities:hashtable = listOfUpperOntology.get(ontName)
+			if(listOfUpperOntologyEntities.get(class.name) != null){
+				verbose("!"+self.oclGetType()+" "+self.getName()+": the same "+self.oclGetType()+" name has already been defined in the upper ontology "+ontName+"\n",true,false)
+				return
+			}
+		}
+
+		var parentList:list = generalEntityTree.get(self)
+	  	if(parentList.size() > 0){
+	  		parentList->forEach(parent:uml.Class){
+				//stdout.println(self.getName()+"->"+parent.getName())
+				if(parent.getName().equals(class.getName())){
+					verbose("*Class "+class.getName()+": circular derivation found!\n",true,false)
+					generalErrors = generalErrors + 1
+					return generalErrors
+				} else parent.checkRightGeneralization(class)
+	  		} return generalErrors
+		} else {
+			if (self.checkIfFinal()){
+			   return generalErrors
+			} else {
+				verbose("*Class "+class.getName()+": Must derive directly or indirectly from one of the entities of the upper ontology\n",true,false)
+    			generalErrors = generalErrors + 1
+				return generalErrors
+    		}
+		}
+	
+	}
+	
+	uml.Class::checkIfFinal():boolean {
+		var ontKeys:list = listOfUpperOntology.keys()
+		ontKeys->forEach(ontName){
+			var listOfUpperOntologyEntities:hashtable = listOfUpperOntology.get(ontName)
+			if(listOfUpperOntologyEntities.get(self.name) != null){
+				return true
+			}
+		}
+		return false
+	}
+	
+	uml.Classifier::checkNamingConventions(){
+		var elementProps:hashtable = self.getElementProps()
+		var name:string = elementProps.get('name')
+	  	var type:string = elementProps.get('type')
+		var parent:string = elementProps.get('parent')
+		if(self.allowedCharlist()){
+			
+			if(name.size()>0){
+				if(type=='Class' || type == 'Enumeration'){
+					if(!name.isUpperCase(0)){
+						verbose ("!"+parent+type+" "+name+": First character's name should be Uppercase\n",true,false)
+					}
+				} else {
+					if(name.isUpperCase(0)){
+						verbose ("!"+parent+type+" "+name+": First character's name should be lowercase\n",true,false)
+					}
+				}
+			}
+		} else verbose ("*"+parent+type+" "+name+": No valid characters in name\n",true,false);
+	}
+	
+	// Common check for Class and Property
+	uml.Classifier::allowedCharlist():boolean{
+		var elementProps:hashtable = self.getElementProps()
+		
+		var what:string = elementProps.get('name')
+	  	var type:string = elementProps.get('type')
+		var parent:string = elementProps.get('parent')
+		
+		// no numbers at the beginning
+		if(what.startsWith("0") ||
+		   what.startsWith("1") ||
+		   what.startsWith("2") ||
+		   what.startsWith("3") ||
+		   what.startsWith("4") ||
+		   what.startsWith("5") ||
+		   what.startsWith("6") ||
+		   what.startsWith("7") ||
+		   what.startsWith("8") ||
+		   what.startsWith("9")) verbose("*"+parent+type+" "+what+": First character's name cannot be a number\n",true,false)
+		
+		// only alphanumeric chars plus the undescore allowed
+		what = what.replace(validChars,"")
+		return (what.size()==0)
+	}
+	
+	// Create list of generic class that MUST BE DERIVED from all the other classes
+	uml.Model::createSuperentitiesList(){
+		self.packageImport->forEach(p:uml.PackageImport){
+			p.relatedElement->forEach(m:uml.Model | m.name.startsWith("org.universaal.")){
+			  	var listOfUpperOntologyEntities:hashtable
+				m.ownedMember->forEach(package:uml.Package){
+					package.ownedMember->forEach(class:uml.Class){
+						listOfUpperOntologyEntities.put(class.name,class)
+						datatypeImportMap.put(class.name,m.name)
+					}
+					package.ownedMember->forEach(subPackage:uml.Package) {
+						subPackage.ownedMember->forEach(class:uml.Class){
+							listOfUpperOntologyEntities.put(class.name,class)
+							datatypeImportMap.put(class.name,m.name)
+						}
+					}
+				}
+				listOfUpperOntology.put(m.name,listOfUpperOntologyEntities)
+			}
+		}
+	}
+
+	/**
+	 * Crate a map containing the basic datatypes supported.
+	 */		
+	uml.Model::val_initDatatypeImportMap() {
+		datatypeImportMap.put("Boolean", " ")
+	    datatypeImportMap.put("Integer", " ")
+	    datatypeImportMap.put("Float", " ")
+	    datatypeImportMap.put("UnlimitedNatural", " ")
+	    datatypeImportMap.put("Long", " ")
+	    datatypeImportMap.put("String", " ")
+	    datatypeImportMap.put("Float", " ")
+	    datatypeImportMap.put("Double", " ")
+	    datatypeImportMap.put("XMLGregorianCalendar", "javax.xml.datatype.XMLGregorianCalendar")
+	    datatypeImportMap.put("Duration", "javax.xml.datatype.Duration")
+	    datatypeImportMap.put("Locale", "java.util.Locale")
+	}		
+		
+		
+	/**
+	 * Check if a property is one of the defined types (basic and model)
+	 */		
+	uml.Property::val_isDataType() {
+		var theTypeName:String = self.type.name
+		var isDatatype:boolean = (datatypeImportMap.get(theTypeName) != null)
+		return isDatatype
+	}
+	
+	uml.Package::checkErrors(){
+	  	if(errors > 0 || warnings > 0){
+			verbose("  "+errors+" error(s), "+warnings+" warning(s)!\n",false,true)
+			tot_errors = tot_errors + errors
+			tot_warnings = tot_warnings + warnings
+		} else {
+			verbose("  OK!\n",false,true)
+		}
+		
+		errors = 0
+		warnings = 0
+	}
+
+	verbose(message:string, error:boolean, force:boolean) {
+		if(error){
+		  	errorsList.add(message)
+		  	if(message.startsWith("*")) errors = errors + 1
+		  	else warnings = warnings + 1
+		} 
+		if(debugEnabled || force){
+			if(message.endsWith("\n"))
+				stdout.println(message.substring(0, message.size()-1))
+			else
+				stdout.print(message)
+		}
+		
+		if(logEnabled) log(message)
+	}
+}

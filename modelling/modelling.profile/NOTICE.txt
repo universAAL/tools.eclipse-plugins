@@ -1,0 +1,26 @@
+UML Profile plugin for AAL Studio
+
+Copyright 2011 SINTEF, http://www.sintef.no
+
+I. Included Software
+
+The product builds on and extends OWL and RDF UML profiles provided
+twouse (http://code.google.com/p/twouse/) 
+Licensed under Eclipse Public License v1.0
+
+II. Used Software
+
+This product uses software developed at
+The OSGi Alliance (http://www.osgi.org/).
+Copyright 2006-2008 The OSGi Alliance.
+Licensed under the Apache License 2.0.
+
+This product uses software developed at
+Eclipse Foundation (www.eclipse.org)
+Copyright (c) 2011 Eclipse Foundation
+Licensed under Eclipse Public License v1.0
+
+
+III. License Summary
+- Apache License 2.0
+- Eclipse Public License v1.0

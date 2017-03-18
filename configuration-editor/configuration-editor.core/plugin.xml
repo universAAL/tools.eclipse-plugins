@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Configuration Editor"
+            extensions="xml"
+            icon="icons/sample.gif"
+            contributorClass="org.universaal.tools.configurationEditor.editors.ConfigurationEditorContributor"
+            class="org.universaal.tools.configurationEditor.editors.ConfigurationEditor"
+            id="org.universaal.tools.configurationEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.universaal.tools.configurationEditor.command"
+            name="universAAL">
+      </category>
+      <command
+            categoryId="org.universaal.tools.configurationEditor.command"
+            defaultHandler="org.universaal.tools.handlers.NewConfigurationHandler"
+            id="org.universaal.tools.configurationEditor.newConfiguration"
+            name="Create new configuration">
+      </command>
+      <command
+            categoryId="org.universaal.tools.configurationEditor.command"
+            defaultHandler="org.universaal.tools.handlers.OpenConfigurationHandler"
+            id="org.universaal.tools.configurationEditor.openConfiguration"
+            name="Open configuration">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.universaal.tools.AALStudio.wizards"
+            name="AAL Studio">
+      </category>
+      <wizard
+            category="org.universaal.tools.AALStudio.wizards"
+            class="org.universaal.tools.configurationEditor.utils.NewConfigurationWizard"
+            icon="icons/new-document-16.png"
+            id="org.universaal.tools.configurationEditor.newConfigurationWizard"
+            name="Configuration">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.universaal.tools.AALStudio.menu?after=new">
+         <command
+               commandId="org.universaal.tools.configurationEditor.newConfiguration"
+               icon="icons/new-document-16.png"
+               id="org.universaal.tools.configurationEditor.menu.newConfiguration"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

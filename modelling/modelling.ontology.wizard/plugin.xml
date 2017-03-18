@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="universAAL"
+            id="org.universaal.tools.modelling.ontology.wizard.commands.category">
+      </category>
+      <command
+            name="Create a new Ontology Project"
+            categoryId="org.universaal.tools.modelling.ontology.wizard.commands.category"
+            id="org.universaal.tools.modelling.ontology.wizard.commands.newOntologyProject">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.universaal.tools.modelling.ontology.wizard.commands.newOntologyProject"
+            class="org.universaal.tools.modelling.ontology.wizard.handlers.NewOntologyProjectHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.universaal.tools.AALStudio.menu?after=newproject">
+         <command
+               commandId="org.universaal.tools.modelling.ontology.wizard.commands.newOntologyProject"
+               icon="icons/new-project-16.png"
+               id="org.universaal.tools.modelling.ontology.wizard.menus.sampleCommand"
+               mnemonic="S">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.universaal.tools.AALStudio.wizards"
+            name="AAL Studio">
+      </category>
+      <wizard
+            category="org.universaal.tools.AALStudio.wizards"
+            class="org.universaal.tools.modelling.ontology.wizard.wizards.OntologyProjectWizard"
+            icon="icons/new-project-16.png"
+            id="org.universaal.tools.modelling.ontology.wizard.ontologyprojectwizard"
+            name="Ontology Project"
+            project="true">
+      </wizard>
+   </extension>
+
+</plugin>

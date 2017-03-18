@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:OWL="http:///schemas/OWL/_8v6kUJ2UEeCA1PJ4jAflww/8" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xsi:schemaLocation="http:///schemas/OWL/_8v6kUJ2UEeCA1PJ4jAflww/8 pathmap://TwoUse_Profiles/OWL.profile.uml#_8wB5EJ2UEeCA1PJ4jAflww">
+  <uml:Model xmi:id="_oA5mcNJuEeKjT_DVDChv2Q" name="model">
+    <packageImport xmi:id="_Y_4o4NJvEeKjT_DVDChv2Q">
+      <importedPackage href="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.owl.uml#_J8JskPqREeCQQaPCMdH-vA"/>
+    </packageImport>
+    <packageImport xmi:id="_as3vINJvEeKjT_DVDChv2Q">
+      <importedPackage href="pathmap://AAL_ONTOLOGIES/org.universaal.ontology.datatypes.uml#_U7uacGkcEeGIl7HiYaL9OA"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_sOlH0NJuEeKjT_DVDChv2Q" name="org.universAAL.middleware.ui.owl">
+      <packagedElement xmi:type="uml:Class" xmi:id="_dgr6kNJvEeKjT_DVDChv2Q" name="AccessImpairment">
+        <generalization xmi:id="_zd-4UNJvEeKjT_DVDChv2Q">
+          <general xmi:type="uml:Class" href="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.owl.uml#_7clzYKFGEeCPiYRKlVcMuQ"/>
+        </generalization>
+        <ownedAttribute xmi:id="_11IV4NJvEeKjT_DVDChv2Q" name="impairment_level">
+          <type xmi:type="uml:Enumeration" href="pathmap://AAL_ONTOLOGIES/org.universaal.middleware.owl.uml#_AGQqENIFEeKw_dHjReEqbg"/>
+        </ownedAttribute>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_5ICGgNJuEeKjT_DVDChv2Q">
+      <eAnnotations xmi:id="_5JKH4NJuEeKjT_DVDChv2Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://TwoUse_Profiles/OWL.profile.uml#_8wB5EJ2UEeCA1PJ4jAflww"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://TwoUse_Profiles/OWL.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_5JKu8NJuEeKjT_DVDChv2Q">
+      <eAnnotations xmi:id="_5KFU8NJuEeKjT_DVDChv2Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://TwoUse_Profiles/RDF.profile.uml#_0R89QCqWEd6tAp0dWJ5sSg"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://TwoUse_Profiles/RDF.profile.uml#_TEtTYHGwEdyoJ7Xxsdx7ug"/>
+    </profileApplication>
+  </uml:Model>
+  <OWL:owlOntology xmi:id="_7QuRUNJuEeKjT_DVDChv2Q" defaultNamespace="http://ontology.universAAL.org/UIBus.owl" base_Package="_sOlH0NJuEeKjT_DVDChv2Q"/>
+  <OWL:objectProperty xmi:id="_11VxQNJvEeKjT_DVDChv2Q" base_Property="_11IV4NJvEeKjT_DVDChv2Q" isFunctional="true"/>
+</xmi:XMI>
