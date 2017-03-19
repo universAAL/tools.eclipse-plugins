@@ -244,7 +244,12 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                                           final File workingDir )
                             throws PlatformException
                         {
-                        	exec(vmOptions, classpath, mainClass, programOptions, javaHome, workingDir, null);
+                        	try {
+                        		exec(vmOptions, classpath, mainClass, programOptions, javaHome, workingDir, null);
+                        	} catch (PlatformException e) {
+                        		e.printStackTrace();
+                        		throw e;
+                        	}
                         }
 
 						public void exec(String[] vmOptions,
