@@ -90,7 +90,7 @@ public class Booter
 		repos.add(getRepo("uaal", "http://depot.universaal.org/maven-repo/releases/"));
 		repos.add(getRepo("uaal-snapshots", "http://depot.universaal.org/maven-repo/snapshots/"));
 		repos.add(getRepo("uaal-thirdparty", "http://depot.universaal.org/maven-repo/thirdparty/"));
-		repos.add(getRepo(">maven2-repository.java.net", "http://download.java.net/maven/2"));
+		//repos.add(getRepo(">maven2-repository.java.net", "http://download.java.net/maven/2"));
 		repos.add(getRepo("apache-snapshots", "http://people.apache.org/repo/m2-snapshot-repository"));
 		repos.add(getRepo("ops4j", "http://repository.ops4j.org/maven2"));
 		//repos.add(getRepo("xxxx", "xxxx"));
