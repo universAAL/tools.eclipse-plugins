@@ -246,7 +246,7 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                         {
                         	try {
                         		exec(vmOptions, classpath, mainClass, programOptions, javaHome, workingDir, null);
-                        	} catch (PlatformException e) {
+                        	} catch (Exception e) {
                         		e.printStackTrace();
                         		throw e;
                         	}
