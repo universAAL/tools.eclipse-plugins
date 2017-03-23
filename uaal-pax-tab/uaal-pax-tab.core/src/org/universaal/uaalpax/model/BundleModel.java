@@ -166,7 +166,7 @@ public class BundleModel {
 			if (!graphRebuildFuture.isDone()) {
 				ProgressMonitorDialog d = new ProgressMonitorDialog(dialogProvider.getShell());
 				try {
-					d.run(false, false, new IRunnableWithProgress() {
+					d.run(true, false, new IRunnableWithProgress() {
 						
 						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 							monitor.beginTask("Dependency graph", IProgressMonitor.UNKNOWN);
