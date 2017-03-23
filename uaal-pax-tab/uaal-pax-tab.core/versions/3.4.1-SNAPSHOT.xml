@@ -62,7 +62,7 @@
 			<bundle>mvn:org.universAAL.ontology/ont.che/3.4.1-SNAPSHOT</bundle>
 		</bundleset>
 		<bundleset name="Log Monitor">
-			<bundle>mvn:org.universAAL.tools/tools.log_mon/3.4.1-SNAPSHOT</bundle>
+			<bundle>mvn:org.universAAL.tools/tools.log-monitor/3.4.1-SNAPSHOT</bundle>
 		</bundleset>
 		<bundleset name="ASOR">
 			<bundle>mvn:org.universAAL.ontology/ont.asor/3.4.1-SNAPSHOT</bundle>
