@@ -267,9 +267,9 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                             if (environmentVariables != null)
                             	paxConfig.setEnvironment(environmentVariables);
 
-                            System.out.println("vmOptions" + vmOptions);
-                            for (String s : vmOptions)
-                            	System.out.println("  " +s);
+							// System.out.println("vmOptions" + vmOptions);
+							// for (String s : vmOptions)
+							// System.out.println(" " +s);
                             
                             try
                             {
@@ -277,6 +277,7 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                             }
                             catch( CoreException e )
                             {
+                            	e.printStackTrace();
                                 throw new PlatformException( "Problem starting platform", e );
                             }
 						}
@@ -287,6 +288,7 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                 }
                 catch( Exception e )
                 {
+                	e.printStackTrace();
                     throw new CoreException( LauncherUtils.createErrorStatus( e.getLocalizedMessage() ) );
                 }
                 finally
