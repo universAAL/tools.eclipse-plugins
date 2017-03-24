@@ -46,9 +46,12 @@ import org.eclipse.pde.internal.ui.PDEUIMessages;
 //import org.eclipse.pde.internal.ui.launcher.LauncherUtils;
 //import org.eclipse.pde.internal.ui.launcher.VMHelper;
 import org.eclipse.pde.ui.launcher.AbstractPDELaunchConfiguration;
+import org.eclipse.pde.ui.launcher.IPDELauncherConstants;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.url.cache.internal.ConfigurationImpl;
+import org.ops4j.util.property.PropertiesPropertyResolver;
 import org.osgi.framework.Bundle;
 
 /**
@@ -156,7 +159,7 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
         options.addAll( Utils.getUserOptions( super.getProgramArguments( configuration ) ) );
         options.addAll( Utils.getTargetPlatformOptions( configuration ) );
         options.addAll( Utils.getStartLevelOptions( configuration ) );
-        options.addAll( Utils.getCleanOptions( configuration ) );
+        //options.addAll( Utils.getCleanOptions( configuration ) );
         options.addAll( Utils.getVMArgsOptions( configuration ) );
         options.addAll( Utils.getWorkingDirOptions( getWorkingDirectory( configuration ).getAbsolutePath() ) );
         options.addAll(
@@ -225,6 +228,8 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
         IVMInstall launcher = VMHelper.createLauncher( configuration );
         final IVMRunner eclipseRunner = launcher.getVMRunner( mode );
 
+        final boolean clean = configuration.getAttribute( IPDELauncherConstants.CONFIG_CLEAR_AREA, false );
+
         return new IVMRunner()
         {
             public void run( final VMRunnerConfiguration configuration, final ILaunch launch,
@@ -234,6 +239,42 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                 ClassLoader oldCCL = Thread.currentThread().getContextClassLoader();
                 try
                 {
+                	
+                 	if (clean) {
+						File wd = new File(configuration.getWorkingDirectory(), "runner");
+						// System.out.println(" -- workdir: " + wd);
+						File cacheSubDir = new ConfigurationImpl(new PropertiesPropertyResolver(System.getProperties()))
+								.getWorkingDirectory();
+						File cacheDir = new File(wd, cacheSubDir.toString());
+						// System.out.println(" -- wd " + wd);
+						// System.out.println(" -- cacheSubDir " + cacheSubDir);
+						// System.out.println(" -- cacheDir " + cacheDir);
+						// boolean deleted = FileUtils.delete( wd );
+						// System.out.println( "Removing working directory [" +
+						// wd.getAbsolutePath() + "] " + deleted );
+						// boolean created = cacheDir.mkdirs();
+						// System.out.println( "Recreating cache dir [" +
+						// cacheDir.getAbsolutePath() + "] " + created);
+						System.out.println("Removing cache dir [" + cacheDir.getAbsolutePath() + "] ");
+						for (File f : cacheDir.listFiles()) {
+							if (f.isDirectory())
+								System.out.println("ERROR: cached file to remove is a directory: "
+										+ f.getAbsoluteFile().toString());
+							else {
+								String s = f.getAbsoluteFile().toString();
+								if (s.endsWith(".meta") || s.endsWith(".data")) {
+									if (!f.delete()) {
+										System.out.println("ERROR: cached file could not be removed: " + s);
+									} else {
+										System.out.println(" Cached file removed: " + s);
+									}
+								} else {
+									System.out.println("ERROR: cached file to remove has wrong extension: " + s);
+								}
+							}
+						}
+					}
+                	
                     Run.main( new JavaRunner()
                     {
                         public void exec( final String[] vmOptions,
