@@ -171,6 +171,7 @@ public class RepoMgmt {
 		repos.add(new Repo("Utility Libraries", "https://github.com/universAAL/utilities.git", "utilities.pom"));
 		repos.add(new Repo("Maven", "https://github.com/universAAL/maven.git", "maven.pom"));
 		repos.add(new Repo("Integration Tests", "https://github.com/universAAL/itests.git", ""));
+		repos.add(new Repo("Runtime Tools", "https://github.com/universAAL/tools.runtime.git", "tools.pom"));
 		add("Extras", repos);
 
 		repos = new ArrayList<Repo>();
@@ -201,6 +202,7 @@ public class RepoMgmt {
 		workingSets.put("lddi.pom.knx", "universAAL LDDI KNX");
 		workingSets.put("lddi.pom.zigbee", "universAAL LDDI ZigBee");
 		workingSets.put("lddi.pom.zwave", "universAAL LDDI ZWave");
+		workingSets.put("tools.pom", "universAAL Runtime Tools");
 	}
 
 	public static String getWorkingSet(String artifactID) {
