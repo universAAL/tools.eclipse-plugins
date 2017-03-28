@@ -373,7 +373,7 @@ public class BundleModel {
 	}
 	
 	private Artifact checkCoreToOsgi(Artifact a) {
-		if (a.getArtifactId().endsWith(".core") && a.getGroupId().startsWith("org.universaal.middleware")) {
+		if (a.getArtifactId().endsWith(".core") && a.getGroupId().toLowerCase().startsWith("org.universaal.middleware")) {
 			// System.out.println("renaming artifact from " + a);
 			Artifact osgi = new DefaultArtifact(a.getGroupId(), a.getArtifactId().substring(0, a.getArtifactId().length() - 5)
 					.concat(".osgi"), a.getExtension(), a.getBaseVersion());
