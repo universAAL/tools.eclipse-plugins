@@ -640,7 +640,7 @@ public class BundleModel {
 				arguments.add("--overwriteUserBundles=true");
 				arguments.add("--overwriteSystemBundles=true");
 				arguments.add("--log=DEBUG");
-				arguments.add("--profiles=felix.obr");
+				//arguments.add("--profiles=felix.obr");
 			}
 		} catch (CoreException e1) {
 		}
@@ -711,11 +711,13 @@ public class BundleModel {
 			trySetAttribute(configuration, "default", true);
 			trySetAttribute(configuration, "default", true);
 			
-			if (!configuration.hasAttribute("org.ops4j.pax.cursor.profiles")) {
-				ArrayList<String> classpath = new ArrayList<String>();
-				classpath.add("felix.obr");
-				configuration.setAttribute("org.ops4j.pax.cursor.profiles", classpath);
-			}
+			// if (!configuration.hasAttribute("org.ops4j.pax.cursor.profiles"))
+			// {
+			// ArrayList<String> classpath = new ArrayList<String>();
+			// classpath.add("felix.obr");
+			// configuration.setAttribute("org.ops4j.pax.cursor.profiles",
+			// classpath);
+			// }
 			
 			trySetAttribute(configuration, "pde.version", "3.3");
 			trySetAttribute(configuration, "show_selected_only", false);

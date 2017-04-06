@@ -97,11 +97,13 @@ public class NewRunConfigHandler extends AbstractHandler {
 			configuration.setAttribute("default", true);
 			configuration.setAttribute("default", true);
 			
-			if (!configuration.hasAttribute("org.ops4j.pax.cursor.profiles")) {
-				ArrayList<String> classpath = new ArrayList<String>();
-				classpath.add("felix.obr");
-				configuration.setAttribute("org.ops4j.pax.cursor.profiles", classpath);
-			}
+			// if (!configuration.hasAttribute("org.ops4j.pax.cursor.profiles"))
+			// {
+			// ArrayList<String> classpath = new ArrayList<String>();
+			// classpath.add("felix.obr");
+			// configuration.setAttribute("org.ops4j.pax.cursor.profiles",
+			// classpath);
+			// }
 			
 			configuration.setAttribute("osgi_framework_id", "--platform=felix --version=4.4.1");
 			configuration.setAttribute("pde.version", "3.3");
@@ -118,7 +120,7 @@ public class NewRunConfigHandler extends AbstractHandler {
 			arguments.add("--overwriteUserBundles=true");
 			arguments.add("--overwriteSystemBundles=true");
 			arguments.add("--log=DEBUG");
-			arguments.add("--profiles=felix.obr");
+			//arguments.add("--profiles=felix.obr");
 			configuration.setAttribute(Attribute.PROVISION_ITEMS, toSave);
 			configuration.setAttribute(Attribute.RUN_ARGUMENTS, arguments);
 			
