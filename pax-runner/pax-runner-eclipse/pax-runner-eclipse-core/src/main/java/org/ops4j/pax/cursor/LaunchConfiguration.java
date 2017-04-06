@@ -241,6 +241,8 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                 throws CoreException
             {
                 ClassLoader oldCCL = Thread.currentThread().getContextClassLoader();
+            	Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+            	
              	Run run = new Run();
                 try
                 {
@@ -304,7 +306,6 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
                 finally
                 {
                     Thread.currentThread().setContextClassLoader( oldCCL );
-                    System.out.println("getVMRunner stopped");
                     //run.stop();
                     //System.gc();
                     //System.runFinalization();
