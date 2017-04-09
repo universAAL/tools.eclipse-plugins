@@ -20,9 +20,14 @@ import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.collection.DependencyCollectionContext;
+import org.eclipse.aether.collection.DependencySelector;
+import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.repository.RepositoryPolicy;
+import org.eclipse.aether.util.graph.selector.AndDependencySelector;
 
 /**
  * A helper to boot the repository system and a repository system session.
@@ -45,21 +50,39 @@ public class Booter
 
 	public static DefaultRepositorySystemSession newRepositorySystemSession( RepositorySystem system )
     {
-        DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
-
-//        LocalRepository localRepo = new LocalRepository( "target/local-repo" );
-        LocalRepository localRepo = new LocalRepository( getLocalRepositoryLocation() );
-        session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, localRepo ) );
-//		LocalRepository localRepo = new LocalRepository(getLocalRepositoryLocation());
-//		// LocalRepository localRepo = new LocalRepository("C:\\Users\\jgdo\\.m2\\repository");
-//		session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
+		DefaultRepositorySystemSession session = MavenRepositorySystemUtils
+				.newSession();
+		// LocalRepository localRepo = new LocalRepository( "target/local-repo");
+		LocalRepository localRepo = new LocalRepository(getLocalRepositoryLocation());
+		session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
+		// LocalRepository localRepo = new LocalRepository(getLocalRepositoryLocation());
+		// LocalRepository localRepo = new LocalRepository("C:\\Users\\jgdo\\.m2\\repository");
+		// session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
 
         session.setTransferListener( new ConsoleTransferListener() );
         session.setRepositoryListener( new ConsoleRepositoryListener() );
 
         // uncomment to generate dirty trees
 		// dirty tree: every child node contains all dependencies; not dirty: every dependency is contained at most once
-        session.setDependencyGraphTransformer( null );
+        session.setDependencyGraphTransformer(null);
+    
+        // set dependency selector to skip all dependencies from middleware
+        //System.out.println("DependencySelector: " + session.getDependencySelector().getClass().getName());
+        DependencySelector ds = new DependencySelector() {
+
+			public DependencySelector deriveChildSelector(
+					DependencyCollectionContext arg0) {
+				return this;
+			}
+
+			public boolean selectDependency(Dependency d) {
+				Artifact a = d.getArtifact();
+				if (a.getGroupId().equals("org.universAAL.middleware"))
+					return false;
+				return true;
+			}
+        };
+        session.setDependencySelector(new AndDependencySelector(ds, session.getDependencySelector()));
 
         return session;
     }

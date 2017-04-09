@@ -392,7 +392,7 @@ public class BundleModel {
 	 * @return start level of the node, i.e. dependent bundles have to start at a higher level
 	 */
 	private int insertDependencies(DependencyNode node /* , int minStartLevel */) {
-		int minStartLevel = 1;
+		int minStartLevel = 20;
 		
 		Dependency d = node.getDependency();
 		if (d != null) {
