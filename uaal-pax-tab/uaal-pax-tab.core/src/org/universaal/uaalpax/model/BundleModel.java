@@ -399,8 +399,6 @@ public class BundleModel {
 			Artifact a = d.getArtifact();
 			a = checkCoreToOsgi(a);
 			ArtifactURL url = BundleEntry.artifactUrlFromArtifact(a);
-			if (url.url.contains("mw.bus.ui"))
-				System.out.println("inserting" + url);
 			
 			// check if bundle is already included
 			BundleEntry be = currentBundles.find(url);
