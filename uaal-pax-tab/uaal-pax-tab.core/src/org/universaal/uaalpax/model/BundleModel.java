@@ -235,18 +235,22 @@ public class BundleModel {
 			if (be.isComposite())
 				composites.add(be);
 		
-		if (composites.isEmpty()
-				|| dialogProvider
-						.openDialog(
-								"Resolve composites",
-								"The current run configuration contains composites, but composites aren't directly supported now.\n"
-										+ "Do you want to resolve them to individual bundles instead?\n\n"
-										+ "Note that if you don't resolve them, this tool could add bundle dependencies to the run config although they are already contained in a composite",
-								"Yes", "No") == 1)
-			composites = null;
+		if (!composites.isEmpty()) {
+			System.err.println("The current run configuration contains composites, but composites aren't directly supported now by the uAAL Pax Tab.");
+		}
 		
-		if (composites != null)
-			rebuildGraphInforeground(composites);
+//		if (composites.isEmpty()
+//				|| dialogProvider
+//						.openDialog(
+//								"Resolve composites",
+//								"The current run configuration contains composites, but composites aren't directly supported now.\n"
+//										+ "Do you want to resolve them to individual bundles instead?\n\n"
+//										+ "Note that if you don't resolve them, this tool could add bundle dependencies to the run config although they are already contained in a composite",
+//								"Yes", "No") == 1)
+//			composites = null;
+//		
+//		if (composites != null)
+//			rebuildGraphInforeground(composites);
 	}
 	
 	private void insertBundleAndDepsNoWait(BundleEntry be) {
