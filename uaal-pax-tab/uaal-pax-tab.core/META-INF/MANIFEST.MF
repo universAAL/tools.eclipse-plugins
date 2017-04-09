@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.core,
  org.eclipse.debug.ui,
  org.eclipse.jdt.junit.runtime,
- org.apache.commons.logging
+ org.apache.commons.logging,
+ org.slf4j.api
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  lib/aether-transport-file-1.0.2.v20150114.jar,
