@@ -100,9 +100,9 @@ public class Booter
     
 	private static RemoteRepository getRepo(String id, String url) {
 		return new RemoteRepository.Builder(id, "default", url)
-				.setReleasePolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_DAILY,
+				.setReleasePolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_NEVER,
 						RepositoryPolicy.CHECKSUM_POLICY_WARN))
-				.setSnapshotPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_ALWAYS,
+				.setSnapshotPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_DAILY,
 						RepositoryPolicy.CHECKSUM_POLICY_WARN))
 				.build();
 	}
