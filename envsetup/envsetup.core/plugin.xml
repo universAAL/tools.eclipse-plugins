@@ -34,7 +34,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.universaal.tools.AALStudio.menu?endof=view">
+            locationURI="menu:org.universaal.tools.Studio.menu?endof=view">
          <command
                commandId="org.universaal.tools.envsetup.openenvsetup"
                id="org.universaal.tools.envsetup.menu.openenvsetup"

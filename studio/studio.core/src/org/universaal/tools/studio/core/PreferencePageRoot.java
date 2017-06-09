@@ -16,7 +16,7 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
  */
-package org.universaal.tools.aalstudio.core;
+package org.universaal.tools.studio.core;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
@@ -30,7 +30,7 @@ public class PreferencePageRoot
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
 		setDescription("Please see subcategories for options related to different " +
-				"AAL Studio plugins.");
+				"universAAL Studio plugins.");
 	}
 
 	@Override

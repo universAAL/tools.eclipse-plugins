@@ -76,7 +76,7 @@ public class TransformOntJava2OWL extends AbstractHandler {
 				MessageDialog.openInformation(
 						window.getShell(),
 						"Wrong project",
-						"Project is not configured to perform a Java to OWL transformation! Make sure the project is created using the uAAL UML to Java tool!"
+						"Project is not configured to perform a Java to OWL transformation! Make sure the project is created using the universAAL UML to Java tool!"
 						);
 				return null;
 			}

@@ -19,7 +19,7 @@
       <command
             categoryId="org.universaal.uaalpax.command.runnerCategory"
             id="org.universaal.uaalpax.command.newRunConfig"
-            name="Create a new uAAL Run Config">
+            name="Create a new universAAL Run Config">
             <commandParameter 
          		id="org.universaal.uaalpax.commandparameters.runDebugMode" 
          		name="Run/Debung mode"> 
@@ -29,7 +29,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=new">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=new">
          <command
                commandId="org.universaal.uaalpax.command.newRunConfig"
                icon="icons/newuaal_clss.png"

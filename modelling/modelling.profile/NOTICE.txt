@@ -1,4 +1,4 @@
-UML Profile plugin for AAL Studio
+UML Profile plugin for universAAL Studio
 
 Copyright 2011 SINTEF, http://www.sintef.no
 

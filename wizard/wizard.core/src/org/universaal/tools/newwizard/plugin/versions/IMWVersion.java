@@ -86,7 +86,7 @@ public interface IMWVersion {
     public static final int VER_340=10;
     
     /**
-     * Identifies a sample AAL App that makes full use of uAAL wrappers.
+     * Identifies a sample App that makes full use of uAAL wrappers.
      */
     public static final int APP_FULL=0;
     /**

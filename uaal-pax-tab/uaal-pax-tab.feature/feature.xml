@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.universaal.tools.uaal.runner.ui.feature"
-      label="AAL Studio Pax Runner UI"
+      label="universAAL Studio Pax Runner UI"
       version="2.0.0"
       provider-name="universAAL"
-      plugin="org.universaal.tools.aalstudio.core">
+      plugin="org.universaal.tools.studio.core">
 
    <description url="http://www.universaal.org">
       This tool is an addition to the original Eclipse Pax-Runner-UI. It provides an additonal tab that allows to add OSGi-Bundels containing a pom.xml and all their dependencies to the start-configuration using only one click. This is done by making a deep-search in all dependencies given in Maven. Also the tool adds some universAAL specific features like setting the middleware version and creating a new configuration containing the most importend parameters for running an application.

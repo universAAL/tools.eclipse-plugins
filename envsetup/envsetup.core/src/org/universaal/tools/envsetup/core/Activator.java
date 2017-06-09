@@ -85,7 +85,7 @@ public class Activator extends AbstractUIPlugin {
 			Writer writer;
 			try {
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
-				writer.write("universAAL AAL Studio Environment Setup\n");
+				writer.write("universAAL Studio Environment Setup\n");
 				writer.write("Delete this file to get the dialog open at startup again\n");
 				writer.write("This only works one time, then the file will be created again");
 				writer.close();

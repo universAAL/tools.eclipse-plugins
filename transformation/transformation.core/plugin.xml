@@ -60,7 +60,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=transform">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=transform">
          <command
                commandId="org.universaal.tools.transformationcommand.commands.ontUML2Java"
                icon="icons/transform-16.png"
@@ -88,7 +88,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=test">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=test">
          <command
                commandId="org.universaal.tools.transformationcommand.validateOntUML"
                icon="icons/test.png"
@@ -99,7 +99,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               label="AAL Studio">
+               label="universAAL Studio">
             <command
                   commandId="org.universaal.tools.transformationcommand.validateOntUML"
                   style="push">
@@ -155,7 +155,7 @@
             name="Transform UML2Java">
       </page>
       <page
-            category="org.universaal.tools.AALStudio"
+            category="org.universaal.tools.Studio"
             class="org.universaal.tools.transformationcommand.preferences.TransformationsPreferencePage"
             id="org.universaal.tools.transformationcommand.transformations"
             name="Transformations">

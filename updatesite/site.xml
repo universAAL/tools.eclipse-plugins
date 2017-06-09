@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.universaal.tools.aalstudio.feature_3.0.0.jar" id="org.universaal.tools.aalstudio.feature" version="3.0.0">
+   <feature url="features/org.universaal.tools.studio.feature_3.0.0.jar" id="org.universaal.tools.studio.feature" version="3.0.0">
       <category name="universaal_tools"/>
    </feature>
    <feature url="features/org.universaal.tools.newwizard.feature_1.2.2.jar" id="org.universaal.tools.newwizard.feature" version="1.2.2">
@@ -30,14 +30,14 @@
    <feature url="features/org.ops4j.pax.runner.eclipse.ui.feature_1.9.0.0.jar" id="org.ops4j.pax.runner.eclipse.ui.feature" version="1.9.0.0">
       <category name="universaal_prereq"/>
    </feature>
-   <category-def name="universaal_tools" label="AAL Studio tools">
+   <category-def name="universaal_tools" label="universAAL Studio tools">
       <description>
-         Tools for development of AAL applications using the universAAL platform
+         Tools for development of universAAL applications using the universAAL platform
       </description>
    </category-def>
-   <category-def name="universaal_prereq" label="AAL Studio prerequisites">
+   <category-def name="universaal_prereq" label="universAAL Studio prerequisites">
       <description>
-         3rd party tools needed by the AAL Studio
+         3rd party tools needed by the universAAL Studio
       </description>
    </category-def>
 </site>

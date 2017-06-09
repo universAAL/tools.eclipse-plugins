@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.universaal.tools.envsetup.feature"
-      label="AAL Studio Development Environment Setup"
+      label="universAAL Studio Development Environment Setup"
       version="1.0.0"
       provider-name="universAAL"
       plugin="org.universaal.tools.envsetup.core">
 
    <description url="http://www.universaal.org/">
-      The AAL Studio project and item wizards make it easy to create new universAAL-compliant projects by providing a skeleton project with all the files you need and initial content to make the project work in universAAL. The item wizards generate new files required or optional to a universAAL project with the proper formatting and template or initial content.
+      The universAAL Studio project and item wizards make it easy to create new universAAL-compliant projects by providing a skeleton project with all the files you need and initial content to make the project work in universAAL. The item wizards generate new files required or optional to a universAAL project with the proper formatting and template or initial content.
    </description>
 
    <copyright url="http://www.igd.fraunhofer.de">

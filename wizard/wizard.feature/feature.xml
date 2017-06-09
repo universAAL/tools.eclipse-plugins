@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.universaal.tools.newwizard.feature"
-      label="AAL Studio Project Wizards"
+      label="universAAL Studio Project Wizards"
       version="1.2.2"
       provider-name="universAAL"
-      plugin="org.universaal.tools.aalstudio.core">
+      plugin="org.universaal.tools.studio.core">
 
    <description url="http://www.universaal.org/">
-      The AAL Studio project and item wizards make it easy to create new universAAL-compliant projects by providing a skeleton project with all the files you need and initial content to make the project work in universAAL. The item wizards generate new files required or optional to a universAAL project with the proper formatting and template or initial content.
+      The universAAL Studio project and item wizards make it easy to create new universAAL-compliant projects by providing a skeleton project with all the files you need and initial content to make the project work in universAAL. The item wizards generate new files required or optional to a universAAL project with the proper formatting and template or initial content.
    </description>
 
    <copyright url="http://www.tsb.upv.es/">
@@ -246,7 +246,7 @@
       <import plugin="org.eclipse.m2e.core.ui" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.m2e.maven.runtime"/>
       <import plugin="org.eclipse.jdt.core"/>
-      <import feature="org.universaal.tools.aalstudio.feature" version="0.3.0"/>
+      <import feature="org.universaal.tools.studio.feature" version="0.3.0"/>
       <import feature="org.eclipse.m2e.feature" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.universaal.tools.owl2uml.feature"
-      label="AAL Studio OWL to UML Transformations"
+      label="universAAL Studio OWL to UML Transformations"
       version="1.1.1"
       provider-name="universAAL"
-      plugin="org.universaal.tools.aalstudio.core">
+      plugin="org.universaal.tools.studio.core">
 
    <description url="http://www.universaal.org/">
       This feature transforms ontology files (.owl) in RDF/XML format 
@@ -235,7 +235,7 @@ limitations under the License.
    </url>
 
    <requires>
-      <import feature="org.universaal.tools.aalstudio.feature" version="0.6.1"/>
+      <import feature="org.universaal.tools.studio.feature" version="0.6.1"/>
    </requires>
 
    <plugin

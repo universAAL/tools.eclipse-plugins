@@ -1,4 +1,4 @@
-AAL Studio Depot Client
+universAAL Studio
 
 Copyright 2011 SINTEF, http://www.sintef.no
 

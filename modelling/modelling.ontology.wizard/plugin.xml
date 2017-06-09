@@ -24,7 +24,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=newproject">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=newproject">
          <command
                commandId="org.universaal.tools.modelling.ontology.wizard.commands.newOntologyProject"
                icon="icons/new-project-16.png"
@@ -36,11 +36,11 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.universaal.tools.AALStudio.wizards"
-            name="AAL Studio">
+            id="org.universaal.tools.Studio.wizards"
+            name="universAAL Studio">
       </category>
       <wizard
-            category="org.universaal.tools.AALStudio.wizards"
+            category="org.universaal.tools.Studio.wizards"
             class="org.universaal.tools.modelling.ontology.wizard.wizards.OntologyProjectWizard"
             icon="icons/new-project-16.png"
             id="org.universaal.tools.modelling.ontology.wizard.ontologyprojectwizard"
