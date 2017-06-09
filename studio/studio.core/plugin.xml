@@ -4,9 +4,9 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.universaal.tools.aalstudio.core.PreferencePageRoot"
-            id="org.universaal.tools.AALStudio"
-            name="AAL Studio">
+            class="org.universaal.tools.studio.core.PreferencePageRoot"
+            id="org.universaal.tools.Studio"
+            name="universAAL Studio">
       </page>
    </extension>
    <extension
@@ -14,8 +14,8 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               id="org.universaal.tools.AALStudio.menu"
-               label="AAL Studio"
+               id="org.universaal.tools.Studio.menu"
+               label="universAAL"
                mnemonic="U">
             <separator
                   name="view">
@@ -51,5 +51,4 @@
          </menu>
       </menuContribution>
    </extension>
-
 </plugin>

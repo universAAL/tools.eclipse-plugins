@@ -1,4 +1,4 @@
-AAL Studio common ontologies
+universAAL Studio common ontologies
 
 Copyright 2012 SINTEF, http://www.sintef.no
 

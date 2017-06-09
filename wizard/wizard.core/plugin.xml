@@ -4,19 +4,19 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="AAL Studio"
-            id="org.universaal.tools.AALStudio.wizards">
+            name="universAAL Studio"
+            id="org.universaal.tools.Studio.wizards">
       </category>
       <wizard
             name="universAAL Project"
             icon="icons/newuaal_proj.png"
-            category="org.universaal.tools.AALStudio.wizards"
+            category="org.universaal.tools.Studio.wizards"
             class="org.universaal.tools.newwizard.plugin.wizards.NewProjectWizard"
             id="org.universaal.tools.newwizard.plugin.wizards.NewProjectWizard"
             project="true">
       </wizard>
       <wizard
-            category="org.universaal.tools.AALStudio.wizards"
+            category="org.universaal.tools.Studio.wizards"
             class="org.universaal.tools.newwizard.plugin.wizards.NewItemWizard"
             icon="icons/newuaal_clss.png"
             id="org.universaal.tools.newwizard.plugin.wizards.NewItemWizard"
@@ -54,7 +54,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=newproject">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=newproject">
          <command
                commandId="org.universaal.tools.newwizard.plugin.command.startNewWizard"
                id="org.universaal.tools.newwizard.plugin.menu.newproject"
@@ -64,7 +64,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.universaal.tools.AALStudio.menu?after=new">
+            locationURI="menu:org.universaal.tools.Studio.menu?after=new">
          <command
                commandId="org.universaal.tools.newwizard.plugin.command.startNewItemWizard"
                icon="icons/newuaal_clss.png"

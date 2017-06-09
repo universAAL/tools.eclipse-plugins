@@ -148,7 +148,7 @@ public class OntologyProjectWizard extends Wizard implements INewWizard {
 		};
 
 		// This job modifies the newly created blank maven project to be
-		// uaal-compliant
+		// universAAL-compliant
 		job2 = new WorkspaceJob(
 			Messages.getString("Project.9")) { //$NON-NLS-1$
 		    public IStatus runInWorkspace(IProgressMonitor monitor) {
@@ -228,7 +228,7 @@ public class OntologyProjectWizard extends Wizard implements INewWizard {
 			    // ignore
 			}
 		    }
-		    // Execute the second job (modify to uaal)
+		    // Execute the second job (modify to universAAL)
 		    // job2.setRule(MavenPlugin.getProjectConfigurationManager().getRule());
 		    job2.schedule();
 

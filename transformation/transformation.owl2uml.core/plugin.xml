@@ -72,8 +72,8 @@
                icon="icons/transform-16.png"
                class="org.universaal.tools.owl2uml.actions.SampleAction"
                tooltip="Tranform an OWL RDF/XML ontology to UML"
-               menubarPath="org.universaal.tools.AALStudio.menu/transform"
-               toolbarPath="uAALGroup"
+               menubarPath="org.universaal.tools.Studio.menu/transform"
+               toolbarPath="universAALGroup"
                id="org.universaal.tools.owl2uml.actions.SampleAction">
          </action>
       </actionSet>

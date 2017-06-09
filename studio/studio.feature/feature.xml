@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.universaal.tools.aalstudio.feature"
-      label="AAL Studio"
+      id="org.universaal.tools.studio.feature"
+      label="universAAL Studio"
       version="3.0.0"
       provider-name="universAAL"
-      plugin="org.universaal.tools.aalstudio.core">
+      plugin="org.universaal.tools.studio.core">
 
    <description url="http://www.universaal.org/ ">
-      The AAL Studio Core contains core shared resources and functionality that is required by other features of the AAL Studio, and is required in any AAL Studio installation.
+      The universAAL Studio Core contains core shared resources and functionality that is required by other features of the universAAL Studio, and is required in any universAAL Studio installation.
    </description>
 
    <copyright url="http://www.sintef.no/">
@@ -251,7 +251,7 @@ limitations under the License.
    </url>
 
    <plugin
-         id="org.universaal.tools.aalstudio.core"
+         id="org.universaal.tools.studio.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

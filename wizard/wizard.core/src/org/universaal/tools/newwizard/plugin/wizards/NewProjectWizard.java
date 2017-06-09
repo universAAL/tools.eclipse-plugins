@@ -74,7 +74,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
      */
     private NewProjectWizardPage1 page1;
     /**
-     * Second page with uAAL info.
+     * Second page with universAAL info.
      */
     private NewProjectWizardPage2 page2;
     /**
@@ -195,7 +195,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 	    }
 	};
 
-	// Modify newly created project to be uaal-compliant
+	// Modify newly created project to be universAAL-compliant
 	final Job job2 = new WorkspaceJob(Messages
 			.getString("Project.5")) { //$NON-NLS-1$
 	    public IStatus runInWorkspace(IProgressMonitor monitor) {
@@ -213,7 +213,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 			    src = packFold;
 			}
 
-			//Create the uaal files
+			//Create the universAAL files
 			if (template) {
 			    //If it was a template, just copy the files from folder
 			    mwVersion.createTemplateFiles(src, templateIndex, pack, monitor);
@@ -268,7 +268,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		}
 	    }
 	    
-	    // Execute the second job (modify to uaal)
+	    // Execute the second job (modify to universAAL)
 	    job2.schedule();
 	    // MNGECLIPSE-766 wait until new project is created
 	    while (listener.getNewProject() == null

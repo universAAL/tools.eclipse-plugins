@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.universaal.tools.profilefeature"
-      label="AAL Studio Modelling Support"
+      label="universAAL Studio Modelling Support"
       version="1.2.0"
       provider-name="universAAL"
-      plugin="org.universaal.tools.aalstudio.core">
+      plugin="org.universaal.tools.studio.core">
 
    <description url="http://www.universaal.org">
       This feature contains UML profiles supporting modelling based
