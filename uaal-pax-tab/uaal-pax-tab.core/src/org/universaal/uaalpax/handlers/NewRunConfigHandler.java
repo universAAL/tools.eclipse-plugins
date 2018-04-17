@@ -105,7 +105,7 @@ public class NewRunConfigHandler extends AbstractHandler {
 			// classpath);
 			// }
 			
-			configuration.setAttribute("osgi_framework_id", "--platform=felix --version=4.4.1");
+			configuration.setAttribute("osgi_framework_id", "--platform=felix --version=4.6.1");
 			configuration.setAttribute("pde.version", "3.3");
 			configuration.setAttribute("show_selected_only", true);
 			configuration.setAttribute("tracing", false);

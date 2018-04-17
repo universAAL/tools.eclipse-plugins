@@ -673,7 +673,7 @@ public class BundleModel {
 		
 		try {
 			if (!configuration.hasAttribute("osgi_framework_id"))
-				configuration.setAttribute("osgi_framework_id", "--platform=felix --version=4.4.1");
+				configuration.setAttribute("osgi_framework_id", "--platform=felix --version=4.6.1");
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
