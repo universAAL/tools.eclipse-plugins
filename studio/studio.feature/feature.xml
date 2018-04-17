@@ -2,7 +2,7 @@
 <feature
       id="org.universaal.tools.studio.feature"
       label="universAAL Studio"
-      version="3.0.0"
+      version="3.0.1"
       provider-name="universAAL"
       plugin="org.universaal.tools.studio.core">
 

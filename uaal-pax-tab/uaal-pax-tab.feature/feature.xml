@@ -2,7 +2,7 @@
 <feature
       id="org.universaal.tools.uaal.runner.ui.feature"
       label="universAAL Studio Pax Runner UI"
-      version="2.0.0"
+      version="2.0.1"
       provider-name="universAAL"
       plugin="org.universaal.tools.studio.core">
 

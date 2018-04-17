@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Working Set Importer
 Bundle-SymbolicName: org.universaal.tools.envsetup.core;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Bundle-Activator: org.universaal.tools.envsetup.core.Activator
 Bundle-Vendor: universAAL
 Require-Bundle: org.eclipse.ui,

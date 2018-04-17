@@ -2,7 +2,7 @@
 <feature
       id="org.universaal.tools.envsetup.feature"
       label="universAAL Studio Development Environment Setup"
-      version="1.0.0"
+      version="1.0.1"
       provider-name="universAAL"
       plugin="org.universaal.tools.envsetup.core">
 

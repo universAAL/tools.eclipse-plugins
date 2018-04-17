@@ -2,7 +2,7 @@
 <feature
       id="org.universaal.tools.newwizard.feature"
       label="universAAL Studio Project Wizards"
-      version="1.2.2"
+      version="1.2.3"
       provider-name="universAAL"
       plugin="org.universaal.tools.studio.core">
 

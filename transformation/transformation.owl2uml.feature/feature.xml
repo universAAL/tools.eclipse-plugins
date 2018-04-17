@@ -2,7 +2,7 @@
 <feature
       id="org.universaal.tools.owl2uml.feature"
       label="universAAL Studio OWL to UML Transformations"
-      version="1.1.1"
+      version="1.1.2"
       provider-name="universAAL"
       plugin="org.universaal.tools.studio.core">
 
