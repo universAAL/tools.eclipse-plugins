@@ -232,7 +232,7 @@ development for the universAAL platform.
    </license>
 
    <url>
-      <update url="http://depot.universaal.org/eclipse4-update/"/>
+      <update url="http://depot.universaal.org/eclipse/updates/4.6/"/>
       <discovery label="MOFScript update site" url="http://download.eclipse.org/modeling/gmt/mofscript/update/"/>
    </url>
 

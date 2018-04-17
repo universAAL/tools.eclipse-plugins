@@ -245,7 +245,7 @@ limitations under the License.
    </license>
 
    <url>
-      <update label="OPS4J Pax Eclipse Update Site" url="http://www.ops4j.org/eclipse/update"/>
+      <update url="http://depot.universaal.org/eclipse/updates/4.6/"/>
    </url>
 
    <requires>

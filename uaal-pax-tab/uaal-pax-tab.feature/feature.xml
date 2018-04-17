@@ -234,6 +234,10 @@
    limitations under the License.
    </license>
 
+   <url>
+      <update url="http://depot.universaal.org/eclipse/updates/4.6/"/>
+   </url>
+
    <requires>
       <import plugin="org.eclipse.pde.ui" version="3.3.0" match="greaterOrEqual"/>
    </requires>

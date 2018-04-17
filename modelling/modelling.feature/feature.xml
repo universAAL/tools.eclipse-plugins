@@ -114,7 +114,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </license>
 
    <url>
-      <update url="http://depot.universaal.org/eclipse4-update/"/>
+      <update url="http://depot.universaal.org/eclipse/updates/4.6/"/>
    </url>
 
    <requires>
